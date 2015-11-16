@@ -1,0 +1,11 @@
+Mappenstructuur in git is ingevoerd
+Er zijn aanpassingen gemaakt in de mappen structuur ten opzichten van de eerste versie
+Latex is toegepast op de systemen van alle teamleden
+Martijn maak latex templates voor de agenda en notulen
+De notulen zullen door Aydin worden ingevuld
+De lijst me vereiste producten is toegevoegd aan git
+De vergadering wordt zo mogelijk volgende week gehouden zodat er tijd is voor het opstellen van vragen
+Het plan van aanpak wordt in week 4 opgeleverd. De precieze delen die worden gemaakt door leden worden bepaald na het interview
+Aydin zal een microfoon regelen voor het opnemen van vergaderingen en interviews
+Aydin verzorgt de uitwerken van het interview in samenwerking met de andere teamleden
+Het oude teamcontract bevat data die in het nieuwe teamcontract moet worden geplaatst, dit wordt verzorgd door martijn
