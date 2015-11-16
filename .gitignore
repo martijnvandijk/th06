@@ -1,6 +1,42 @@
-# Created by https://www.gitignore.io/api/atex,linux,windows,osx,visualstudio,intellij,c++
+# Created by https://www.gitignore.io/api/latex,linux,windows,osx,visualstudio,intellij,c++
 
-#!! ERROR: atex is undefined. Use list command to see defined gitignore types !!#
+### LaTeX ###
+*.acn
+*.acr
+*.alg
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.nlo
+*.out
+*.pdfsync
+*.ps
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdy
+*.tdo
+
 
 ### Linux ###
 *~
@@ -358,4 +394,3 @@ crashlytics-build.properties
 *.exe
 *.out
 *.app
-
