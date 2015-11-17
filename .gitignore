@@ -1,4 +1,21 @@
-# Created by https://www.gitignore.io/api/latex,linux,windows,osx,visualstudio,intellij,c++
+# Created by https://www.gitignore.io/api/microsoftoffice,libreoffice,latex,linux,windows,osx,visualstudio,intellij,c++
+
+### MicrosoftOffice ###
+*.tmp
+
+# Word temporary
+~$*.doc*
+
+# Excel temporary
+~$*.xls*
+
+# Excel Backup File
+*.xlk
+
+
+### LibreOffice ###
+# LibreOffice locks
+.~lock.*#
 
 ### LaTeX ###
 *.acn
