@@ -1,7 +1,7 @@
 Mappenstructuur in git is ingevoerd
 Er zijn aanpassingen gemaakt in de mappen structuur ten opzichten van de eerste versie
 Latex is toegepast op de systemen van alle teamleden
-Martijn maak latex templates voor de agenda en notulen
+Martijn maakt latex templates voor de agenda en notulen
 De notulen zullen door Aydin worden ingevuld
 De lijst me vereiste producten is toegevoegd aan git
 De vergadering wordt zo mogelijk volgende week gehouden zodat er tijd is voor het opstellen van vragen
