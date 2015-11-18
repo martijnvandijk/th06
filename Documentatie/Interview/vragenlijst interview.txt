@@ -1,0 +1,9 @@
+moet de gebruiker zelf het programma kunnen instellen of zijn voorafgestelde keuzes toegestaan
+wat voor categorie aan instellingen moeten kunnen worden ingesteld (centrifuge, duur wasbeurt, temperatuur etc)
+hoe vaak moet de informatie van de user interface worden opgevraagd
+moet de termperatuur bestaan uit ronde getallen of mogen het decimale waardes zijn?
+moeten aanpassingen aan de wasbeurt worden opgeslagen in een logbestand
+moeten taken kunnen worden ingepland
+hoe krijgt de gebruiker foutmeldingen te zien
+moeten alle foutmeldingen worden getoond of gelogd?
+moet de website een ander uiterlijk hebben voor mobiele toestellen?
