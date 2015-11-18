@@ -1,0 +1,2 @@
+﻿Er gaat gebruik worden gemaakt van todo.txt (beschikbaar voor alle platformen)
+Chiel zet de notities van het voortgangsgesprek om naar een .tex bestand
