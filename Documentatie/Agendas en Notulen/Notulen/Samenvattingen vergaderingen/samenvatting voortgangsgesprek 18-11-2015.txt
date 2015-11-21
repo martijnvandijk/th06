@@ -1,11 +1,54 @@
-Map agendas en notulen samenvoegen
-Het zonnescherm doet kut
-Blijkbaar zijn de gesprekken op woensdag toch GEEN vergaderingen :I
-Aydin heeft uitgelegd wat hij heeft gedaan sinds de laatste vergaderingen
-Martijn heeft uitgegeld wat hij heeft gedaan sinds de laatste vergaderingen
-Christiaan heeft uitgegeld wat hij heeft gedaan sinds de laatste vergaderingen
-Chiel heeft uitgegeld wat hij heeft gedaan sinds de laatste vergaderingen
-Christiaan moet de ideeën voor een wasprogramma nog uitwerken
-Er moet een planning komen voor elk onderdeel van elk bestand en daarbij wie dit onderdeel gaat doen
-Urenverantwoording moet worden ingevuld met terugwerkende kracht (er is een schema met de activiteiten blijkbaar sjabloon))
-Urenverantwoording via google drive, gmail adressen staan in het teamcontract
+Opening:
+	Martijn heeft het gesprek geopend
+
+	De map agendas en notulen moeten samen gevoegd worden
+	Het zonnescherm doet kut
+	Blijkbaar zijn de gesprekken op woensdag toch GEEN vergaderingen :I
+		(dit bleek alleen de eerste groep te zijn)
+
+	Aydin heeft uitgelegd wat hij heeft gedaan sinds de laatste vergaderingen
+	Martijn heeft uitgegeld wat hij heeft gedaan sinds de laatste vergaderingen
+	Christiaan heeft uitgegeld wat hij heeft gedaan sinds de laatste vergaderingen
+	Chiel heeft uitgegeld wat hij heeft gedaan sinds de laatste vergaderingen
+
+Gedaan:
+	- Er is een github repository aangemaakt
+	- De bekende deadlines zijn geformuleert
+	- We hebben een (goede) microfoon voor de interviews
+	- De templates voor de LaTeX bestanden zijn ingesteld
+	- Op de computers van de teamgenoten is het benodigde geinstaleerd
+	- Er zijn meerdere bestanden om gezet naar latex
+	- Voor de bronvermeldingen is er onderzoek gaande naar een goede oplossing
+
+Todo's:
+	Christiaan moet de ideeën voor een wasprogramma nog uitwerken
+
+	Er moet een planning komen voor elk onderdeel van elk bestand en daarbij wie dit onderdeel gaat doen
+		- De requirements architecture moet gemaakt worden om een goede indeling te kunnen maken
+		- Het plan van aanpak gaat gemaakt worden aan de hand van de MoSCoW methode
+			- Hiervoor moet eerst het interview gedaan worden
+
+	De vragenlijst is gedeeltelijk af, er moeten nog een aantal vragen toe gevoegd worden
+
+	Urenverantwoording moet worden ingevuld met terugwerkende kracht (er is een schema met de activiteiten blijkbaar sjabloon)
+		- De urenverantwoording is al wel op gesteld, maar nog niet in gevuld
+		- Het bestand wordt gedeeld via google drive, de gmail adressen staan in het teamcontract
+
+Opmerkingen:
+	Voor een vergadering moet het bestand notulen heten, niet notule
+		- Notule is gebrekkig taalgebruik
+
+Vragen:
+	Waneer ontvangen wij de arduino pi?
+		- Dat is net gezegd
+		- Om half twee
+			- Luisteren is moeilijk
+
+Andere zaken:
+	Er zijn verder geen opmerkingen of zaken om te bespreken
+	...
+	De urenverantwooring moet op een practische manier in gevuld worden:
+		- Alleen maar een log van geplande uren en besteede uren
+
+Het gesprek is gesloten om 13:11
+	- Aangezien wij de laatste groep waren, hebben we gelijk de arduino pi op kunnen halen
