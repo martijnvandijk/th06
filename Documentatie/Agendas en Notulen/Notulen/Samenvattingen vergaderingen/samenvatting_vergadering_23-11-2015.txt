@@ -1,0 +1,12 @@
+Martijn opent de vergadering
+agendapunten staan in telegram
+Urenadministratie: de uren moeten beter worden ingevuld. Alle leden kunnen er nu bij
+Voorbereiding interview: geen functionaliteiten aanbieden aan de klant. Vragen zo open mogelijk houden
+Er is een redelijk aantal vragen
+Aydin zal achterhalen of er andere kernvragen zijn die van toepassing zijn op het project
+Aydin tekent op dit moment een schets voor de user interface op de ipad
+Er wordt een aparte groep gemaakt voor belangrijke meldingen op Telegram. Het is de bedoeling dat deze groep niet gemute wordt door de deelnemers
+Tevens wordt er gevraagd een bevestiging te geven wanneer je de melding hebt gezien in Telegram
+Er wordt gebruik gemaakt van Trello voor een todo lijst. Aan marten wordt gevraagd of we deze moeten delen met een of meerdere docenten
+Chiel maakt een telegram groep aan
+Martijn stuurt een testbericht en de leden bevestigen het bericht om te testen of de trello groep werkt
