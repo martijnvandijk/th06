@@ -17,14 +17,22 @@ Hoe goed moet het systeem het doen? Hier wordt het constraints model gebruikt. V
 - Learnability - Hoe snel kan de gebruiker leren met het systeem om te gaan 
 
 #Vragenlijst interview
+
+Wasmachine:
 - Moet de gebruiker zelf het programma kunnen instellen of zijn voorafgestelde keuzes toegestaan?
-- Wat voor categorie aan instellingen moeten kunnen worden ingesteld (centrifuge, duur wasbeurt, temperatuur etc)?
-- Hoe vaak moet de informatie van de user interface worden opgevraagd?
-- Moet de termperatuur bestaan uit ronde getallen of mogen het decimale waardes zijn?
-- Moeten aanpassingen aan de wasbeurt worden opgeslagen in een logbestand?
-- Moeten taken kunnen worden ingepland?
-- Hoe krijgt de gebruiker foutmeldingen te zien?
-- Moeten alle foutmeldingen worden getoond of gelogd?
-- Moet de website een ander uiterlijk hebben voor mobiele toestellen?
+- Wat voor categorien aan instellingen moeten kunnen worden ingesteld (centrifuge, duur wasbeurt, temperatuur etc)?
 - Uit hoeveel wasbeurten kan de gebruiker kiezen?
 - Uit wat voor wasbeurten kan de gebruiker kiezen?
+- Moeten taken kunnen worden ingepland?
+
+misc:
+- Moeten alle foutmeldingen worden getoond of gelogd?
+- Moet de termperatuur bestaan uit ronde getallen of mogen het decimale waardes zijn?
+- Moeten aanpassingen aan de wasbeurt worden opgeslagen in een logbestand?
+
+Website:
+- Moet de website een ander uiterlijk hebben voor mobiele toestellen?
+- Hoe krijgt de gebruiker foutmeldingen te zien?
+- Hoe vaak moet de informatie van de user interface worden opgevraagd?
+
+Beveiliging:
