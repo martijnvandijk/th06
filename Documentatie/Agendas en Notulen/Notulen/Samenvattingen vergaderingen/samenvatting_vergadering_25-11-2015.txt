@@ -1,0 +1,31 @@
+Notulen vergadering 25-11-2015
+
+Aydin stuurt mail naar marten voor nieuwe telefoon.
+
+Koppen PvA
+Inleiding met achtergrond - Martijn
+Informatie/onderzoek - Christiaan
+Experimenten - Christiaan
+Op te leveren producten + prioriteit - Aydin
+Projectorganisatie verantwoordelijkheid deelproducten - Martijn
+Methode van kwaliteits bewaking - Chiel
+Mijlpalen - Aydin
+Fasering - Aydin
+Lijst met risico's - Chiel
+Bronvermeldingen - Martijn
+
+Onderzoek naar servers
+Risico = functionele eis niet kunnen realiseren, externe gevaren, interne gevaren
+Laxheid en ziek zijn tellen niet als gevaren voor het project
+
+Interview: 
+Geluidsbestand en aantekeningen zijn toegevoegd
+Informeren of de klant de optie mag hebben om het systeem te beveiligen met een pin code
+Bij voorkeur 100% van de kracht van het systeem gebruiken
+"File access binnen een realtime systeem is bijzonder gevaarlijk" - Marten
+Wanneer netstroom uitvalt gaat het systeem backuppen en dan zichzelf uitzetten (indien dit mogelijk is, suggestie van aydin).
+Moet onderzoek worden gedaan naar file-access (duur van schrijf/lees taak).
+Martijn mailt naar gerald ovink over de beoordeling van het Plan van Aanpak.
+Aydin controleert of documenten correct zijn toegevoegd in de github folder (documenten die moeten worden ingeleverd)
+Iedereen krijgt een eigen bestand die samenkomt tot een groot PvA
+Chiel heeft een BBtex bestand gemaakt om te testen. Hij zal deze op github toevoegen.

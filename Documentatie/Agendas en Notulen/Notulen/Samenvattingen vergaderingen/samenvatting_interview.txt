@@ -1,0 +1,42 @@
+Ja zuurbier directeur van de wasmachine fabriek
+Domotica
+Proof of concept aub
+could: andere css voor mobile
+Alleen toegestane input
+Directe verbinding van UI naar machine
+Maximaal acceptabele vertraging = mag na haf uur maar stop moet vrijwel direct
+Gebruiker hoeft tijd niet aan te passen van een wasprogramma.
+Hij moet programma kiezen en dat programma wordt gewoon uitgevoerd.
+Temperatuur kan wel worden aangepast.
+Ieder programma heeft aantal toegestane termperaturen: 
+20 - 30 - 40 - 60 - 90
+Geen temperaturen tussen de aangegeven waardes is.
+Tonen van temperatuur aan gebruiker is altijd ronde getallen.
+
+Fijne was altijd op 30 of 40. Witte/bonte kan tot 90.
+Wasprogrammas: Witte was, fijne was, bonte was. Er kunnen nieuwe wasprogrammas worden toegevoegd.
+Wasprogramma bevat de duur, temperatuur, vorkeurtemperatuur, centrifugesnelheid zitten in het programma.
+Draaipatroon ook mogelijk (snel, dan langzaam, dan weer snel).
+
+Software update mag semi-automatisch, kan vol-automatisch.
+Gebruiker moet altijd toestemming geven, mag nooit vanzelf updaten.
+Gebruiker kan zelf geen wasprogramma aanmaken.
+Inloggen: door middel van pincode want het is lokaal.
+Pincode moet aanpasbaar zijn. Gebruiker kiest zelf de eerste pincode.
+Geen beveiliging tegen te vaak foute pincode.
+Indien pincode vergeten: herstelcode.
+
+Wastaken moeten kunnen worden ingepland.
+Er moet een logbestand worden bijgehouden van wat de gebruiker heeft gedaan.
+Totaal aantal uren motor gedraaid. Hoeveel uur gecentrifugeerd.
+Energieverbruik moet aan de gebruiker worden getoond. Waterverbruik ook.
+
+Moet het systeem beschikken over backups of crash-beveiliging?: 
+Ja, op apparaat zelf.
+Bij stroomuitval tijdens het wasprogramma: 
+Dan stopt de wasmachine. Wanneer de stroom terugkomt moet het programma verder gaan waar het gebleven was.
+De gebruiker stelt in of de machine doorgaat of de was stopt (water wegpompen) na stroomuitval.
+
+(geheugen opslaan op de kleine chip(?))
+Indien de gebruiker de waardes aanpast zal het systeem een foutmelding toont dat de waarde niet kan worden gebruikt.
+Locatie in wasprogramma, tijd en temperatuur moet worden getoond aan de gebruiker
