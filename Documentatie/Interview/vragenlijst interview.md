@@ -35,4 +35,11 @@ Website:
 - Hoe krijgt de gebruiker foutmeldingen te zien?
 - Hoe vaak moet de informatie van de user interface worden opgevraagd?
 
-Beveiliging:
+#Beveiliging:
+- Moet het systeem beveiligd worden tegen ongeauthoriseerde toegang?
+	- Hoe moeten mensen inloggen?
+	- Wat voor eisen worden er aan wachtwoorden gesteld?
+- Moet het systeem beschikken over backups indien het systeem crasht?
+	- Zo ja, hoe regelmatig?
+- Moet het systeem beveiligd worden tegen gevaarlijke invoer (SQL Injecties etc)
+- 
