@@ -25,7 +25,7 @@ Wasmachine:
 - Uit wat voor wasbeurten kan de gebruiker kiezen?
 - Moeten taken kunnen worden ingepland?
 
-misc:
+Misc:
 - Moeten alle foutmeldingen worden getoond of gelogd?
 - Moet de termperatuur bestaan uit ronde getallen of mogen het decimale waardes zijn?
 - Moeten aanpassingen aan de wasbeurt worden opgeslagen in een logbestand?
