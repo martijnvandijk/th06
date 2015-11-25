@@ -1,0 +1,44 @@
+Alleen toegestaande temperaturen kiezen
+Onmiddelijk opsturen naar wasmachine
+Status van Wasmachine laten zijn in UI
+
+
+Alleen temperatuur aanpassen van wasprogrammas
+20, 30, 40, 60, 90 graden voor wasprogrammas.
+
+Fijne niet 60/90
+
+Fijne, bonte, witte was + toegevoegde
+
+
+
+Toevoegbare wasprogrammas door specialisten.
+Duur, voorkeurztemperatuur, RPM van trommel. Draaipatroon.
+
+Software update moet worden toegestaan.
+
+Pincode tegen kindermisbruik
+4 cijfers
+Pincode moet aanpasbaar zijn
+geen bruteforce protectie
+
+2 verschillende pincodes
+
+Ronde getallen voor temperatuur
+
+Taken kunnen worden ingepland
+
+Logbestand: Hoe vaak is de machine gebruikt, welke temperatuur de machine gebruikt is per wasbeurt
+hoeveel rondes de centrifuge heeft gedraait
+Energie verbruik
+Water verbruik
+
+Log bestanden op het systeem zelf
+
+Stroomuitval: Machine houd bij waar in het wasprogramma het is en moet verder gaan na stroomuitval. inclusief water opwarmen. Optie toevoegen voor actien a stroomuitval.
+
+Foutmelding bij niet-standaard waarden
+
+Voortgang wasprogramma in UI.
+Timer.
+Wat het wasprogramma op dit moment doet.
