@@ -1,10 +1,10 @@
 Teamcontract
 Github repo
-notulen
-urenverantwoording
+Notulen
+Urenverantwoording
 Interview opdrachtgever
 Plan van aanpak
-requirements architecture
+Requirements architecture
 solution architecture
-eindproduct
-technisch verslag
+Technisch verslag
+Proof of concept
