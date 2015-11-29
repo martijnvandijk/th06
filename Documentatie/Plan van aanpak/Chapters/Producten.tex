@@ -1,34 +1,46 @@
-\chapter{Producten en Kwaliteitsbewaking}
-\subtitle{Producten}
+\chapter{MoSCoW Prioritisering en Kwaliteitseisen producten}
+\subtitle{MoSCoW Prioritisering}
 \paragraph{Inleiding}
-In dit hoofdstuk worden alle op te leveren producten behandeld die van toepassing zijn tot het project.
+In dit hoofdstuk worden alle op te leveren functionaliteiten behandeld die van toepassing zijn tot het project.
 Deze producten variëren van software en hardware tot documentatie en gemaakte notulen.
 Van deze producten wordt een prioriteiten lijst gemaakt en een lijst aan kwaliteitseisen waaraan deze documenten moeten voldoen.
 Tevens wordt besproken hoe de kwaliteit van deze producten zal worden bewaakt.
 
-\section{Op te leveren producten}
-\subsection{Prioriteitenlijst}
-\begin{itemize}
-\item Teamcontract
-\item Github repo
-\item Notulen
-\item Urenverantwoording
-\item Interview opdrachtgever
-\item Plan van aanpak
-\item Requirements architecture
-\item solution architecture
-\item Technisch verslag
-\item Proof of concept
-\end{itemize}
-\begin{itemize}
+\subsection{Prioriteitenlijst op te leveren functionaliteiten}
+In dit onderdeel bespreken wij de lijst van functionaliteiten die tijdens het interview met de klant zijn achterhaald.
+Wij maken een lijst van deze prioriteiten aan de hand van de MoSCoW methode. Deze methode houdt in dat functionaliteiten een letter krijgen toegewezen die aanduid wat hun prioriteit is binnen het systeem.
+De anduiding gaat als volgt: 
+M : Must - Deze eis is verplicht voor een goede afronding van het project.
+S : Should - Deze eis moet er in komen maar het project komt niet in gevaar wanneer dit niet mogelijk is.
+C : Could - Deze eis zou kunnen worden toegevoegd indien de Must en Should eisen behaald zijn.
+W : Would - Indien er tijd extra over is kunnen deze eisen worden geïmplementeerd.
 
-\subsection{Kwaliteitsbewaking}
-Een beschrijving van hoe je er voor zorgt dat de resultaten voldoen aan relevante kwaliteitsnormen.
-denk hierbij bijv aan: 
--Gebruik van standaarden en methoden
--Testen
--Reviews door eindgebruikers en/of anderen
+\begin{table}[]
+\centering
+\begin{tabular}{ l c r }
+  Functionaliteit & Beschrijving & Prioriteit \\
+  Starten & Stoppen machine & De machine mag er tot een half uur over doen om het wasprogramma te starten. Stoppen moet vrijwel direct zijn & M \\
+  Aanpassen temperatuur & De gebruiker moet de temperatuur van een wasprogramma moeten kunnen aanpassen aan de hand van beschikbare opties & M \\
+  Wasprogramma's & Er moeten standaard 3 wasprogramma's aanwezig zijn: Witte was, Fijne was en Bonte was & M \\
+  Toevoegen wasprogramma's & Iemand die in dienst is bij de klant kan indien gewenst een nieuw wasprogramma maken en toevoegen aan de lijst van beschikbare wasprogramma's & M \\
+  Inhoud wasprogramma's & Wasprogramma's bevatten de volgende gegevens: Duur, Temperatuur, Voorkeurstemperatuur en Centrifugesnelheid & M \\
+  Updaten wasprogramma's & Het updaten van de lijst van wasprogramma's moet automatisch gaan & M \\
+  Accepteren updates & De gebruiker per update aangeven of hij/zij deze update wilt ontvangen & M \\
+  Inloggen webinterface & De gebruiker logt in op de webinterface door middel van een pincode & M \\
+  Kiezen pincode & De gebruiker kiest zelf een pincode bij het voor het eerst opstarten van de webapplicatie & M \\
+  Aanpassen pincode & De pincode moet door de gebruiker aanpasbaar zijn & M \\
+  Herstelcode pincode & Er moet een herstelcode beschikbaar zijn die bij het systeem wordt geleverd om de huidige pincode op te vragen & M \\
+  Inplannen wastaken & Wastaken moeten kunnen worden ingepland (wasprogramma uitvoeren naar X aantal uren) & M \\
+  Logbestanden & Er moeten logs worden bijgehouden van wat de gebruiker heeft gedaan & M \\
+  Inhoud logbestanden & De logbestanden moeten de volgende informatie tonen: Uren motor gedraaid, waterverbruik en stroomverbruik & M \\
+  Crashbeveiliging & Het systeem moet beveiligd zijn tegen crashes & M \\
+  Acties stroomuitval & Wanneer na een stroomuitval de stroom weer terug is moet het systeem automatisch verder gaan met het wasprogramma & M \\
+  Opties stroomuitval & De gebruiker kan via een optie in de webinterface kiezen of de machine na een stroomuitval automatisch verder gaat of dat het water wordt weggepompt & S \\
+  Meldingen webinterface & De huidige tijd en temperatuur van het systeem moet worden getoond aan de gebruiker & S \\
+\end{tabular}
+\end{table}
 
-
+\subtitle{Kwaliteitseisen op te leveren producten}
+(Kwaliteits) eisen waaraande op te leveren producten moeten voldoen
 
 \end{document}
