@@ -1,7 +1,13 @@
 \documentclass[dutch]{hu}
+\usepackage{apa}
 \usepackage{makecell}
 \usepackage{longtable}
 \usepackage{makeidx}
+\usepackage{csquotes}
+% \usepackage[dutch]{babel}
+% \usepackage[style=apa, backend=biber]{biblatex}
+% \DeclareLanguageMapping{american}{american-apa}
+\addbibresource{literatuur.bib}
 \makeindex
 \input{../project.tex}
 \subtitle{Plan van Aanpak}
@@ -23,5 +29,7 @@
 \input{Chapters/Bronvermelding.tex}
 
 \input{Chapters/Risicos.tex} 
+
+\printbibliography
 
 \end{document}
