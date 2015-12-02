@@ -1,0 +1,23 @@
+Notule 02-12-2015
+Feedback is uitgelegd aan christiaan omdat hij afwezig was bij de feedback van Gerald
+Christiaan is om familie omstandigheden minder beschikbaar dan in het teamcontract staat aangegeven. De andere leden houden hier rekening mee.
+Feedback uren moeten in de planing worden toegevoegd. De feedback van gerald op 01-12-2015 is al toegevoegd aan de planning.
+Er moet een workflow-stijl schema worden gemaakt voor het Plan van Aanpak.
+Er wordt gekeken naar de modelijkheden voor het tekenen van schema's diagrammen.
+Visual Paradigm wordt op alle systemen geïnstalleerd voor het ontwikkellen van de diagrammen en modellen.
+Aydin vertaalt zijn handgeschreven notities naar een textbestand voor in de github map.
+Er moet worden bepaald wat er precies in de Requirements Architecture moet komen te staan.
+Aydin spit de resultaten van het interview nogmaals door om te controleren of er geen eisen worden gemist.
+Aydin maakt een lijst van alle eisen. Ieder lid vult bij de eis in wat voor priority deze denkt te moeten hebben. De meest voorkomende wordt gekozen.
+Deze MoSCoW komt ook in het Plan van Aanpak.
+Christiaan zal bij de kop onderzoek in het Plan van Aanpak duidelijk aangeven waarvoor het onderzoek is, waarom en wat het precieze doel is van het onderzoek.
+Martijn veranderd de volgorde van hoofdstukken aan de hand van de volgende regeling: 2. Producten; 3. MoSCoW; 4. Onderzoek; 5. Kwaliteitseisen.
+Chiel 
+
+RA: Use-case diagrammen
+	Activity diagrammen
+	Constraints model
+	
+Aydin heeft een afbeelding met daarop de instructies voor het RA op github geplaatst in de map Documentatie -> Requirements Architecture.
+Er gaat gebruik worden gemaakt van Gantt Project voor het maken van het planningsoverzicht (wanneer activiteiten moeten worden ingepland).
+Er wordt vrijdag een extra vergadering gehouden voor het bepalen wie wat doet voor het Requirements Architecture.

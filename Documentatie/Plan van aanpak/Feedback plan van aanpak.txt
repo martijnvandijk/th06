@@ -1,0 +1,14 @@
+Pva feedback
+
+Hoodstuk Onderzoek:
+Waarvoor/Waarom is dit onderzoek? Wat is het doel dat wij willen bereiken met dit onderzoek?
+Dit moet beter worden uitgelegd in dit hoofstuk.
+
+Er moet meer uitleg komen over de taken die vooraf het onderzoek gaan.
+
+De hoofstukken moeten van volgorde veranderd worden. Dit is de nieuwe volgorde: 
+2. Producten; 3. MoSCoW; 4. Onderzoek; 5. Kwaliteitseisen.
+
+Er moet beschreven worden hoe er gaat worden getest.
+De planning moet de onderzoeken worden toegevoegd en de ontmoetingen voor feedback moeten er in worden opegenomen.
+Er moet een workflow-stijl schema komen voor de taken die worden uitgevoerd.
