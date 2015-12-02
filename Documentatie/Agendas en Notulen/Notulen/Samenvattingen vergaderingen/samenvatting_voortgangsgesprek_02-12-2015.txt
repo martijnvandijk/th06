@@ -1,0 +1,18 @@
+PDF bestanden van agenda's en notulen in een aparta map van de .tex bestanden voor de leesbaarheid.
+Gerald Ovink met hoofdletters. plan van aanpak met kleinde letters. Github met hoofdletter.
+
+2 dingen relevant voor een wasprogramma:
+Wat is een wasprogramma door de ogen van de gebruiker?
+Hoe ziet een wasprogramma er uit voor het bestuuringssysteem? Wat moet er in worden vastgelegd.
+
+Het globale idee voor het wasprogramm (reeks acties die bepalen hoe de hardware moet worden ingesteld) is goed.
+
+Mist in onderzoek: Hoe gaat het user-interface communiceren met de rest van het systeem.
+Wasprogramma's staan in een directory. Wanneer het systeem opstart leest hij deze uit en voegt hij de programma's toe aan de lijst in de user-interface. Deze bestanden bestaan uit JSON.
+Er moet een protocol worden opgezet voor het versturen van de requests en responses vanuit de webinterface naar de server/socket.
+Hoe de berichten heen en weer worden gestuurd moet als onderzoek in het PVA komen.
+
+Must-haves zouden in Projectweek 1 moeten worden gerealiseerd. Mag uitlopen tot vroeg week 2.
+
+Er moet contact worden opgenomen met de klant of de MoSCoW lijst kloppend is.
+Hoorcollege's en voortgangsgesprekken tellen mee in de planning.
