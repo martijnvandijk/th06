@@ -5,10 +5,10 @@ Gerald Ovink met hoofdletters. plan van aanpak met kleinde letters. Github met h
 Wat is een wasprogramma door de ogen van de gebruiker?
 Hoe ziet een wasprogramma er uit voor het bestuuringssysteem? Wat moet er in worden vastgelegd.
 
-Het globale idee voor het wasprogramm (reeks acties die bepalen hoe de hardware moet worden ingesteld) is goed.
+Het globale idee voor het wasprogramma (reeks acties die bepalen hoe de hardware moet worden ingesteld) is goed.
 
 Mist in onderzoek: Hoe gaat het user-interface communiceren met de rest van het systeem.
-Wasprogramma's staan in een directory. Wanneer het systeem opstart leest hij deze uit en voegt hij de programma's toe aan de lijst in de user-interface. Deze bestanden bestaan uit JSON.
+Wasprogramma's staan in een directory/database. Wanneer het systeem opstart leest hij deze uit en voegt hij de programma's toe aan de lijst in de user-interface. Deze bestanden bestaan uit JSON.
 Er moet een protocol worden opgezet voor het versturen van de requests en responses vanuit de webinterface naar de server/socket.
 Hoe de berichten heen en weer worden gestuurd moet als onderzoek in het PVA komen.
 
