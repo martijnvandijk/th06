@@ -4,16 +4,15 @@ Om dit project te kunnen maken is er onderzoek naar diversen onderwerpen nodig. 
 Hiervoor zijn de volgende onderwerpen die wij gaan onderzoeken.
 
 \section{Read/Write met RTOS}
-Om bij te houden waar het systeem was na stroomuitval is het nodig om de informatie op te slaan in een log bestand, maar omdat het maken en schrijven in een 
-bestand een actie van het OS is, kan dit het rest van het systeem in een sleep zetten. Om te onderzoeken of dit een probleem wordt met deadlines van het realtime systeem gaan wij 
-onderzoeken hoe lang het duurt om een log file te maken, en dan meerdere keren het bestand openen, schrijven en daarna sluiten om te kijken hoe lang het duurt. Als deze periode niet de 
+Het doel van dit onderzoek is om een systeem te maken dat bijhoud waar het systeem was na stroomuitval of een systeem crash. Hiervoor is het nodig om de informatie op te slaan in een log bestand, maar omdat het maken en schrijven in een 
+bestand een actie van het OS is kan dit het rest van het systeem in een sleep zetten. 
+Om te onderzoeken of dit een probleem wordt met deadlines van het realtime systeem gaan wij onderzoeken hoe lang het duurt om een log file te maken, en dan meerdere keren het bestand openen, schrijven en daarna sluiten om te kijken hoe lang het duurt. Als deze periode niet de 
 deadlines overschrijd dan kunnen wij dit gebruiken in het systeem.
 
 \section{Wasprogrammas}
-Het doel van het onderzoek is om beter verstand krijgen van de wasmachine en wasprogrammas om de hardware beter aan te sturen en zodat specialisten nieuwe wasprogrammas kunnen toevoegen.
+Het doel van dit onderzoek is om beter verstand krijgen van de wasmachine en wasprogrammas om de hardware beter aan te sturen en zodat specialisten nieuwe wasprogrammas kunnen toevoegen.
 Dit kunnen wij doen door ons meer te verdiepen in de geleverde hardware, andere wasmachines bestuderen en onderzoeken hoe wasprogrammas precies in elkaar zitten.
 
 \section{Snelheid van de UI}
-Wij moeten onderzoeken hoe snel het systeem kan reageren op een actie in de UI, zoals de wasmachine stoppen, starten, etc. dit kunnen wij doen door simpelweg te 
-kijken naar het systeem nadat wij een bepaalde optie selecteren. 
-
+Het doal van dit onderzoek is om de acties van de UI zo snel naar het systeem te brengen, zoals stoppen, starten en de temperatuur te laten zien in de UI.
+Dit kunnen wij doen door een debug functie toe te voegen die laat zien wanneer er een actie wordt uigevoerd in de UI en wanneer er een actie wordt uitgevoerd door het systeem. Met deze informatie kunnen wij uitzoeken hoe wij het systeem sneller kunnen laten reageren.
