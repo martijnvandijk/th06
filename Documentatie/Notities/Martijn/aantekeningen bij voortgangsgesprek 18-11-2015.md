@@ -1,0 +1,2 @@
+- notulen en agenda's bij elkaar
+- notulen zijn meervoud
