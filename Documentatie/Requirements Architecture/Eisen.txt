@@ -1,0 +1,25 @@
+Functionele eisen:
+
+Aanpassen temperatuur & De gebruiker moet de temperatuur van een wasprogramma moeten kunnen aanpassen aan de hand van beschikbare opties & M \\
+Toevoegen wasprogramma's & Iemand die in dienst is bij de klant kan indien gewenst een nieuw wasprogramma maken en toevoegen aan de lijst van beschikbare wasprogramma's & M \\
+Inplannen wastaken & Wastaken moeten kunnen worden ingepland (wasprogramma uitvoeren naar X aantal uren) & M \\
+Inloggen webinterface & De gebruiker logt in op de webinterface door middel van een pincode & M \\
+Accepteren updates & De gebruiker moet per update aangeven of hij/zij deze update wilt ontvangen & S \\
+Aanpassen pincode & De pincode moet door de gebruiker aanpasbaar zijn & S \\
+Kiezen pincode & De gebruiker kiest zelf een pincode bij het voor het eerst opstarten van de webapplicatie & S \\
+Opties stroomuitval & De gebruiker kan via een optie in de webinterface kiezen of de machine na een stroomuitval automatisch verder gaat of dat het water wordt weggepompt & S \\
+
+
+Niet-functionele eisen:
+
+Functionaliteit & Beschrijving & Prioriteit \\
+Starten \& Stoppen machine & De machine mag er tot een half uur over doen om het wasprogramma te starten. Stoppen moet vrijwel direct zijn & M \\
+Wasprogramma's & Er moeten standaard 3 wasprogramma's aanwezig zijn: Witte was, Fijne was en Bonte was & M \\
+Inhoud wasprogramma's & Wasprogramma's bevatten de volgende gegevens: Duur, Temperatuur, Voorkeurstemperatuur en Centrifugesnelheid & M \\
+Updaten wasprogramma's & Het updaten van de lijst van wasprogramma's moet automatisch gaan & M \\
+Logbestanden & Er moeten logs worden bijgehouden van wat de gebruiker heeft gedaan & M \\
+Inhoud logbestanden & De logbestanden moeten de volgende informatie tonen: Uren motor gedraaid, waterverbruik en stroomverbruik & M \\
+Crashbeveiliging & Het systeem moet beveiligd zijn tegen crashes & M \\
+Acties stroomuitval & Wanneer na een stroomuitval de stroom weer terug is moet het systeem automatisch verder gaan met het wasprogramma & M \\
+Herstelcode pincode & Er moet een herstelcode beschikbaar zijn die bij het systeem wordt geleverd om de huidige pincode op te vragen & S \\
+Meldingen webinterface & De huidige tijd en temperatuur van het systeem moet worden getoond aan de gebruiker & S \\
