@@ -8,15 +8,9 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
 
 \subsection{Kiezen Wasprogramma}
 \begin{center}
-<<<<<<< HEAD
-  \begin{tabular}{ l | c | r | }
-    \hline
-    Doel & Het kiezen van een wasprogramma om deze te starten. \\ \hline
-=======
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het starten van een wasprogramma. \\ \hline
->>>>>>> b55511651ac14a8928e7b0ed94e09bb5f218a447
-    Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode. \\ \hline
+    Doel & Het kiezen van een wasprogramma om deze te starten. \\ \hline
+    Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
     Post-condities & De wasmachine is gestopt met wassen en het water is weg gepompt. \\ \hline
     Uitzonderingen & De gebruiker klikt op de knop "Stop". Hierdoor wordt de huidige wastaak stopgezet. De wasmachine pompt het water weg. \\
     \hline
@@ -25,14 +19,8 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
 
 \subsection{Temperatuur instellen}
 \begin{center}
-<<<<<<< HEAD
-  \begin{tabular}{ l | c | r | }
-    \hline
-    Doel & Het instellen van de temperatuur voor het huidige wasprogramma. \\ \hline
-=======
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
     Doel & Het aanpassen van de temperatuur van het huidige wasprogramma. \\ \hline
->>>>>>> b55511651ac14a8928e7b0ed94e09bb5f218a447
     Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode en heeft een wasprogramma gekozen. \\ \hline
     Post-condities & De wasmachine is een wastaak begonnen met de aangegeven temperatuur. \\ \hline
     Uitzonderingen &  \\
@@ -54,7 +42,7 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
 \subsection{Accepteren update}
 \begin{center}
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het accepteren van een automatische update. \\ \hline
+    Doel & Het accepteren van een nieuw wasprogramma door middel van een automatische update. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode. \\ \hline
     Post-condities & Een nieuw wasprogramma is toegevoegd aan de lijst van wasprogramma's. \\ \hline
     Uitzonderingen &  \\
@@ -67,7 +55,7 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
     Doel & Het automatisch laten uitvoeren van een wastaak nadat een bepaalde tijd verstreken is. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode. \\ \hline
-    Post-condities & De wasmachine heeft na de ingevulde tijd het wasprogramma uitgevoerd. \\ \hline
+    Post-condities & De wasmachine is na een aangegeven periode begonnen met het uitvoeren van de aangegeven wastaak. \\ \hline
     Uitzonderingen &  \\
     \hline
   \end{tabular}
@@ -75,18 +63,11 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
 
 \subsection{Kiezen pincode}
 \begin{center}
-<<<<<<< HEAD
-  \begin{tabular}{ l | c | r | }
+  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
     \hline
     Doel & De gebruiker een pincode laten kiezen voor het inloggen op de webinterface. \\ \hline
     Pre-condities & Geen pre-conditie. \\ \hline
     Post-condities & De pincode is ingesteld als login pin voor de webinterface. \\ \hline
-=======
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & De gebruiker een zelfbedachte pincode laten kiezen voor het inloggen op de webinterface. \\ \hline
-    Pre-condities & De gebruiker heeft via een browser de webinterface benaderd. \\ \hline
-    Post-condities & De gebruiker is doorgestuurd naar een login scherm waar deze de nieuwe pincode kan invoeren. \\ \hline
->>>>>>> b55511651ac14a8928e7b0ed94e09bb5f218a447
     Uitzonderingen &  \\
     \hline
   \end{tabular}
@@ -97,24 +78,8 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
     Doel & De gebruiker de huidige pincode laten aanpassen. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
-<<<<<<< HEAD
     Post-condities & De huidige pincode is vervangen door de nieuwe pincode als login. \\ \hline
-    Uitzonderingen &  \\
-=======
-    Post-condities & De gebruiker krijgt een melding dat de pincode is aangepast. \\ \hline
 	Uitzonderingen &  \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsection{Toevoegen wasprogramma}
-\begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & De beheerder een nieuw wasprogramma laten toevoegen. \\ \hline
-    Pre-condities & De beheerder is ingelogd op de webinterface. \\ \hline
-    Post-condities & De beheerder heeft een wasprogramma toegevoegd als update voor de gebruikers. \\ \hline
-	Uitzonderingen &  \\
->>>>>>> b55511651ac14a8928e7b0ed94e09bb5f218a447
     \hline
   \end{tabular}
 \end{center}
