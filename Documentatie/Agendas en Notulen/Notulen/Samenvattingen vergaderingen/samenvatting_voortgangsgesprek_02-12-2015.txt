@@ -1,4 +1,4 @@
-PDF bestanden van agenda's en notulen in een aparta map van de .tex bestanden voor de leesbaarheid.
+PDF bestanden van agenda's en notulen in een aparte map van de .tex bestanden voor de leesbaarheid.
 Gerald Ovink met hoofdletters. plan van aanpak met kleinde letters. Github met hoofdletter.
 
 2 dingen relevant voor een wasprogramma:

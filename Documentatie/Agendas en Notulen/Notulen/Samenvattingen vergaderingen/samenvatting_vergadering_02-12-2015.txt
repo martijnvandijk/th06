@@ -22,4 +22,3 @@ RA: Use-case diagrammen
 	
 Aydin heeft een afbeelding met daarop de instructies voor het RA op github geplaatst in de map Documentatie -> Requirements Architecture.
 Er gaat gebruik worden gemaakt van Gantt Project voor het maken van het planningsoverzicht (wanneer activiteiten moeten worden ingepland).
-Er wordt vrijdag een extra vergadering gehouden voor het bepalen wie wat doet voor het Requirements Architecture.
