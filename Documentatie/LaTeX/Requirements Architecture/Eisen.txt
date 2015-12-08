@@ -8,12 +8,11 @@ Accepteren updates & De gebruiker moet per update aangeven of hij/zij deze updat
 Aanpassen pincode & De pincode moet door de gebruiker aanpasbaar zijn & S \\
 Kiezen pincode & De gebruiker kiest zelf een pincode bij het voor het eerst opstarten van de webapplicatie & S \\
 Opties stroomuitval & De gebruiker kan via een optie in de webinterface kiezen of de machine na een stroomuitval automatisch verder gaat of dat het water wordt weggepompt & S \\
-
+Starten \& Stoppen machine & De machine mag er tot een half uur over doen om het wasprogramma te starten. Stoppen moet vrijwel direct zijn & M \\
 
 Niet-functionele eisen:
 
 Functionaliteit & Beschrijving & Prioriteit \\
-Starten \& Stoppen machine & De machine mag er tot een half uur over doen om het wasprogramma te starten. Stoppen moet vrijwel direct zijn & M \\
 Wasprogramma's & Er moeten standaard 3 wasprogramma's aanwezig zijn: Witte was, Fijne was en Bonte was & M \\
 Inhoud wasprogramma's & Wasprogramma's bevatten de volgende gegevens: Duur, Temperatuur, Voorkeurstemperatuur en Centrifugesnelheid & M \\
 Updaten wasprogramma's & Het updaten van de lijst van wasprogramma's moet automatisch gaan & M \\
