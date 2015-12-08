@@ -1,0 +1,12 @@
+{
+	"options":{
+		"root": "ReqArch.tex",
+		"pdf": "Requirements Architecture.pdf"
+	},
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
+}
