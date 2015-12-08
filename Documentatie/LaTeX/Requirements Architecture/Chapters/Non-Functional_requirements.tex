@@ -1,1 +1,14 @@
 \chapter{Non-Functional Requirements}
+\begin{center}
+\begin{tabular}{ | p{3cm} | p{2.5cm} | p{2.5cm} | p{2cm} | p{3cm} | }
+\hline
+\textbf{Constrainttype} & \textbf{Identificatie} & \textbf{Beschrijving} & \textbf{Eis} & \textbf{Verificatie} \\
+\hline
+Performance & Reactietijd & De tijd die verstrijkt tussen het geven van een commando in de browser en het versturen van een commando naar de wasmachine-emulator. & Tijd maximaal 2s & Verifieren door een actie uit te voeren in de browser en tegelijkertijd een logic analyzer starten om de UART af te luisteren. \\ \hline
+
+Robustness & Stroomuitval & Het systeem moet kunnen herstellen van stroomuitval tijdens het uitvoeren van het wasprogramma. & Als stroom weer beschikbaar is moet het programma hervat worden vanaf het punt waar de stroom uitviel. & Stroom uitschakelen en weer inschakelen. Het systeem moet verder gaan op het punt waar de stroom uitviel. \\ \hline
+
+Resoure Use & RAM Gebruik & De hoeveelheid RAM die de applicatie gebruikt & Maximaal 300MB & htop gebruiken om het systeem te monitoren tijdens het draaien van de testprogramma's \\ \hline
+\end{tabular}
+
+\end{center}
