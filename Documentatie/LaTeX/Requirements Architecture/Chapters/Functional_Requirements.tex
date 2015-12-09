@@ -15,80 +15,36 @@ Wanneer er wordt gerefereerd naar een "gebruiker" dan wordt hiermee de klant bed
 Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en beheert.
 \newpage
 \section{Use Case Beschrijvingen}
-\subsection{Kiezen Wasprogramma}
+
+\subsection{Systeem configureren}
 \begin{center}
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het kiezen van een wasprogramma om deze te starten. \\ \hline
+    Doel & Het aanpassen van de instellingen voor pincode en gedrag systeemuitval. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
-    Post-condities & De wasmachine is gestopt met wassen en het water is weg gepompt. \\ \hline
-    Uitzonderingen & De gebruiker klikt op de knop "Stop". Hierdoor wordt de huidige wastaak stopgezet. De wasmachine pompt het water weg. \\
+    Post-condities & De aangepaste instellingen zijn opgeslagen. \\ \hline
+    Uitzonderingen & \\
     \hline
   \end{tabular}
 \end{center}
 
-\subsection{Temperatuur instellen}
+\subsection{De was doen}
 \begin{center}
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het aanpassen van de temperatuur van het huidige wasprogramma. \\ \hline
-    Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode en heeft een wasprogramma gekozen. \\ \hline
-    Post-condities & De wasmachine is een wastaak begonnen met de aangegeven temperatuur. \\ \hline
-    Uitzonderingen &  \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsection{Opties stroomuitval aanpassen}
-\begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het aanpassen van de instellingen voor het beveiligen tegen stroomuitval. \\ \hline
-    Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode. \\ \hline
-    Post-condities & De instelling voor het beveiligen tegen stroomuitval zijn opgeslagen. \\ \hline
-    Uitzonderingen &  \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsection{Accepteren update}
-\begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het accepteren van een nieuw wasprogramma door middel van een automatische update. \\ \hline
-    Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode. \\ \hline
-    Post-condities & Een nieuw wasprogramma is toegevoegd aan de lijst van wasprogramma's. \\ \hline
-    Uitzonderingen &  \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsection{Inplannen wastaak}
-\begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het automatisch laten uitvoeren van een wastaak nadat een bepaalde tijd verstreken is. \\ \hline
-    Pre-condities & De gebruiker is ingelogd op de webinterface door middel van een pincode. \\ \hline
-    Post-condities & De wasmachine is na een aangegeven periode begonnen met het uitvoeren van de aangegeven wastaak. \\ \hline
-    Uitzonderingen &  \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsection{Kiezen pincode}
-\begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    \hline
-    Doel & De gebruiker een pincode laten kiezen voor het inloggen op de webinterface. \\ \hline
-    Pre-condities & Geen pre-conditie. \\ \hline
-    Post-condities & De pincode is ingesteld als login pin voor de webinterface. \\ \hline
-    Uitzonderingen &  \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsection{Aanpassen pincode}
-\begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & De gebruiker de huidige pincode laten aanpassen. \\ \hline
+    Doel & Het systeem een wastaak laten uitvoeren door een wasprogramma te kiezen. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
-    Post-condities & De huidige pincode is vervangen door de nieuwe pincode als login. \\ \hline
-	Uitzonderingen &  \\
+    Post-condities & De wasmachine is een wastaak aan het uitvoeren. \\ \hline
+    Uitzonderingen & \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Software updaten}
+\begin{center}
+  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
+    Doel & Het systeem een wastaak laten uitvoeren. \\ \hline
+    Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
+    Post-condities & De wasmachine is een wastaak aan het uitvoeren. \\ \hline
+    Uitzonderingen & \\
     \hline
   \end{tabular}
 \end{center}
