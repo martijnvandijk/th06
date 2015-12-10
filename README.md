@@ -1,0 +1,2 @@
+#TH06 - Wasmachine project | Team 12
+In deze git repository staan zowel de documentatie als de source code van de applicatie. De documentatie is geschreven in LaTeX. In de map `Documentatie` bevindt zich een map `Source` en een map `PDF`. De map `Source` bevat de LaTeX bronbestanden, de map `PDF` bevat de gecompileerde documenten.
