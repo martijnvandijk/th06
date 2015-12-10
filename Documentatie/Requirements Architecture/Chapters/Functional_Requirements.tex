@@ -1,17 +1,18 @@
 \chapter{Functional Requirements}
-\section{Useage Model}
-\scalebox{1}{
-	
-\includegraphics{usage1.png}
-}
-\newpage
-	
-
 \section{Inleiding}
 In dit hoofdstuk zullen de use-cases worden beschreven.
 Wanneer er wordt gerefereerd naar een "gebruiker" dan wordt hiermee de klant bedoelt die de wasmachine gekocht heeft en deze gebruikt om de was mee te doen.
 Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en beheert.
 \newpage
+\section{Useage Model}
+\scalebox{1}{
+  
+\includegraphics{usage1.png}
+}
+\newpage
+  
+
+
 \section{Use Case Beschrijvingen}
 
 \subsection{Systeem configureren}
@@ -47,7 +48,20 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
   \end{tabular}
 \end{center}
 
+\subsection{Inloggen}
+\begin{center}
+  \begin{tabular}{ | p{4cm} | p{8.5cm} | } \hline
+  Doel & Vaststellen dat degene die probeert in te loggen op de webinterface daadwerkelijk de wasmachine mag bedienen. \\ \hline
+  Pre-condities & Er is een webinterface-sessie gestart.\\ \hline
+  Post-condities & De gebruiker is geauthenticeerd. \\ \hline
+  \end{tabular}
+\end{center}
+
+\begin{landscape}
+\thispagestyle{empty}
+\clearpage
 \section{Activity Diagrams}
-\scalebox{0.6}{
+\scalebox{0.55}{
 \includegraphics{Activitydiagram1.png}
 }
+\end{landscape}
