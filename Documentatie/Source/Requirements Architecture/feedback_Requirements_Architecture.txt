@@ -1,0 +1,82 @@
+schrijfsteil 'usecases zullen worden beschreven'
+
+tegenwoordige tijd
+minder lege ruimte op pagina's
+
+(twee dingen over notities: stop het in een note dingetje, volgens uml)
+
+wat heeft de opdrachtgever gezegd dat er speciaal is aan deze wasmachine
+wat is de relatie tussen moscow en RA
+	-moscow is wat je wil dat je systeem kan kunnen
+	-er is een goede manier en we kunnen ook dit doen maar het is niet nodig (should have)
+	je kan verschillende documenten maken per must/should/would/won't
+	constraints kunnen ook zo in gedeeld worden
+	meer nadenken over de indeling van moscow tot relatie op het RA
+	moscow en RA moeten aansluiten
+		om makkelijk aansluiten alles in de hoofdvraag
+		als je op functionele aua moscow gaat doen dan wordt dat wel makkelijk
+	je moet zo kunnen zien deze must have is 1.2 of 1.3
+		of je zet het in de hoofdtext (dit vind martin mischien niet leuk)
+	hij zet de must/should/would... altijd bij de beschrijving
+is de stroom een actor?
+	bij stroomuitval komt de wasmachine weer op
+	is het een secundaire actor?
+	'hervatten na storing' kan een use case zijn.
+	over use cases die geen primaire actor lijken te hebben
+		klok
+	'hervatten wasprogramma (na storing)' is een goede use case
+voldoen alle use cases aan de drie eisen?
+	'inloggen' is door de gebruiker, kan beter 'authenticeren' heten
+	niet 'systeem configureren', maar een andere naam vanuit het systeem
+wat heeft ieder use case diagram?
+	systeemgrens
+	primary actor beheerder
+	zorg dat het consistent is
+is 'loggen' een use case?
+	het kan bij de was doen
+		bij de was doen hoort dat je dingen logt
+	monteur moet logs kunnen uitlezen
+	wat wil ik gelogd hebben?
+		hoe veel logbestanden?
+	'logboek tonen'
+		een losse actor?
+hoe worden de logs in het bestand gezet
+	eeprom
+		emuleer het gewoon door een bestand
+doel voor aanpassen van pincode is iets wat uit google translate gehaald zou kunnen worden
+doel 'de was doen'
+	gewoon 'kleren schoonmaken'
+	dingen selecteren is niet het doel
+doel 'systeem updaten'
+	doel en beschrijving komen niet overeen
+	de complete code updaten, of alleen de wasprogramma's
+	door json?
+		het is wel veel bytes verspild
+		doe alsof je op een microcontroller werkt
+		binair bestand gebaseerd op structs kan goed werken
+			dump het gewoon in het geheugen
+inloggen stopt alleen als de gebruiker de browser sluit
+
+activity diagram onder de use case; use case beschrijving en activity diagram bij elkaar
+
+mischien kan inleiding gewoon onder hoofdstuk 1
+
+secties in een hoofdstuk ongeveer even groot
+
+activity diagrammen zijn te groot (letterlijk)
+	doe iets met de scalebox
+
+de was doen
+	'display the list of options'
+	signal moet een signaal zijn wat ergens vandaan komt
+
+systeem updaten moet een if worden, zonder event
+
+zet gewoon centraal een file voor de update neer.
+	heel systeem updaten hoeft niet
+
+constraints zijn alleen constraints als we er ook invloed op hebben
+
+reactietijd meten door gewoon een camera
+
+
