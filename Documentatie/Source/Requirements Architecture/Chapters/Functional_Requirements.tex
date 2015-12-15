@@ -18,7 +18,7 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
 \subsection{Systeem configureren}
 \begin{center}
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het aanpassen van de instellingen voor pincode en gedrag systeemuitval. \\ \hline
+    Doel & Het aanpassen van de pincode of veranderen wat er gebeurt na het uitvallen van de wasmachine. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
     Post-condities & De aangepaste instellingen zijn opgeslagen. \\ \hline
     Uitzonderingen & \\
@@ -29,7 +29,7 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
 \subsection{De was doen}
 \begin{center}
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het systeem een wastaak laten uitvoeren door een wasprogramma en temperatuur te kiezen. \\ \hline
+    Doel & Zorgen dat de was gewassen wordt. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
     Post-condities & De wasmachine is een wastaak aan het uitvoeren. \\ \hline
     Uitzonderingen & \\
@@ -37,23 +37,46 @@ Een "beheerder" is iemand die werkt voor het bedrijf die wasmachine's levert en 
   \end{tabular}
 \end{center}
 
+\subsection{Authenticeren}
+\begin{center}
+  \begin{tabular}{ | p{4cm} | p{8.5cm} | } \hline
+  Doel & Vaststellen dat degene die probeert toegang te krijgen tot de webinterface daadwerkelijk bevoegd is om de wasmachine te bedienen. \\ \hline
+  Pre-condities & Er is een webinterface-sessie gestart.\\ \hline
+  Post-condities & De gebruiker is geauthenticeerd. \\ \hline
+  Uitzonderingen & De gebruiker sluit de browser. De wasmachine gaat verder met taken indien deze voor het sluiten waren doorgegeven. \\
+  \end{tabular}
+\end{center}
+
 \subsection{Software updaten}
 \begin{center}
   \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
-    Doel & Het toevoegen van een nieuw wasprogramma door middel van een automatische update. \\ \hline
+    Doel & Het ontvangen van een update door deze te accepteren. \\ \hline
     Pre-condities & De gebruiker is ingelogd op de webinterface. \\ \hline
     Post-condities & Een nieuw wasprogramma is toegevoegd aan de lijst van wasprogramma's. \\ \hline
-    Uitzonderingen & \\
+    Uitzonderingen &  \\
     \hline
   \end{tabular}
 \end{center}
 
-\subsection{Inloggen}
+\subsection{Log inzien}
 \begin{center}
-  \begin{tabular}{ | p{4cm} | p{8.5cm} | } \hline
-  Doel & Vaststellen dat degene die probeert in te loggen op de webinterface daadwerkelijk de wasmachine mag bedienen. \\ \hline
-  Pre-condities & Er is een webinterface-sessie gestart.\\ \hline
-  Post-condities & De gebruiker is geauthenticeerd. \\ \hline
+  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
+    Doel & Het lezen van het logbestand om informatie te kunnen achterhalen over het systeem. \\ \hline
+    Pre-condities & \\ \hline
+    Post-condities & \\ \hline
+    Uitzonderingen &  \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Hervatten wasprogramma}
+\begin{center}
+  \begin{tabular}{ | p{4cm} | p{8.5cm} | }    \hline
+    Doel & Het hervatten van het huidige wasprogramma na een stroomstoring. \\ \hline
+    Pre-condities & Er is een stroomstoring geweest waardoor het systeem tijdelijk niet in staat was om het wasprogramma uit te voeren. \\ \hline
+    Post-condities & Het systeem is bezit met het uitvoeren van het wasprogramma vanaf het laatst bereikte punt. \\ \hline
+    Uitzonderingen & De gebruiker heeft bij de instellingen aangegeven niet het programma te willen hervatten na een storing maar dat deze moet worden stopgezet. Het systeem pompt het water weg en ontgrendelt de deur. \\
+    \hline
   \end{tabular}
 \end{center}
 
