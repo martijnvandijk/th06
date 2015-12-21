@@ -1,0 +1,11 @@
+Feedback globale SA
+
+Extra gedrag naast aan en uit zetten hoort in een controle object.
+Er mogen meer controllers dan use-cases zijn (voor die extra functionaliteit). Als er iets procedureels moet gebeuren wat geen boundary object is dan wordt het bijna altijd een controller.
+Externe database (of bestand) is meestal utility. Boundary is minst slechte alternatief als het een externe database is.
+Packages toepassen voor wanneer dingen bij elkaar horen.
+
+Feedback onze SA
+Boundary objecten kunnen in een superklasse. En die moeten ook een relatie hebben met een listener om een bericht te kunnen sturen.
+Wasprogramma mist :^)
+Waardes van toerental en temperatuur missen in diagram.
