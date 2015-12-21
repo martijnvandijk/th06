@@ -1,0 +1,29 @@
+\documentclass[dutch]{hu}
+\usepackage{apa}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage{makeidx}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\date{18 december 2015}
+% \addbibresource{literatuur.bib}
+\makeindex
+\input{../project.tex}
+\subtitle{Requirements Architecture}
+\begin{document}
+
+\maketitle
+
+\tableofcontents{}
+
+\input{Chapters/Class_Model.tex}
+
+\input{Chapters/Dynamic_Model.tex}
+
+\input{Chapters/Concurrency_Model.tex}
+
+\printbibliography
+
+\end{document}
