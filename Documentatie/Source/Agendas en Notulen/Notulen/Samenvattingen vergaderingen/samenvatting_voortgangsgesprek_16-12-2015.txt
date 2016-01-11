@@ -1,0 +1,16 @@
+RTOS-library moet in het klassendiagram een verwijzing voor komen (hoeft niet de hele RTOS-library) (RTOS::Task gaan de andere taken van erfen) - Marten.
+"De uart library is een klasse". De pijlen "use" kloppen niet helemaal. Lib-serials een klasse -> word één object. Hoeft niet per sé een aggregatie te hebben. - Marten.
+Dit houdt in dat in alle boundary klasse code zal moeten worden geprogrammeerd die hetzelfde doet. - Marten.
+Overerfing -> i.p.v. aggregatie of compositie. - Marten.
+Een abstracte klasse die mogelijk "boundary" heet. - Marten.
+WashingController implementeert het interface "SensorListener". - Marten. De sensoren moeten de sensorlistener kennen maar niet de WashingController.
+Tussen de sensorhandler en de 2 boundary klassen moet nog een interface.
+WebSocketHandler is een task. Hoe wordt die op de hoogte gesteld van veranderingen in de temperatuur?
+Boundary object voor het vragen van de toestand van de wasmachine mist. (Zie slide 8 van week 3). "StatusSensor".
+^- moet gemonitord worden om info te sturen naar het aansturings onderdeel en de user-interface.
+Er moet worden aangegeven hoe de wasprogrammas worden uitgevoerd (klasse wasprogramma).
+Hoe ziet het wasprogramma object er uit?
+Klasse wasprogramma met daarin wasinstructies (2 klassen).
+Wasinstructies zijn taken die worden uitgevoerd door de hardware.
+Een wasinstructie bepaald hoe de hardware moet worden ingesteld.
+(Entity relationship diagram).
