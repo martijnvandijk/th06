@@ -1,4 +1,1 @@
-PyOpenSSL
-
-[subjectAltName_support]
-pyasn1
+/usr/share/pyshared/ndg_httpsclient-0.3.2.egg-info/requires.txt

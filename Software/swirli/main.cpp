@@ -1,6 +1,6 @@
 #include <iostream>
-#include "libs/libserial.h"
-#include "libs/Protocol.h"
+#include "libserial.h"
+#include "Protocol.h"
 using namespace std;
 
 int main() {

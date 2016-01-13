@@ -1,0 +1,74 @@
+@startuml
+skinparam classAttributeIconSize 0
+left to right direction
+
+class WashingController<<controller>>
+interface Observable<<Interface>> {
+    +subscribe()
+    +poll()
+}
+class WashingProgram<<Object>>
+abstract class WashingInstruction<<Object>>
+interface SensorListener<<Interface>> {
+    +update(observable,data)
+}
+class SensorHandler<<thread>>
+class TemperatureSensor<<boundary>>
+class WaterlevelSensor<<boundary>>
+
+class SettingsController<<control>>
+class LogController<<control>>
+class LogFile<<boundary>>
+
+class UpdateController<<control>>
+class WebSocketHandler<<thread>>
+
+class LED<<boundary>>
+
+abstract class uart<<library>>
+class Watervalve<<boundary>>
+class Motor<<boundary>>
+class Heating<<boundary>>
+class SoapDispenser<<boundary>>
+class Pump<<boundary>>
+class Door<<boundary>>
+
+
+SensorListener <|. WashingController : Implements
+
+SensorListener <--o "1" TemperatureSensor
+	TemperatureSensor ..|> Observable : Implements
+	SensorListener <--o "1" WaterlevelSensor
+WaterlevelSensor ..|> Observable : Implements
+	Observable <--o "0..*" SensorHandler
+
+WashingController "1" o--> SettingsController
+WashingController "1" o--> LogController
+	LogController *--> LogFile
+WashingController "1" o--> "1" UpdateController
+WashingController <--o "1" WebSocketHandler
+
+
+WashingController "1" o-> WashingProgram
+	WashingProgram "0..*" o-> WashingInstruction
+LED <-o WashingController
+
+
+Watervalve <--o "1" WashingController
+Motor <--o "1" WashingController
+Heating <--o "1" WashingController
+SoapDispenser <--o "1" WashingController
+Pump <--o "1" WashingController
+Door <--o "1" WashingController
+
+uart <.. TemperatureSensor : use
+uart <.. WaterlevelSensor : use
+
+uart <.. Watervalve : use
+uart <.. Motor : use
+uart <.. Heating : use
+uart <.. SoapDispenser : use
+uart <.. Pump : use
+uart <.. Door : use
+
+@enduml

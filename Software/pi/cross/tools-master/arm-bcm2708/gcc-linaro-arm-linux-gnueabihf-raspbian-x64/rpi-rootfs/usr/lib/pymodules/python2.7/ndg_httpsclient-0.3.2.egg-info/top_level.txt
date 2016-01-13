@@ -1,1 +1,1 @@
-ndg
+/usr/share/pyshared/ndg_httpsclient-0.3.2.egg-info/top_level.txt

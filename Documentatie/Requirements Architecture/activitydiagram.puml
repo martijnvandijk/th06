@@ -1,0 +1,104 @@
+@startuml
+title De was doen
+
+start
+partition "De was doen" {
+
+:User selects
+washing program
+from list<
+
+:Selected washing
+program is stored;
+
+:User selects temperature for
+the selected washing
+program from a list of
+allowed temperatures<
+
+:Selected
+temperature is
+stored;
+
+:Start button
+pressed<
+
+:The washing machine executes
+the selected program with the
+selected temperature;
+stop
+
+:Stop button pressed<
+}
+
+:Stops whatever the washing machine is doing;
+if (Is there water in the machine?) then (Yes)
+	:Pump out the water;
+else (No)
+endif
+stop
+@enduml
+
+@startuml
+start
+repeat
+	split
+		:Close
+		settings is
+		selected<
+		stop
+	split again
+		:Change
+		pincode
+		selected<
+		:New pincode
+		entered<
+		:New pincode is
+		saved;
+	split again
+		:Change power
+		failure settings
+		selected<
+		:New power
+		settings
+		entered<
+		:New power
+		settings saved;
+	end split
+repeat while
+@enduml
+
+@startuml
+start
+if (New update detected) then
+	:Pop-up comes up
+	showing the user
+	that a new update
+	is available;
+	if (Accept the update?) then
+		:Update the
+		washingmachine;
+	else (No)
+	endif
+else (Else)
+endif
+stop
+@enduml
+
+@startuml
+start
+if (Pincode ingesteld) then (Ja)
+	:Voer pincode in;
+else (Nee)
+endif
+
+repeat
+:Voer niewe
+pincode in;
+:Voer niewe
+pincode nogmaals in;
+repeat while (Twee pincodes verschillen?) -> Ja
+-> Nee;
+stop
+@enduml
+
