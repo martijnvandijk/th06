@@ -1,0 +1,4 @@
+#ifndef WASHINGMACHINE_MOTOR_H
+#define WASHINGMACHINE_MOTOR_H
+
+#endif

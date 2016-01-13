@@ -1,0 +1,4 @@
+#ifndef WASHINGMACHINE_DOOR_H
+#define WASHINGMACHINE_DOOR_H
+
+#endif

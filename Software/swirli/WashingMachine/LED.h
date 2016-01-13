@@ -1,0 +1,4 @@
+#ifndef WASHINGMACHINE_LED_H
+#define WASHINGMACHINE_LED_H
+
+#endif

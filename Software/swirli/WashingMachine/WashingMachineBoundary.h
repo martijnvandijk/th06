@@ -1,0 +1,8 @@
+#ifndef WASHINGMACHINE_WASHINGMACHINEBOUNDARY_H
+#define WASHINGMACHINE_WASHINGMACHINEBOUNDARY_H
+
+class WashingMachineBoundary{
+
+};
+
+#endif
