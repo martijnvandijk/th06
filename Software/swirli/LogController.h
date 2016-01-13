@@ -1,0 +1,4 @@
+#ifndef SWIRLI_LOGCONTROLLER_H
+#define SWIRLI_LOGCONTROLLER_H
+
+#endif

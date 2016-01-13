@@ -1,0 +1,4 @@
+#ifndef SWIRLI_WASHINGPROGRAM_H
+#define SWIRLI_WASHINGPROGRAM_H
+
+#endif
