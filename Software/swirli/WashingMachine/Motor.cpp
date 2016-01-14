@@ -4,7 +4,7 @@
 #include "../libs/Protocol.h"
 
 WashingMachine::Motor::Motor(LibSerial &serial) :
-    serialConnection{serial}{
+    serialConnection(serial){
 
 }
 
