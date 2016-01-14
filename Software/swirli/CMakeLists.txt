@@ -15,4 +15,4 @@ add_executable(swirli main.cpp ${SOURCE_FILES})
 target_link_libraries(swirli pthread rt)
 
 add_executable(swirli_testing test_main.cpp ${SOURCE_FILES})
-target_link_libraries(swirli_testing gtest pthread)
+target_link_libraries(swirli_testing gtest pthread rt)
