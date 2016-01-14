@@ -38,4 +38,5 @@ add_executable(swirli ${WashingMachineSourceFiles} ${MainSourceFiles} ${RTOS_Sou
 target_link_libraries(swirli pthread rt)
 
 add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
+
 target_link_libraries(swirli_testing gtest pthread rt)

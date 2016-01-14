@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "--std=c++11")
-
-
 IF (CMAKE_BUILD_TYPE MATCHES "Release")
 	set(target tools-master/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64)
-	include(pi/cross/${target}/CMakeLists.txt)
-ENDIF()
+	set(include_target ${CMAKE_CURRENT_LIST_DIR}/pi/cross/${target}/CMakeLists.txt)
+	include(${include_target})
+ENDIF(CMAKE_BUILD_TYPE MATCHES "Release")
 
 add_subdirectory(swirli)
