@@ -3,7 +3,7 @@
 namespace WashingMachine{
 
     Door::Door(LibSerial &serial):
-        serialConnection{serial}
+        serialConnection(serial)
     {
     }
 
