@@ -1,8 +1,9 @@
 #include <iostream>
-#include "libs/libserial.h"
-#include "libs/Protocol.h"
+
 #include "WashingMachine/Motor.h"
 
+#include "libserial.h"
+#include "Protocol.h"
 using namespace std;
 
 int main() {
@@ -48,6 +49,7 @@ int main() {
     std::cin.ignore();
     motor.setRPM(-100);
     std::cin.ignore();
+    motor.setRPM(0);
     serial.close();
 
     return 0;

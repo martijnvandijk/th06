@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+actor Gebruiker<<primary>>
+actor Beheerder<<primary>>
+actor Stroomtoevoer<<secondary>>
+
+rectangle {
+	Gebruiker --> (Systeem configureren)
+	note right of (Systeem configureren)
+		Hierin zit Pincode instellen, opties stroomuitval aanpassen
+	end note
+
+	Gebruiker --> (De was doen)
+	note right of (De was doen)
+		Hierin zit kiezen wasprogramma
+		temperatuur instellen,
+		inplannen wastaak
+		starten
+	end note
+
+	Gebruiker --> (Software updaten)
+	note right of (Software updaten) : Wasmachine updaten
+
+	(Inloggen)
+	(De was doen) ..> (Inloggen)
+	(Systeem configureren) ..> (Inloggen)
+	Beheerder --> (De logs bekijken)
+
+	(Wasprogramma hervatten) <-- Stroomtoevoer
+	(De logs bekijken) <.. (Wasprogramma hervatten)
+}
+@enduml

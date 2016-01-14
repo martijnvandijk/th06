@@ -1,0 +1,89 @@
+@startuml
+state "Begin Authenticatie" as begin
+[*] --> begin : /
+begin: entry / show_input()
+begin: entry / tries = 0
+
+state "Input pincode" as input
+begin --> input : /
+input: entry / input = input_pincode()
+
+state "Check Pincode" as check
+input --> check : accept_pincode /
+check: entry / tries++
+check: entry / show_tries_left(tries)
+check: entry / valid = (input == get_current_pin())
+
+check --> input : [else] /
+
+state "Login timeout" as timeout
+check --> timeout : [valid == false && tries > max_tries] /
+timeout: entry / start_timeout_timer()
+timeout --> input : [timeout passed]/tries = 0
+
+check --> Login : [valid == true] /
+Login: entry / do_login()
+
+Login --> [*] : /
+@enduml
+
+@startuml
+state "Show settings" as start
+start: entry / show_settings_panel()
+[*] --> start : /
+
+state "Exit settings" as exit
+exit: entry / close_settings_panel()
+start --> exit : [exit settings selected] /
+exit --> [*] : /
+
+state "Change power failure settiings" as power
+power: entry / input = get_power_settings_input()
+start --> power : [change power settings selected] /
+power --> start : [cancel selected] /
+
+state "Store power failure settings" as store_power
+store_power: entry / store_power_settings(input)
+power --> store_power : [settings input] /
+store_power --> start : /
+
+state "Change pincode" as pin
+pin: entry / input = input_pincodes()
+start --> pin : [change pincode selected] /
+pin --> start : [cancel selected] /
+
+state "Check pincode" as check_pin
+check_pin: entry / valid = (input == get_current_pin())
+check_pin: entry / valid = valid && input[newpin1] == input[newpin2]
+pin --> check_pin : [pincodes input] /
+check_pin --> pin : [else] /
+
+state "Input new pincode" as input_newpin
+input_newpin: entry / store_new_pincode(input[newpin1])
+check_pin --> input_newpin : [valid == true] /
+input_newpin --> start : /
+@enduml
+
+@startuml
+
+state "Start Logging" as start
+start: entry / file = open(path)
+start: entry / stop_logging = false
+
+state "Receive Log Message" as log_recv
+log_recv: entry / input = receive_log_message()
+
+state "Write Log Message" as log_write
+log_write: entry / file.write_log(input)
+
+state "Stop Logging" as stop
+stop: entry / close(file)
+
+[*] --> start : /
+start --> log_recv : /
+log_recv --> log_write : [message received] /
+log_write --> log_recv : /
+log_recv --> stop : [stop_logging == true] /
+stop --> [*] : /
+
+@enduml

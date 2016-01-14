@@ -3,6 +3,9 @@ project(swirli)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+add_subdirectory(libs/googletest-master)
+include_directories(${GTEST_INCLUDE_DIRS} libs)
+
 set(WashingMachineSourceFiles
         WashingMachine/Door.cpp WashingMachine/Door.h
         WashingMachine/HeatingUnit.cpp WashingMachine/HeatingUnit.h
@@ -16,18 +19,23 @@ set(WashingMachineSourceFiles
         WashingMachine/TemperatureSensor.cpp WashingMachine/TemperatureSensor.h
         WashingMachine/WashingMachineBoundary.h
         WashingMachine/WaterLevelSensor.cpp WashingMachine/WaterLevelSensor.h
-        WashingMachine/WaterValve.cpp WashingMachine/WaterValve.h
+		WashingMachine/WaterValve.cpp WashingMachine/WaterValve.h
 #        libs/Protocol.h
-        )
+)
 
 set(RTOS_SourceFiles
-        libs/pRTOS.cpp libs/pRTOS.h
-        libs/libfiber.cpp libs/libfiber.h
-        libs/libserial.cpp libs/libserial.h
-        )
+	libs/pRTOS.cpp libs/pRTOS.h
+	libs/libfiber.cpp libs/libfiber.h
+	libs/libserial.cpp libs/libserial.h
+)
+
 
 set(MainSourceFiles
-        main.cpp
-        )
+	main.cpp
+)
 
-add_executable(swirli ${SOURCE_FILES} ${WashingMachineSourceFiles} ${MainSourceFiles} ${RTOS_SourceFiles})
+add_executable(swirli ${WashingMachineSourceFiles} ${MainSourceFiles} ${RTOS_SourceFiles})
+target_link_libraries(swirli pthread rt)
+
+add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
+target_link_libraries(swirli_testing gtest pthread rt)
