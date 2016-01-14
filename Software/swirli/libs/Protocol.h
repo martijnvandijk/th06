@@ -18,7 +18,7 @@
 #define GET_RPM_REQ           (uint8_t) 0x09
 #define SET_RPM_REQ           (uint8_t) 0x0A
 #define SIGNAL_LED_REQ        (uint8_t) 0x0B
-
+#define REPLY_BIT             (uint8_t) 0x80
 // Command IDs
 #define STATUS_CMD            (uint8_t) 0x01
 

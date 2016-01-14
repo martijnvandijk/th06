@@ -1,10 +1,16 @@
 #ifndef WASHINGMACHINE_OBSERVABLE_H
 #define WASHINGMACHINE_OBSERVABLE_H
 #include <vector>
+#include "SensorListener.h"
 
-class Observable{
-    Public:
-        virtual void subscribe();
-        virtual void poll();
-};
+namespace WashingMachine{
+    class Observable{
+    public:
+        void subscribe(SensorListener* listener);
+        virtual void poll() = 0;
+
+    private:
+        std::vector<SensorListener*> listeners;
+    };
+}
 #endif

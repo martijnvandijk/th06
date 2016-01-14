@@ -1,6 +1,8 @@
 #include <iostream>
 #include "libs/libserial.h"
 #include "libs/Protocol.h"
+#include "WashingMachine/Motor.h"
+
 using namespace std;
 
 int main() {
@@ -25,10 +27,10 @@ int main() {
     commandTurn[1]=0x00;
 
     serial.write(commandStart,2);
-
-    serial.write(commandOn,2);
-    std::cin.ignore();
-    serial.write(commandOff,2);
+/*
+//    serial.write(commandOn,2);
+//    std::cin.ignore();
+//    serial.write(commandOff,2);
 
     while(true){
         serial.write(commandTurn,2);
@@ -37,5 +39,16 @@ int main() {
     }
 
     serial.close();
+     */
+
+    WashingMachine::Motor motor(serial);
+    motor.setRPM(100);
+    std::cin.ignore();
+    motor.setRPM(0);
+    std::cin.ignore();
+    motor.setRPM(-100);
+    std::cin.ignore();
+    serial.close();
+
     return 0;
 }
