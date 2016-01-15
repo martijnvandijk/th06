@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 message(STATUS "Build type is \"${CMAKE_BUILD_TYPE}\" \"$ENV{CMAKE_BUILD_TYPE}\"")
 
-if (($ENV{CMAKE_BUILD_TYPE} STREQUAL "Release") OR (CMAKE_BUILD_TYPE STREQUAL "Release") OR (CMAKE_BUILD_TYPE STREQUAL ""))
+if ((NOT ($ENV{CMAKE_BUILD_TYPE} STREQUAL "Debug")) AND (NOT (CMAKE_BUILD_TYPE STREQUAL "Debug")))
 	message(STATUS "Building Release build")
 	set(target tools-master/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64)
 	set(include_target ${CMAKE_CURRENT_LIST_DIR}/pi/cross/${target}/CMakeLists.txt)

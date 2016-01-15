@@ -11,7 +11,7 @@ using namespace std;
 class UARTTest : public WashingMachine::UARTUser{
 public:
     UARTTest(WashingMachine::Motor &motor):
-        motor{motor},
+        motor(motor),
         WashingMachine::UARTUser{98}{
 
     }

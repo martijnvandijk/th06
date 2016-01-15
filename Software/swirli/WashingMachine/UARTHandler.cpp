@@ -7,7 +7,7 @@
 #include "Protocol.h"
 namespace WashingMachine {
     UARTHandler::UARTHandler(LibSerial &serial) :
-            serialConnection{serial},
+            serialConnection(serial),
             InputBuffer(this),
             OutputBuffer(),
             inputQueueCounter{0}
