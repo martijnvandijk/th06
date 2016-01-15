@@ -11,11 +11,12 @@ namespace WashingMachine{
         Door(LibSerial &serial);
 
         door_states_t getDoorState();
-        bool set_lock();
-        bool toggle_lock();
+        void set_lock(bool status);
+        void toggle_lock();
 
     private:
-        LibSerial &serialConnection;
+        UARTHandler &uart;
+
 
     };
 }
