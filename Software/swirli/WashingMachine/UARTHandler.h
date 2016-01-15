@@ -22,7 +22,7 @@ namespace WashingMachine{
     class UARTHandler : public RTOS::task{
     public:
         UARTHandler(LibSerial &serial);
-        uint8_t sendMessage(UARTMessage m);
+        void sendMessage(UARTMessage m);
     private:
         LibSerial &serialConnection;
         RTOS::channel<UARTMessage, 64> InputBuffer;

@@ -13,7 +13,7 @@ namespace WashingMachine {
             inputQueueCounter{0}
             {}
 
-    uint8_t UARTHandler::sendMessage(UARTMessage m) {
+    void UARTHandler::sendMessage(UARTMessage m) {
         InputBuffer.write(m);
         inputQueueCounter++;
         m.sender->suspend();
