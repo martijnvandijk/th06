@@ -9,7 +9,7 @@ include_directories(${GTEST_INCLUDE_DIRS} libs)
 set(WashingMachineSourceFiles
 		WashingMachine/Door.cpp WashingMachine/Door.h
 		WashingMachine/HeatingUnit.cpp WashingMachine/HeatingUnit.h
-		WashingMachine/LED.cpp WashingMachine/LED.h
+		WashingMachine/SignalLed.cpp WashingMachine/SignalLed.h
 		WashingMachine/Motor.cpp WashingMachine/Motor.h
 		WashingMachine/Observable.cpp WashingMachine/Observable.h
 		WashingMachine/Pump.cpp WashingMachine/Pump.h

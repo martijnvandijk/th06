@@ -7,7 +7,12 @@ namespace WashingMachine{
     class SignalLed{
     public:
         SignalLed(UARTHandler &uart);
-        bool getStatus();
+        bool getStatus(UARTUser *referenceUser);
+        void toggle(UARTUser *referenceUser);
+        void enable(UARTUser *referenceUser);
+        void disable(UARTUser *referenceUser);
+    private:
+        UARTHandler &uart;
     };
 }
 #endif
