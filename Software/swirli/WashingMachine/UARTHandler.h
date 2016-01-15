@@ -15,6 +15,7 @@ namespace WashingMachine{
     typedef struct{
         uint8_t requestByte;
         uint8_t commandByte;
+        bool hasCommandByte = true;
         UARTUser *sender;
     } UARTMessage;
 

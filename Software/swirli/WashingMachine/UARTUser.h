@@ -14,12 +14,19 @@ namespace WashingMachine {
         UARTUser(unsigned int priority):
         RTOS::task{priority}{}
 
-        virtual void receiveReply(uint8_t replyByte) = 0;
+        void receiveReply(uint8_t replyByte){
+            replyPool.write(replyByte);
+        };
+        uint8_t getReplyPoolContents(){
+            return replyPool.read();
+
+        };
 
     protected:
         RTOS::pool<uint8_t> replyPool;
         virtual void main() = 0;
     };
+
 
 }
 
