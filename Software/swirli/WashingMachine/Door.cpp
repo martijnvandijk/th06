@@ -4,7 +4,7 @@
 namespace WashingMachine{
 
     Door::Door(UARTHandler &uart):
-        UARTHandler(uart){
+    uart{uart}{
     }
 
     door_states_t Door::getDoorState(UARTUser *referenceUser) {
@@ -14,9 +14,9 @@ namespace WashingMachine{
         command.sender = referenceUser;
         command.requestByte = DOOR_LOCK_REQ;
         command.commandByte = STATUS_CMD;
-        uart.sendMessage(command)
+        uart.sendMessage(command);
 
-        //ADD RECEIVE REPLY HERE TO GET DOOR STATUS
+        /*ADD RECEIVE REPLY HERE TO GET DOOR STATUS
         if(*readBuf[0] == ( REPLY_BIT | DOOR_LOCK_REQ)){
             switch(*readBuf[1]){
                 case LOCKED:
@@ -29,27 +29,28 @@ namespace WashingMachine{
                     return DOOR_OPENED;
                     break;
             }
-        }
+        }*/
     }
 
     void Door::set_lock(bool status, UARTUser *referenceUser) {
-       UARTMessage command;
-       command.senser = referenceuser;
-       command.requestByte = DOOR_LOCK_REQ;
-       if(status){
-        command.commandByte = LOCK_CMD;
-       }
-       else{
-        command.commandByte = UNLOCK_CMD;
-       }
-       uart.sendMessage(command);
+        UARTMessage command;
+        command.sender = referenceUser;
+        command.requestByte = DOOR_LOCK_REQ;           
+        if(status){
+            command.commandByte = LOCK_CMD;
+        }
+        else{
+            command.commandByte = UNLOCK_CMD;
+        }
+        uart.sendMessage(command);
     }
 
-    bool Door::toggle_lock(UARTUser *referenceUser) {
+    void Door::toggle_lock(UARTUser *referenceUser) {
         if(getDoorState(referenceUser) == DOOR_LOCKED){
             set_lock(false, referenceUser);
         }
-        else if (getDoorState(referenceUser) == DOOR_UNLOCKED){
+        else if (getDoorState(referenceUser) == DOOR_CLOSED && getDoorState(referenceUser) != DOOR_LOCKED){
             set_lock(true, referenceUser);
         }
     }
+}
