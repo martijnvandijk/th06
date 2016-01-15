@@ -4,10 +4,45 @@
 
 #include "libserial.h"
 #include "Protocol.h"
+#include "WashingMachine/UARTHandler.h"
+#include "WashingMachine/UARTUser.h"
 using namespace std;
 
+class UARTTest : public WashingMachine::UARTUser{
+public:
+    UARTTest(WashingMachine::Motor &motor):
+        motor{motor},
+        WashingMachine::UARTUser{98}{
+
+    }
+    void main(){
+        std::cout<<"starting motor"<<std::endl;
+        motor.setRPM(100,this);
+        sleep(1000);
+        std::cout<<"stopping motor"<<std::endl;
+        motor.setRPM(0,this);
+    }
+    void receiveReply(uint8_t replyByte){
+
+    }
+
+private:
+    WashingMachine::Motor &motor;
+};
+
+class TaskTest: RTOS::task{
+public:
+    void main(){
+        while(true){
+            std::cout << "test" << std::endl;
+            sleep(50);
+        }
+
+    }
+};
+
 int main() {
-    cout << "Hello, World!" << endl;
+//    cout << "Hello, World!" << endl;
     LibSerial serial = LibSerial();
     serial.open("/dev/ttyAMA0", 9600);
     uint8_t commandOn[2];
@@ -28,29 +63,35 @@ int main() {
     commandTurn[1]=0x00;
 
     serial.write(commandStart,2);
-/*
-//    serial.write(commandOn,2);
-//    std::cin.ignore();
-//    serial.write(commandOff,2);
+//    WashingMachine::UARTHandler handler(serial);
+//    WashingMachine::Motor motor(handler);
+//    UARTTest test(motor);
+//    test.resume();
+//    TaskTest test();
 
-    while(true){
-        serial.write(commandTurn,2);
-        commandTurn[1]+=0x01;
-        std::cin.ignore();
-    }
 
-    serial.close();
-     */
+    class my_task_class : public RTOS::task {
+    public:
+        my_task_class( const char * name ):
+                task(
+                        10,    // task priority
+                        name,  // name of the task
+                        16384  // task stack size
+                ){}
+    private:
+        void main( void ){
+            while(true){
+                std::cout << "test" << std::endl;
+            }
+            // put the code of your task here
+        }
+    };
+    my_task_class my_task( "my first task" );
+//    my_task_class my_task2( "my second task" );
 
-    WashingMachine::Motor motor(serial);
-    motor.setRPM(100);
-    std::cin.ignore();
-    motor.setRPM(0);
-    std::cin.ignore();
-    motor.setRPM(-100);
-    std::cin.ignore();
-    motor.setRPM(0);
-    serial.close();
 
+
+    while(true){}
     return 0;
 }
+

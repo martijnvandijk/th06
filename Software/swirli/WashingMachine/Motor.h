@@ -2,16 +2,21 @@
 #define WASHINGMACHINE_MOTOR_H
 
 #include "../libs/libserial.h"
+#include "UARTUser.h"
+#include "UARTHandler.h"
 
 namespace WashingMachine{
     class Motor{
     public:
-        Motor(LibSerial &serial);
+        Motor(UARTHandler &uart);
         int getRPM();
-        void setRPM(int rpm);
+        void setRPM(int rpm, UARTUser *referenceUser);
     private:
-        LibSerial &serialConnection;
+//        LibSerial &serialConnection;
+    UARTHandler &uart;
 
+
+//        virtual void receiveReply(uint8_t replyByte);
     };
 }
 
