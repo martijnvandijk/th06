@@ -5,7 +5,7 @@
 #include "UARTHandler.h"
 
 WashingMachine::Motor::Motor(UARTHandler &uart) :
-    uart {uart}{
+    uart (uart){
 
 }
 
