@@ -43,8 +43,8 @@ if (CMAKE_CROSSCOMPILING)
 	add_custom_command(TARGET swirli_pi
 			POST_BUILD
 			COMMAND rsync
-			ARGS -ahe ssh --timeout=3
-			$<TARGET_FILE_DIR:swirli>
+			ARGS -ahe ssh --timeout=10
+			$<TARGET_FILE:swirli>
 			pi@10.10.0.10:swirli_cmake
 			WORKING_DIRECTORY .)
 endif ()
