@@ -44,6 +44,7 @@ if (CMAKE_CROSSCOMPILING)
 			POST_BUILD
 			COMMAND rsync
 			ARGS -ahe ssh --timeout=10
+			${PROJECT_SOURCE_DIR}/
 			$<TARGET_FILE:swirli>
 			pi@10.10.0.10:swirli_cmake
 			WORKING_DIRECTORY .)
