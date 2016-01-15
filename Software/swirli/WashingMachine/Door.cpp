@@ -1,17 +1,22 @@
 #include <stdint.h>
 #include "Door.h"
+#include "UARTHandler.h"
 namespace WashingMachine{
 
-    Door::Door(LibSerial &serial):
-        serialConnection(serial)
-    {
+    Door::Door(UARTHandler &uart):
+        UARTHandler(uart){
     }
 
-    door_states_t Door::getDoorState() {
+    door_states_t Door::getDoorState(UARTUser *referenceUser) {
         uint8_t *readBuf[2];
-        serialConnection.writeChar(DOOR_LOCK_REQ);
-        serialConnection.read(readBuf, 2);
 
+        UARTMessage command;
+        command.sender = referenceUser;
+        command.requestByte = DOOR_LOCK_REQ;
+        command.commandByte = STATUS_CMD;
+        uart.sendMessage(command)
+
+        //ADD RECEIVE REPLY HERE TO GET DOOR STATUS
         if(*readBuf[0] == ( REPLY_BIT | DOOR_LOCK_REQ)){
             switch(*readBuf[1]){
                 case LOCKED:
@@ -27,11 +32,24 @@ namespace WashingMachine{
         }
     }
 
-    bool Door::set_lock() {
-        return false;
+    void Door::set_lock(bool status, UARTUser *referenceUser) {
+       UARTMessage command;
+       command.senser = referenceuser;
+       command.requestByte = DOOR_LOCK_REQ;
+       if(status){
+        command.commandByte = LOCK_CMD;
+       }
+       else{
+        command.commandByte = UNLOCK_CMD;
+       }
+       uart.sendMessage(command);
     }
 
-    bool Door::toggle_lock() {
-        return false;
+    bool Door::toggle_lock(UARTUser *referenceUser) {
+        if(getDoorState(referenceUser) == DOOR_LOCKED){
+            set_lock(false, referenceUser);
+        }
+        else if (getDoorState(referenceUser) == DOOR_UNLOCKED){
+            set_lock(true, referenceUser);
+        }
     }
-}
