@@ -9,14 +9,11 @@ namespace WashingMachine{
     class Motor{
     public:
         Motor(UARTHandler &uart);
-        int getRPM();
+        int getRPM(UARTUser *referenceUser);
         void setRPM(int rpm, UARTUser *referenceUser);
     private:
-//        LibSerial &serialConnection;
     UARTHandler &uart;
 
-
-//        virtual void receiveReply(uint8_t replyByte);
     };
 }
 

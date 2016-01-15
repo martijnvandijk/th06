@@ -9,26 +9,27 @@
 #define debug_task_logging_1
 using namespace std;
 
-class UARTTest : public WashingMachine::UARTUser{
+class UARTTest : public WashingMachine::UARTUser {
 public:
-    UARTTest(WashingMachine::Motor &motor):
-        motor(motor),
-        WashingMachine::UARTUser{98}{
+    UARTTest(WashingMachine::Motor &motor) :
+            motor(motor),
+            WashingMachine::UARTUser{98} {
 
     }
-    void main(){
-        while(true){
-            std::cout<<"starting motor"<<std::endl;
+
+    void main() {
+        while (true) {
+            std::cout << "starting motor" << std::endl;
             motor.setRPM(100,this);
+            std::cout << motor.getRPM(this) << std::endl;
             sleep(1 S);
-            std::cout<<"stopping motor"<<std::endl;
+            std::cout << "stopping motor" << std::endl;
             motor.setRPM(0,this);
+            std::cout << motor.getRPM(this) << std::endl;
             sleep(1 S);
         }
     }
-    void receiveReply(uint8_t replyByte){
 
-    }
 
 private:
     WashingMachine::Motor &motor;

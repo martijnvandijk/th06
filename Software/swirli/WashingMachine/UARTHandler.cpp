@@ -19,17 +19,15 @@ namespace WashingMachine {
         m.sender->suspend();
     }
 
-    void UARTHandler::handleUART() {
-
-    }
-
     void UARTHandler::main(){
         while(true){
 //            this->wait(InputBuffer);
             if(inputQueueCounter){
                 UARTMessage message = InputBuffer.read();
                 serialConnection.writeChar(message.requestByte);
-                serialConnection.writeChar(message.commandByte);
+                if(message.hasCommandByte){
+                    serialConnection.writeChar(message.commandByte);
+                }
                 inputQueueCounter--;
                 OutputBuffer.push_back(message);
             }
@@ -43,6 +41,7 @@ namespace WashingMachine {
                     OutputBuffer.pop_front();
                 }
             }
+
             sleep(10 MS);
 
         }
