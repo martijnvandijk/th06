@@ -6,6 +6,7 @@
 #include "Protocol.h"
 #include "WashingMachine/UARTHandler.h"
 #include "WashingMachine/UARTUser.h"
+#define debug_task_logging_1
 using namespace std;
 
 class UARTTest : public WashingMachine::UARTUser{
@@ -16,11 +17,14 @@ public:
 
     }
     void main(){
-        std::cout<<"starting motor"<<std::endl;
-        motor.setRPM(100,this);
-        sleep(1000);
-        std::cout<<"stopping motor"<<std::endl;
-        motor.setRPM(0,this);
+        while(true){
+            std::cout<<"starting motor"<<std::endl;
+            motor.setRPM(100,this);
+            sleep(1 S);
+            std::cout<<"stopping motor"<<std::endl;
+            motor.setRPM(0,this);
+            sleep(1 S);
+        }
     }
     void receiveReply(uint8_t replyByte){
 
@@ -28,17 +32,6 @@ public:
 
 private:
     WashingMachine::Motor &motor;
-};
-
-class TaskTest: RTOS::task{
-public:
-    void main(){
-        while(true){
-            std::cout << "test" << std::endl;
-            sleep(50);
-        }
-
-    }
 };
 
 int main() {
@@ -63,35 +56,12 @@ int main() {
     commandTurn[1]=0x00;
 
     serial.write(commandStart,2);
-//    WashingMachine::UARTHandler handler(serial);
-//    WashingMachine::Motor motor(handler);
-//    UARTTest test(motor);
-//    test.resume();
-//    TaskTest test();
+    serial.flush();
+    WashingMachine::UARTHandler handler(serial);
+    WashingMachine::Motor motor(handler);
+    UARTTest test(motor);
 
-
-    class my_task_class : public RTOS::task {
-    public:
-        my_task_class( const char * name ):
-                task(
-                        10,    // task priority
-                        name,  // name of the task
-                        16384  // task stack size
-                ){}
-    private:
-        void main( void ){
-            while(true){
-                std::cout << "test" << std::endl;
-            }
-            // put the code of your task here
-        }
-    };
-    my_task_class my_task( "my first task" );
-//    my_task_class my_task2( "my second task" );
-
-
-
-    while(true){}
+    RTOS::run();
     return 0;
 }
 

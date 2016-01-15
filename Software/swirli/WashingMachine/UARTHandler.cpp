@@ -34,14 +34,16 @@ namespace WashingMachine {
                 OutputBuffer.push_back(message);
             }
             if(serialConnection.peek() >= 2){
-                uint8_t *readBuf[2];
-                serialConnection.read(readBuf, 2);
-                if((OutputBuffer.front().requestByte | REPLY_BIT ) == *readBuf[0]){
-                    OutputBuffer.front().sender->receiveReply(*readBuf[1]);
+                uint8_t readBuf[2];
+                serialConnection.read(&readBuf, 2);
+                if((OutputBuffer.front().requestByte | REPLY_BIT ) == readBuf[0])
+                {
+                    OutputBuffer.front().sender->receiveReply(readBuf[1]);
                     OutputBuffer.front().sender->resume();
                     OutputBuffer.pop_front();
                 }
             }
+            sleep(10 MS);
 
         }
     }
