@@ -18,8 +18,6 @@ namespace WashingMachine{
 
     private:
         UARTHandler uart;
-
-
     };
 }
 #endif

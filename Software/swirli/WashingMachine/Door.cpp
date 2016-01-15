@@ -46,7 +46,7 @@ namespace WashingMachine{
     }
 
     void Door::toggle_lock(UARTUser *referenceUser) {
-        if(getDoorState(referenceUser) == DOOR_LOCKED){
+        if(getDoorState(referenceUser) == DOOR_LOCKED && getDoorState(referenceUser) == DOOR_CLOSED){
             set_lock(false, referenceUser);
         }
         else if (getDoorState(referenceUser) == DOOR_CLOSED && getDoorState(referenceUser) != DOOR_LOCKED){
