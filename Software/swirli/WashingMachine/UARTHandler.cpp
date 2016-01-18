@@ -10,13 +10,11 @@ namespace WashingMachine {
             serialConnection(serial),
             InputBuffer(this),
             OutputBuffer(),
-            inputQueueCounter{0},
             timer(this)
             {}
 
     void UARTHandler::sendMessage(UARTMessage m) {
         InputBuffer.write(m);
-        inputQueueCounter++;
         m.sender->suspend();
     }
 
