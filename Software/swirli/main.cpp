@@ -36,6 +36,9 @@ private:
 };
 
 int main() {
+
+    float boat; //must be float, otherwise it sinks.
+
 //    cout << "Hello, World!" << endl;
     LibSerial serial = LibSerial();
     serial.open("/dev/ttyAMA0", 9600);
