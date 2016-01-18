@@ -1,5 +1,17 @@
 window.onload = function() {
-	window.ws = WebSocketConnect(); // Connect to the websocket
+	window.socket = WebSocketConnect(); // Connect to the websocket
+	
+	/* 	Websocket Commands
+	
+		fetch_user = opvragen usergegevens
+		fetch_update = verkrijgen nieuw wasprogramma
+		update_user [pincode] [recovery methode] = opslaan user gegevens
+		fetch_wash = opvragen wasprogramma's
+		start_wash [wasprogramma] [temperatuur] [duur wasprogramma]= start wasprogramma
+		stop_wash = stop wasprogramma
+		poll_wash_state = opvragen huidige staat wasprogramma
+		poll_wash_time = opvragen tijd in wasprogramma
+	*/
 	
 	/*
 		Values
@@ -49,6 +61,9 @@ window.onload = function() {
 			
 			user_login = true;
 			
+			// Set default value for time input fields
+			document.getElementById("duration").value = "00:00";
+			
 			navbar.style.display = "block"; // Show the menu
 			overlay.style.display = "none"; // Hide the black overlay
 			document.body.style.overflow = "scroll"; // Show the scrollbar
@@ -80,13 +95,15 @@ window.onload = function() {
 			} else { // If not, the only other option must be selected
 				save_settings(new_pin, "cancel");
 			}
+			document.getElementById("user_menu").style.display = "none";
+			show_menu = false;
 		}
 	}
 	
 	start_button.onclick = function() {
 		// Get the selected washingprogram
 		var was_dropdown = document.getElementById("wasprogrammas");
-		var was_selected = was_dropdown.options[was_dropdown.selectedIndex].text;
+		var was_selected = was_dropdown.options[was_dropdown.selectedIndex].label;
 		
 		// Get the selected temperature
 		var temp_dropdown = document.getElementById("temperaturen");
@@ -97,15 +114,14 @@ window.onload = function() {
 		console.log(duration_value);
 		
 		// Start the washing program 
-		// window.websocket.send("start_wash");
+		window.socket.send("start_wash " + was_selected + " " + temp_selected  + " " + duration_value);
 		
 		// Parse reply; show to use that the program has been started
 	}
 	
 	stop_button.onclick = function() {
-		console.log("stop clicked");
 		// Stop the washing program 
-		// window.websocket.send("stop_wash");
+		window.socket.send("stop_wash");
 		
 		// Parse reply; show to use that the program has been stopped
 	}
@@ -113,6 +129,8 @@ window.onload = function() {
 	update_button.onclick = function() {
 		update_screen.style.display = "none";
 		// Perform an update (read update file, place into wasprogramma's array and tell the user a new program has been added)
+		
+		window.socket.send("fetch_update");
 	}
 }
 
@@ -127,18 +145,10 @@ function save_settings(pin, recovery) {
 	
 	// Write as json to file
 	var new_settings = '{"pin" : "'+ pin +'", "recovery" : "'+ recovery +'"}';
+	console.log("wasd");
 	
-	$.ajax({
-		type: "POST",
-		url: "../save_settings.php",
-		data: {data:new_settings},
-		dataType: 'json',
-		success: function(response) {
-			console.log("Success");
-		}, error: function(data) {
-			console.log("Error");
-		},
-	});
+	// Signal websocket to save user_data
+	window.socket.send("update_user" + " " + new_settings);
 }
 
 /*
@@ -155,6 +165,7 @@ function fetch_wasprogrammas() {
 		var option = document.createElement("option");
 		
 		option.textContent = window.page_json[i][0];
+		option.label = window.page_json[i][0].replace(' was', '');
 		option.value = i;
 		
 		was_dropdown.appendChild(option);
@@ -220,9 +231,8 @@ function WebSocketConnect() {
 		ws = new WebSocket("ws://10.10.0.10:2222");
 		ws.onopen = function(evt) { console.log("connection open"); };
 		ws.onclose = function(evt) { console.log("connection closed"); };
-		ws.onmessage = function(evt) {  };
+		ws.onmessage = function(evt) { console.log("Received message: " + evt.data) };
 		ws.onerror = function(evt) { console.log("websocket error: " + evt.data); };
-		
 		return ws;
 	} else {
 		alert("WebSocket NOT supported by your Browser!");
