@@ -25,9 +25,7 @@ namespace WashingMachine {
             if(inputQueueCounter){
                 UARTMessage message = InputBuffer.read();
                 serialConnection.writeChar(message.requestByte);
-                if(message.hasCommandByte){
-                    serialConnection.writeChar(message.commandByte);
-                }
+                serialConnection.writeChar(message.commandByte);
                 inputQueueCounter--;
                 OutputBuffer.push_back(message);
             }

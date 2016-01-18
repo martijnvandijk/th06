@@ -14,7 +14,6 @@ int WashingMachine::Motor::getRPM(UARTUser *referenceUser) {
     UARTMessage command;
     command.sender = referenceUser;
     command.requestByte = GET_RPM_REQ;
-    command.hasCommandByte = true;
     command.commandByte = 0xFF;
     uart.sendMessage(command);
     uint8_t reply = referenceUser->getReplyPoolContents();
@@ -30,6 +29,5 @@ void WashingMachine::Motor::setRPM(int rpm, UARTUser *referenceUser) {
     command.sender = referenceUser;
     command.requestByte = SET_RPM_REQ;
     command.commandByte = rpmbyte;
-    command.hasCommandByte = true;
     uart.sendMessage(command);
 }
