@@ -4,7 +4,7 @@
 #include "../libs/libserial.h"
 #include "../libs/libserial.h"
 #include "UARTHandler.h"
-#include "UARTuser.h"
+#include "UARTUser.h"
 
 namespace WashingMachine{
     enum pump_states_t {PUMP_ON, PUMP_OFF};
