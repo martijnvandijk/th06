@@ -7,22 +7,33 @@ add_subdirectory(libs/googletest-master)
 include_directories(${GTEST_INCLUDE_DIRS} libs)
 
 set(WashingMachineSourceFiles
-		WashingMachine/Door.cpp WashingMachine/Door.h
-		WashingMachine/HeatingUnit.cpp WashingMachine/HeatingUnit.h
-		WashingMachine/SignalLed.cpp WashingMachine/SignalLed.h
-		WashingMachine/Motor.cpp WashingMachine/Motor.h
-		WashingMachine/Observable.cpp WashingMachine/Observable.h
-		WashingMachine/Pump.cpp WashingMachine/Pump.h
-		WashingMachine/SensorHandler.cpp WashingMachine/SensorHandler.h
+		WashingMachine/Door.cpp					WashingMachine/Door.h
+		WashingMachine/HeatingUnit.cpp			WashingMachine/HeatingUnit.h
+		WashingMachine/SignalLed.cpp			WashingMachine/SignalLed.h
+		WashingMachine/Motor.cpp				WashingMachine/Motor.h
+		WashingMachine/Observable.cpp			WashingMachine/Observable.h
+		WashingMachine/Pump.cpp					WashingMachine/Pump.h
+		WashingMachine/SensorHandler.cpp		WashingMachine/SensorHandler.h
 		WashingMachine/SensorListener.h
-		WashingMachine/SoapDispenser.cpp WashingMachine/SoapDispenser.h
-		WashingMachine/TemperatureSensor.cpp WashingMachine/TemperatureSensor.h
+		WashingMachine/SoapDispenser.cpp		WashingMachine/SoapDispenser.h
+		WashingMachine/TemperatureSensor.cpp	WashingMachine/TemperatureSensor.h
 		WashingMachine/WashingMachineBoundary.h
-		WashingMachine/WaterLevelSensor.cpp WashingMachine/WaterLevelSensor.h
-		WashingMachine/WaterValve.cpp WashingMachine/WaterValve.h
+		WashingMachine/WaterLevelSensor.cpp		WashingMachine/WaterLevelSensor.h
+		WashingMachine/WaterValve.cpp			WashingMachine/WaterValve.h
 #        libs/Protocol.h
-		WashingMachine/UARTHandler.cpp WashingMachine/UARTHandler.h
-		WashingMachine/UARTUser.h)
+		WashingMachine/UARTHandler.cpp			WashingMachine/UARTHandler.h
+		WashingMachine/UARTUser.h
+
+		WashingInstruction.h
+		WashingTask.cpp										WashingTask.h
+		WashingProgram.cpp									WashingProgram.h
+		WashingInstructions/SetRPMInstruction.cpp			WashingInstructions/SetRPMInstruction.h
+		WashingInstructions/SetWaterLevelInstruction.cpp	WashingInstructions/SetWaterLevelInstruction.h
+		WashingInstructions/SetTemperatureInstruction.cpp	WashingInstructions/SetTemperatureInstruction.h
+		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
+		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
+		TemperatureRegulator.h
+		WaterLevelRegulator.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h
