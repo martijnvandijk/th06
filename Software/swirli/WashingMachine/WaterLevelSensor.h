@@ -3,8 +3,15 @@
 #include "Observable.h"
 #include "WashingMachineBoundary.h"
 
-class WaterLevelSensor{
+namespace WashingMachine{
+    class WaterLevelSensor{
+    public:
+        WaterLevelSensor(UARTHandler &uart);
+        int poll(UARTUser *referenceUser);
+    private:
+    	UARTHandler &uart;
 
-};
+    };
+}
 
 #endif
