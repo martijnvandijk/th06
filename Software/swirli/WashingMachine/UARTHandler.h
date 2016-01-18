@@ -28,6 +28,7 @@ namespace WashingMachine{
         void handleUART();
         void main();
         int inputQueueCounter;
+        RTOS::timer timer;
         std::deque<UARTMessage> OutputBuffer;
     };
 
