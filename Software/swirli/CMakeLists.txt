@@ -38,6 +38,9 @@ set(MainSourceFiles
 add_executable(swirli ${WashingMachineSourceFiles} ${MainSourceFiles} ${RTOS_SourceFiles})
 target_link_libraries(swirli pthread rt)
 
+add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
+target_link_libraries(swirli_testing gtest pthread rt)
+
 if (CMAKE_CROSSCOMPILING)
 	add_custom_target(swirli_pi)
 	add_custom_command(TARGET swirli_pi
@@ -46,9 +49,7 @@ if (CMAKE_CROSSCOMPILING)
 			ARGS -ahe ssh --timeout=10
 			${PROJECT_SOURCE_DIR}/
 			$<TARGET_FILE:swirli>
+			$<TARGET_FILE:swirli_testing>
 			pi@10.10.0.10:swirli_cmake
 			WORKING_DIRECTORY .)
 endif ()
-
-add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
-target_link_libraries(swirli_testing gtest pthread rt)
