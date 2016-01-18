@@ -1,0 +1,22 @@
+//
+// Created by chiel on 18/01/16.
+//
+
+#ifndef ADDSOAPINSTRUCTION_H
+#define ADDSOAPINSTRUCTION_H
+
+#include "../WashingInstruction.h"
+#include "../WashingMachine/SoapDispenser.h"
+
+class AddSoapInstruction: public WashingInstruction {
+public:
+	AddSoapInstruction(WashingMachine::SoapDispenser &dispenser);
+
+	virtual void execute(WashingMachine::UARTUser *user) override;
+
+private:
+	WashingMachine::SoapDispenser &dispenser;
+};
+
+
+#endif //ADDSOAPINSTRUCTION_H

@@ -27,7 +27,7 @@ namespace WashingMachine {
                 UARTMessage message = InputBuffer.read();
                 serialConnection.writeChar(message.requestByte);
                 serialConnection.writeChar(message.commandByte);
-                OutputBuffer.push_back(message);
+                OutputBuffer.push(message);
             }
             else{
                 if(serialConnection.peek() >= 2 ){
@@ -36,7 +36,7 @@ namespace WashingMachine {
                     if((OutputBuffer.front().requestByte | REPLY_BIT) == readBuf[0]){
                         OutputBuffer.front().sender->receiveReply(readBuf[1]);
                         OutputBuffer.front().sender->resume();
-                        OutputBuffer.pop_front();
+                        OutputBuffer.pop();
                     }
                 }
             }

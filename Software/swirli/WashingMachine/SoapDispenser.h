@@ -21,4 +21,10 @@ namespace WashingMachine{
 }
 
 
+#include "UARTUser.h"
+
+namespace WashingMachine {
+	class SoapDispenser;
+}
+
 #endif

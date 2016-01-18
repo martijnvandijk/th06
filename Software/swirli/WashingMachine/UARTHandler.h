@@ -8,8 +8,7 @@
 #include <stdint.h>
 #include <pRTOS.h>
 #include <libserial.h>
-//#include <bits/stl_deque.h>
-#include <deque>
+#include <queue>
 #include "UARTUser.h"
 namespace WashingMachine{
 
@@ -39,7 +38,8 @@ namespace WashingMachine{
         RTOS::channel<UARTMessage, 64> InputBuffer;
         void main();
         RTOS::timer timer;
-        std::deque<UARTMessage> OutputBuffer;
+        std::queue<UARTMessage> OutputBuffer;
     };
+
 }
 #endif //SWIRLI_UARTHANDLER_H

@@ -7,22 +7,33 @@ add_subdirectory(libs/googletest-master)
 include_directories(${GTEST_INCLUDE_DIRS} libs)
 
 set(WashingMachineSourceFiles
-		WashingMachine/Door.cpp WashingMachine/Door.h
-		WashingMachine/HeatingUnit.cpp WashingMachine/HeatingUnit.h
-		WashingMachine/SignalLed.cpp WashingMachine/SignalLed.h
-		WashingMachine/Motor.cpp WashingMachine/Motor.h
-		WashingMachine/Observable.cpp WashingMachine/Observable.h
-		WashingMachine/Pump.cpp WashingMachine/Pump.h
-		WashingMachine/SensorHandler.cpp WashingMachine/SensorHandler.h
+		WashingMachine/Door.cpp					WashingMachine/Door.h
+		WashingMachine/HeatingUnit.cpp			WashingMachine/HeatingUnit.h
+		WashingMachine/SignalLed.cpp			WashingMachine/SignalLed.h
+		WashingMachine/Motor.cpp				WashingMachine/Motor.h
+		WashingMachine/Observable.cpp			WashingMachine/Observable.h
+		WashingMachine/Pump.cpp					WashingMachine/Pump.h
+		WashingMachine/SensorHandler.cpp		WashingMachine/SensorHandler.h
 		WashingMachine/SensorListener.h
-		WashingMachine/SoapDispenser.cpp WashingMachine/SoapDispenser.h
-		WashingMachine/TemperatureSensor.cpp WashingMachine/TemperatureSensor.h
+		WashingMachine/SoapDispenser.cpp		WashingMachine/SoapDispenser.h
+		WashingMachine/TemperatureSensor.cpp	WashingMachine/TemperatureSensor.h
 		WashingMachine/WashingMachineBoundary.h
-		WashingMachine/WaterLevelSensor.cpp WashingMachine/WaterLevelSensor.h
-		WashingMachine/WaterValve.cpp WashingMachine/WaterValve.h
+		WashingMachine/WaterLevelSensor.cpp		WashingMachine/WaterLevelSensor.h
+		WashingMachine/WaterValve.cpp			WashingMachine/WaterValve.h
 #        libs/Protocol.h
-		WashingMachine/UARTHandler.cpp WashingMachine/UARTHandler.h
-		WashingMachine/UARTUser.h)
+		WashingMachine/UARTHandler.cpp			WashingMachine/UARTHandler.h
+		WashingMachine/UARTUser.h
+
+		WashingInstruction.h
+		WashingTask.cpp										WashingTask.h
+		WashingProgram.cpp									WashingProgram.h
+		WashingInstructions/SetRPMInstruction.cpp			WashingInstructions/SetRPMInstruction.h
+		WashingInstructions/SetWaterLevelInstruction.cpp	WashingInstructions/SetWaterLevelInstruction.h
+		WashingInstructions/SetTemperatureInstruction.cpp	WashingInstructions/SetTemperatureInstruction.h
+		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
+		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
+		TemperatureRegulator.h
+		WaterLevelRegulator.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h
@@ -38,6 +49,9 @@ set(MainSourceFiles
 add_executable(swirli ${WashingMachineSourceFiles} ${MainSourceFiles} ${RTOS_SourceFiles})
 target_link_libraries(swirli pthread rt)
 
+add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
+target_link_libraries(swirli_testing gtest pthread rt)
+
 if (CMAKE_CROSSCOMPILING)
 	add_custom_target(swirli_pi)
 	add_custom_command(TARGET swirli_pi
@@ -46,9 +60,7 @@ if (CMAKE_CROSSCOMPILING)
 			ARGS -ahe ssh --timeout=10
 			${PROJECT_SOURCE_DIR}/
 			$<TARGET_FILE:swirli>
+			$<TARGET_FILE:swirli_testing>
 			pi@10.10.0.10:swirli_cmake
 			WORKING_DIRECTORY .)
 endif ()
-
-add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
-target_link_libraries(swirli_testing gtest pthread rt)
