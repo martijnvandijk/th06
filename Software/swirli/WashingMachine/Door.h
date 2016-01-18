@@ -2,7 +2,6 @@
 #define WASHINGMACHINE_DOOR_H
 #include "../libs/Protocol.h"
 #include "../libs/libserial.h"
-#include "../libs/libserial.h"
 #include "UARTHandler.h"
 #include "UARTUser.h"
 
