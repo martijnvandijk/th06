@@ -22,14 +22,14 @@ namespace WashingMachine{
         }
 
     }
-    void Pump::set(bool status, UARTUser *referenceUser){
+    void Pump::set(pump_states_t state, UARTUser *referenceUser){
     	UARTMessage command;
     	command.sender = referenceUser;
     	command.requestByte = PUMP_REQ;
-    	if(status){
+    	if(state == PUMP_ON){
     		command.commandByte = ON_CMD;
     	}
-    	else{
+    	else if(state == PUMP_OFF){
     		command.commandByte = OFF_CMD;
     	}
     	uart.sendMessage(command);
@@ -38,10 +38,10 @@ namespace WashingMachine{
 
     void Pump::toggle(UARTUser *referenceUser){
     	if(getState(referenceUser) == PUMP_ON){
-			set(false, referenceUser);
+			set(PUMP_OFF, referenceUser);
     	}
     	else if(getState(referenceUser) == PUMP_OFF){
-			set(true, referenceUser);
+			set(PUMP_ON, referenceUser);
     	}
     }
 }

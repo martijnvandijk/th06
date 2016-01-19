@@ -7,16 +7,40 @@
 #include "../libs/Protocol.h"
 
 namespace WashingMachine{
-    enum watervalve_states_t {VALVE_OPEN, VALVE_CLOSED};
+    // This is an enum class which handles the states the heating unit can be in.
+    enum watervalve_states_t {
+        VALVE_OPEN, // The water valve is open
+        VALVE_CLOSED // the water valve is clsoed
+    };
     class WaterValve{
     public:
-        WaterValve(UARTHandler &uart);
+        /**
+       * @brief Constructor, specify UARTHandler instance
+       * 
+       * @param uart The UARTHandler to be used for communicating with the emulator
+       */
+       WaterValve(UARTHandler &uart);
 
-        watervalve_states_t getWaterValveState(UARTUser *referenceUser);
-        void set(bool status, UARTUser *referenceUser);
-        void toggle(UARTUser *referenceUser);
-    private:
-    UARTHandler uart;
+         /**
+         * @brief getState Gets the current state of the water valve
+         * 
+         * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
+         * @return heatingunit_states_t Returns the enum VALVE_OPEN or VALVE_CLOSED
+         */
+         watervalve_states_t getWaterValveState(UARTUser *referenceUser);
+        /**
+          * @brief set Sets the hwater valve to either the open or closed state
+          * @param state The state the water valve will be set to
+          * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
+          */
+          void set(watervalve_states_t state, UARTUser *referenceUser);
+        /**
+          * @brief toggle Toggles the water valve between the open and closed state.
+          * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
+          */
+          void toggle(UARTUser *referenceUser);
+      private:
+        UARTHandler uart;
 
     };
 }

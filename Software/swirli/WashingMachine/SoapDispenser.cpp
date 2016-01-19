@@ -8,7 +8,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    soapdispenser_states_t SoapDispenser::getSoapDispenserState(UARTUser *referenceUser){
+    soapdispenser_states_t SoapDispenser::getState(UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = SOAP_DISPENSER_REQ;
@@ -22,25 +22,25 @@ namespace WashingMachine{
         }
     }
 
-    void SoapDispenser::set_soapdispenser(bool status, UARTUser *referenceUser) {
+    void SoapDispenser::set(soapdispenser_states_t state, UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = SOAP_DISPENSER_REQ;
-        if(status){
+        if(state == SOAP_OPEN){
             command.commandByte = OPEN_CMD;
         }
-        else{
+        else if(state == SOAP_CLOSED){
             command.commandByte = CLOSE_CMD;
         }
         uart.sendMessage(command);
     }
 
-    void SoapDispenser::toggle_soapdispenser (UARTUser *referenceUser) {
-            if(getSoapDispenserState(referenceUser) == SOAP_OPEN){
-                set_soapdispenser(false, referenceUser);
+    void SoapDispenser::toggle(UARTUser *referenceUser) {
+            if(getState(referenceUser) == SOAP_OPEN){
+                set(SOAP_CLOSED, referenceUser);
             }
-            else if (getSoapDispenserState(referenceUser) != SOAP_CLOSED){
-                set_soapdispenser(true, referenceUser);
+            else if (getState(referenceUser) != SOAP_CLOSED){
+                set(SOAP_OPEN, referenceUser);
             }
     }
 }

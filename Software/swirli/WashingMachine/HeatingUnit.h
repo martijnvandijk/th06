@@ -10,10 +10,10 @@ namespace WashingMachine{
   enum heatingunit_states_t {
         HEATINGUNIT_ON, // The heating unit is on
         HEATINGUNIT_OFF // the heating unit is off
-       };
-       class HeatingUnit{
-       public:
-              /**
+      };
+      class HeatingUnit{
+      public:
+       /**
        * @brief Constructor, specify UARTHandler instance
        * 
        * @param uart The UARTHandler to be used for communicating with the emulator
