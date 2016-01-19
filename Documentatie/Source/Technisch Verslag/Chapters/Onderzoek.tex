@@ -5,6 +5,18 @@ Tevens bespreken wij de onderzoeken en experimenten die zijn uitgevoerd tijdens 
 \newpage
 
 \section{Verzamelde informatie en bronnen}
+\subsection{JSON in C++}
+De wasprogramma's worden opgeslagen in JSON formaat.
+Om uit deze JSON alleen de relevante informatie te halen en via de websocket naar de webinterface te sturen, moet de JSON aan de C++ kant verwerkt worden.
+Omdat dit met C++ alleen niet mogelijk is, wordt er gebruik gemaakt van een externe library zoals RapidJSON \cite{repo}.
 
+Er is voor RapidJSON gekozen vanwege zijn performance. Uit benchmark tests is gebleken dat RapidJSON vele malen sneller is dan andere populaire JSON parsers.
+Op een systeem wat gebruik maakt van de GCC 32-bit compiler zijn 1000 tests uitgevoerd waarvan de snelheid in milliseconden is opgenomen.
+Voor bijvoorbeeld het parsen van DOM had RapidJSON 796 milliseconden nodig, terwijl YAJL 6316 milliseconden nodig had en JsonCpp 6705 milliseconden \cite{performance}.
+
+Voor het toepassen van RapidJSON hebben wij geruik gemaakt van een online tutorial \cite{tutorial}.
 
 \section{Experimenten en resultaten}
+\subsection{RapidJSON}
+Zoals eerder vermeld maken wij gebruik van RapidJSON vanwege de hoge snelheid en compactheid van de library.
+Voor RapidJSON zijn een aantal benchmarks uitgevoerd, maar omdat wij deze niet zelf hebben uitgevoerd zijn de resultaten vernoemd onder de kop "Verzamelde informatie en bronnen".
