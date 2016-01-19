@@ -24,6 +24,7 @@ namespace WashingMachine{
     }
 
     void Door::set(door_states_t state, UARTUser *referenceUser) {
+        UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = DOOR_LOCK_REQ;           
         if(state == DOOR_LOCKED){

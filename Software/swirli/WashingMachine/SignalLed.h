@@ -17,8 +17,8 @@ namespace WashingMachine{
         SignalLed(UARTHandler &uart);
 
         signalled_states_t getStatus(UARTUser *referenceUser);
-        void setLed(signalled_states_t status, UARTUser *referenceUser);
-        void toggleLed(UARTUser *referenceUser);
+        void set(signalled_states_t status, UARTUser *referenceUser);
+        void toggle(UARTUser *referenceUser);
 
     private:
         UARTHandler &uart;
