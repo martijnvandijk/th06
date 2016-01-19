@@ -11,5 +11,5 @@ SetDoorLockInstruction::SetDoorLockInstruction(WashingMachine::Door &door, bool 
 {}
 
 void SetDoorLockInstruction::execute(WashingMachine::UARTUser *user) {
-	door.set_lock(lock, user);
+	door.setLock(lock, user);
 }

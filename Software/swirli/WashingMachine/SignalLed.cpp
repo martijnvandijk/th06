@@ -33,10 +33,10 @@ namespace WashingMachine{
     }
     void SignalLed::toggleLed(UARTUser *referenceUser){
         if (getStatus(referenceUser) == LED_ON){
-            setLed(false, referenceUser);
+            setLed(LED_OFF, referenceUser);
         }
         else if(getStatus(referenceUser) == LED_OFF){
-            setLed(true, referenceUser);
+            setLed(LED_ON, referenceUser);
         }
 
     }
