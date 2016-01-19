@@ -36,9 +36,7 @@ namespace WashingMachine{
     private:
         LibSerial &serialConnection;
         RTOS::channel<UARTMessage, 64> InputBuffer;
-        void handleUART();
         void main();
-        int inputQueueCounter;
         RTOS::timer timer;
         std::queue<UARTMessage> OutputBuffer;
     };
