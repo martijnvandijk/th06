@@ -9,7 +9,7 @@ namespace WashingMachine{
     // This is an enum class which handles the states the heating unit can be in.
   enum heatingunit_states_t {
         HEATINGUNIT_ON, // The heating unit is on
-         HEATINGUNIT_OFF // the heating unit is off
+        HEATINGUNIT_OFF // the heating unit is off
        };
        class HeatingUnit{
        public:
@@ -26,7 +26,6 @@ namespace WashingMachine{
          * @return heatingunit_states_t Returns the enum HEATINGUNIT_ON or HEATINGUNIT_OFF depending on wether the heatingunit is on or off.
          */
          heatingunit_states_t getState(UARTUser *referenceUser);
-
          /**
           * @brief set Sets the heating unit to either the on or off state.
           * @param state The state the heating unit will be set to.

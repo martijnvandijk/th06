@@ -23,12 +23,18 @@ namespace WashingMachine{
          */
          door_states_t getState(UARTUser *referenceUser);
 
+<<<<<<< HEAD
           /**
           * @brief set Sets the door to either the DOOR_LOCKED or the DOOR_UNLOCKED_CLOSED state.
           * @param state The state the door will be set to.
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
           void set(door_states_t state, UARTUser *referenceUser);
+=======
+        door_states_t getDoorState(UARTUser *referenceUser);
+        void setLock(bool status, UARTUser *referenceUser);
+        void toggleLock(UARTUser *referenceUser);
+>>>>>>> bae158f8f0344b5d1587bf5c652a4904335a6aba
 
          /**
           * @brief toggle Toggles the door between the locked and unlocked state

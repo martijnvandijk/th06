@@ -6,8 +6,6 @@ namespace WashingMachine{
     }
 
     heatingunit_states_t HeatingUnit::getState(UARTUser *referenceUser){
-        uint8_t *readBuf[2];
-
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = HEATING_UNIT_REQ;

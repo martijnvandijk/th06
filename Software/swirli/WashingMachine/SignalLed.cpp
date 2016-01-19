@@ -19,7 +19,7 @@ namespace WashingMachine{
             case OFF: return LED_OFF; break;
         }
     }
-    void SignalLed::set_led(bool status, UARTUser *referenceUser){
+    void SignalLed::setLed(signalled_states_t status, UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = SIGNAL_LED_REQ;
@@ -31,12 +31,21 @@ namespace WashingMachine{
         }
 
     }
+<<<<<<< HEAD
     void SignalLed::toggle_led(UARTUser *referenceUser){
         if (getStatus(referenceUser) == LED_ON){
             set_led(false, referenceUser);
         }
         else if(getStatus(referenceUser) == LED_OFF){
             set_led(true, referenceUser);
+=======
+    void SignalLed::toggleLed(UARTUser *referenceUser){
+        if (getStatus(referenceUser) == LED_ON){
+            setLed(LED_OFF, referenceUser);
+        }
+        else if(getStatus(referenceUser) == LED_OFF){
+            setLed(LED_ON, referenceUser);
+>>>>>>> bae158f8f0344b5d1587bf5c652a4904335a6aba
         }
 
     }

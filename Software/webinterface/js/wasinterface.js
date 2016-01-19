@@ -14,7 +14,7 @@ window.onload = function() {
 	*/
 	
 	/*
-		Values
+		Values (booleans, ints, json arrays)
 	*/
 	var user_login = false; // bool
 	var update_available = true;
@@ -24,7 +24,7 @@ window.onload = function() {
 	var entered_pin; // int
 	
 	/*
-		Buttons
+		Buttons (UI elements)
 	*/
 	var pin_button = document.getElementById("pinbutton");
 	var option_button = document.getElementById("optionbutton");
@@ -34,7 +34,7 @@ window.onload = function() {
 	var update_button = document.getElementById("updatebutton");
 	
 	/*
-		Visual elements
+		Visual elements (pop-up's, menu's)
 	*/
 	var update_screen = document.getElementById("update-message");
 	var login_screen = document.getElementById("login");
@@ -48,11 +48,13 @@ window.onload = function() {
 	
 	loadJSON("js/usersettings.json"); // Load the user settings	
 	
+	// Check if the user is logged in
 	if(user_login == false) {	
 		navbar.style.display = "none";
 		login_screen.style.display = "block";
 	}
 	
+	// Perform function when the pin button is pressed
 	pin_button.onclick = function() {
 		entered_pin = pin_field.value;
 		
@@ -73,6 +75,7 @@ window.onload = function() {
 		}
 	};
 	
+	// Perform function when the menu button is pressed
 	menu_button.onclick = function() {
 		if(show_menu == false) {
 			document.getElementById("user_menu").style.display = "block";
@@ -87,6 +90,7 @@ window.onload = function() {
 	option_button.onclick = function() {
 		var new_pin = document.getElementById("newpinfield").value;
 		
+		// Check if the pin is at least 4 characters long and a number
 		if((new_pin.length != 4 || isNaN(new_pin) == true) && new_pin) {
 			alert("Pin moet bestaan uit 4 getallen");
 		} else {
@@ -100,6 +104,7 @@ window.onload = function() {
 		}
 	}
 	
+	// Perform function when start button is pressed
 	start_button.onclick = function() {
 		// Get the selected washingprogram
 		var was_dropdown = document.getElementById("wasprogrammas");
@@ -111,25 +116,27 @@ window.onload = function() {
 		
 		// Get the selected time until start of program
 		var duration_value = document.getElementById("duration").value;
-		console.log(duration_value);
 		
-		// Start the washing program 
+		// Send a start command to the websocket, along with a few parameters
 		window.socket.send("start_wash " + was_selected + " " + temp_selected  + " " + duration_value);
 		
 		// Parse reply; show to use that the program has been started
 	}
 	
+	// Perform function when stop button is pressed
 	stop_button.onclick = function() {
-		// Stop the washing program 
+		// Send a stop command to the websocket
 		window.socket.send("stop_wash");
 		
 		// Parse reply; show to use that the program has been stopped
 	}
 	
+	// Perform function when update button is pressed
 	update_button.onclick = function() {
 		update_screen.style.display = "none";
 		// Perform an update (read update file, place into wasprogramma's array and tell the user a new program has been added)
 		
+		// Send an update_wasprogramma command to the websocket
 		window.socket.send("fetch_update");
 	}
 }
@@ -139,15 +146,13 @@ window.onload = function() {
 */
 function save_settings(pin, recovery) {
 	// Save user settings 
-	// window.websocket.send("save_pin / save_recovery");
 	
 	if(!pin) { pin = window.user_json.pin; } // If the new_pin is empty, fill it with the current pin number
 	
-	// Write as json to file
+	// Create a json array
 	var new_settings = '{"pin" : "'+ pin +'", "recovery" : "'+ recovery +'"}';
-	console.log("wasd");
 	
-	// Signal websocket to save user_data
+	// Send an update_user command to the websocket
 	window.socket.send("update_user" + " " + new_settings);
 }
 
@@ -165,14 +170,13 @@ function fetch_wasprogrammas() {
 		var option = document.createElement("option");
 		
 		option.textContent = window.page_json[i][0];
-		option.label = window.page_json[i][0].replace(' was', '');
+		option.label = window.page_json[i][0].replace(' was', ''); // Set a label so the start command can send a name that does not contain spaces
 		option.value = i;
 		
 		was_dropdown.appendChild(option);
 	}
 	
-	// Initial call to populate_temp to fill the dropdown (since onchange doesn't have to be called)
-	populate_temp();
+	populate_temp(); // Initial call to populate_temp to fill the dropdown (since onchange doesn't get called on intial load)
 }
 
 /*
@@ -182,6 +186,7 @@ function populate_temp() {
 	var was_dropdown = document.getElementById("wasprogrammas");
 	var temp_dropdown = document.getElementById("temperaturen");
 	
+	// Empty the temperature dropdown so it can be populated again
 	while(temp_dropdown.hasChildNodes()) {
 		temp_dropdown.removeChild(temp_dropdown.lastChild);
 	}
@@ -192,7 +197,7 @@ function populate_temp() {
 	for(var i = 0; i < window.page_json[was_dropdown.value][1].length; i++) {
 		var option = document.createElement("option");
 		
-		option.innerHTML = window.page_json[was_dropdown.value][1][i] + "&deg;C";
+		option.innerHTML = window.page_json[was_dropdown.value][1][i] + "&deg;C"; // Set text for the dropdown to the number with a Celcius symbol
 		option.value = window.page_json[was_dropdown.value][1][i];
 		
 		temp_dropdown.appendChild(option);
@@ -226,13 +231,16 @@ function loadJSON(path) {
 	xhr.send();
 }
 
+/*
+	Function to connect to the websocket and show message based on results
+*/
 function WebSocketConnect() {
 	if ("WebSocket" in window) {
 		ws = new WebSocket("ws://10.10.0.10:2222");
 		ws.onopen = function(evt) { console.log("connection open"); };
 		ws.onclose = function(evt) { console.log("connection closed"); };
-		ws.onmessage = function(evt) { console.log("Received message: " + evt.data) };
-		ws.onerror = function(evt) { console.log("websocket error: " + evt.data); };
+		ws.onmessage = function(evt) { console.log("Received message: " + evt) };
+		ws.onerror = function(evt) { console.log("websocket error: " + evt); };
 		return ws;
 	} else {
 		alert("WebSocket NOT supported by your Browser!");
