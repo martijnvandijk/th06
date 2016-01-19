@@ -40,7 +40,7 @@ namespace WashingMachine{
           */
           void toggle(UARTUser *referenceUser);
       private:
-        UARTHandler uart;
+        UARTHandler &uart;
 
     };
 }
