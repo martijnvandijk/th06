@@ -1,13 +1,11 @@
 Notities koffiepraat
 
-Er wordt onderzoek gedaan naar JSON communicatie voor het sturen van data tussen de websocket en de webinterface.
-RapidJSON(?)
-De websocketserver moet worden ontwikkeld. Dit zal aydin doen. Deze websocketserver zal op de PI draaien.
-
+Aydin zal de website van zijn lokale WAMP installatie verplaatsen naar de PI.
+Aydin had problemen met de websocketserver die geen verbindingen accepteert maar dit is nu verholpen.
 
 Commando's voor de webserver --
 fetch_user = opvragen usergegevens
-save_pin [pincode] = opslaan nieuwe pincode
+save_pin [pincode] = opslaan nieuw pincode
 save_recovery [recovery] = opslaan recovery methode
 fetch_wash = opvragen wasprogramma's
 start_wash = start wasprogramma
