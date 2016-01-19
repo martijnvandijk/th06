@@ -3,21 +3,23 @@
 //
 
 #include "UARTHandler.h"
-#include "pRTOS.h"
 #include "Protocol.h"
 namespace WashingMachine {
     UARTHandler::UARTHandler(LibSerial &serial) :
+		    RTOS::task{1000, "UARTHandler"},
             serialConnection(serial),
-            InputBuffer(this),
-            OutputBuffer(),
-            timer(this)
-            {}
+            InputBuffer{this, "UARTHandler InputBuffer"},
+            OutputBuffer{},
+            timer{this, "UARTHandler timer"}
+    {}
 
     void UARTHandler::sendMessage(UARTMessage m) {
         InputBuffer.write(m);
         m.sender->suspend();
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
     void UARTHandler::main(){
         while(true){
             timer.set(10 MS);
@@ -42,4 +44,5 @@ namespace WashingMachine {
             }
         }
     }
+#pragma clang diagnostic pop
 }

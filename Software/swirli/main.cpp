@@ -1,12 +1,9 @@
 #include <iostream>
 
-#include "WashingMachine/Motor.h"
+#define debug_task_logging 1
 
-#include "libserial.h"
+#include "WashingMachine/Motor.h"
 #include "Protocol.h"
-#include "WashingMachine/UARTHandler.h"
-#include "WashingMachine/UARTUser.h"
-#define debug_task_logging_1
 using namespace std;
 
 class UARTTest : public WashingMachine::UARTUser {
@@ -14,9 +11,10 @@ public:
     UARTTest(WashingMachine::Motor &motor) :
             motor(motor),
             WashingMachine::UARTUser{98} {
-
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
     void main() {
         while (true) {
             std::cout << "starting motor" << std::endl;
@@ -29,6 +27,7 @@ public:
             sleep(1 S);
         }
     }
+#pragma clang diagnostic pop
 
 
 private:

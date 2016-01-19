@@ -5,14 +5,17 @@
 #ifndef SWIRLI_UARTUSER_H
 #define SWIRLI_UARTUSER_H
 
+#include <string>
 #include <stdint.h>
 #include <pRTOS.h>
 
 namespace WashingMachine {
     class UARTUser : public RTOS::task{
     public:
-        UARTUser(unsigned int priority):
-        RTOS::task{priority}{}
+        UARTUser(unsigned int priority, const char *name = ""):
+                RTOS::task{priority, name},
+                replyPool{(std::string{"UU "} + name + " replyPool").c_str()}
+        {}
 
         void receiveReply(uint8_t replyByte){
             replyPool.write(replyByte);
