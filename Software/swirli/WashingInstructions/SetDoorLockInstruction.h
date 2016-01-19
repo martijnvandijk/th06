@@ -10,13 +10,13 @@
 
 class SetDoorLockInstruction: public WashingInstruction {
 public:
-	SetDoorLockInstruction(WashingMachine::Door &door, bool lock);
+	SetDoorLockInstruction(WashingMachine::Door &door, WashingMachine::door_states_t lock);
 
 	virtual void execute(WashingMachine::UARTUser *user) override;
 
 private:
 	WashingMachine::Door &door;
-	bool lock;
+	WashingMachine::door_states_t lock;
 };
 
 

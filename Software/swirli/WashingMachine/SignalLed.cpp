@@ -6,7 +6,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    signalled_states_t SignalLed::getSignalLedStatus(WashingMachine::UARTUser *referenceUser) {
+    signalled_states_t SignalLed::getStatus(WashingMachine::UARTUser *referenceUser) {
         UARTMessage command;
         command.requestByte = SIGNAL_LED_REQ;
         command.commandByte = STATUS_CMD;
@@ -32,10 +32,10 @@ namespace WashingMachine{
 
     }
     void SignalLed::toggle_led(UARTUser *referenceUser){
-        if (getSignalLedStatus(referenceUser) == LED_ON){
+        if (getStatus(referenceUser) == LED_ON){
             set_led(false, referenceUser);
         }
-        else if(getSignalLedStatus(referenceUser) == LED_OFF){
+        else if(getStatus(referenceUser) == LED_OFF){
             set_led(true, referenceUser);
         }
 
