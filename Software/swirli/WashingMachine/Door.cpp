@@ -25,7 +25,7 @@ namespace WashingMachine{
         }
     }
 
-    void Door::set_lock(bool status, UARTUser *referenceUser) {
+    void Door::setLock(bool status, UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = DOOR_LOCK_REQ;           
@@ -38,13 +38,13 @@ namespace WashingMachine{
         uart.sendMessage(command);
     }
 
-    void Door::toggle_lock(UARTUser *referenceUser) {
+    void Door::toggleLock(UARTUser *referenceUser) {
         if(getDoorState(referenceUser) == DOOR_CLOSED){
             if(getDoorState(referenceUser) == DOOR_LOCKED){
-                set_lock(false, referenceUser);
+                setLock(false, referenceUser);
             }
             else if (getDoorState(referenceUser) != DOOR_LOCKED){
-                set_lock(true, referenceUser);
+                setLock(true, referenceUser);
             }
         }
     }

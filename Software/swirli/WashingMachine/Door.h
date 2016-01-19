@@ -12,8 +12,8 @@ namespace WashingMachine{
         Door(UARTHandler &uart);
 
         door_states_t getDoorState(UARTUser *referenceUser);
-        void set_lock(bool status, UARTUser *referenceUser);
-        void toggle_lock(UARTUser *referenceUser);
+        void setLock(bool status, UARTUser *referenceUser);
+        void toggleLock(UARTUser *referenceUser);
 
     private:
         UARTHandler uart;

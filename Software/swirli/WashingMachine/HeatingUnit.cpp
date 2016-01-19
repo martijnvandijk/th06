@@ -22,7 +22,7 @@ namespace WashingMachine{
         }
 
     }
-    void HeatingUnit::set_heatingunit(bool status, UARTUser *referenceUser){
+    void HeatingUnit::set(bool status, UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = HEATING_UNIT_REQ;
@@ -36,12 +36,12 @@ namespace WashingMachine{
     }
     
 
-    void HeatingUnit::toggle_heatingunit(UARTUser *referenceUser){
+    void HeatingUnit::toggle(UARTUser *referenceUser){
         if(getHeatingUnitState(referenceUser) == HEATINGUNIT_ON){
-            set_heatingunit(false, referenceUser);
+            set(false, referenceUser);
         }
         else if(getHeatingUnitState(referenceUser) == HEATINGUNIT_OFF){
-            set_heatingunit(true, referenceUser);
+            set(true, referenceUser);
         }
     }
 }

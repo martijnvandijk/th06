@@ -22,7 +22,7 @@ namespace WashingMachine{
         }
     }
 
-    void WaterValve::set_watervalve(bool status, UARTUser *referenceUser) {
+    void WaterValve::set(bool status, UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = WATER_VALVE_REQ;
@@ -35,12 +35,12 @@ namespace WashingMachine{
         uart.sendMessage(command);
     }
 
-    void WaterValve::toggle_watervalve (UARTUser *referenceUser) {
+    void WaterValve::toggle(UARTUser *referenceUser) {
             if(getWaterValveState(referenceUser) == VALVE_OPEN){
-                set_watervalve(false, referenceUser);
+                set(false, referenceUser);
             }
             else if (getWaterValveState(referenceUser) != VALVE_CLOSED){
-                set_watervalve(true, referenceUser);
+                set(true, referenceUser);
             }
     }
 }

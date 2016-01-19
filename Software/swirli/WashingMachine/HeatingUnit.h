@@ -12,8 +12,8 @@ namespace WashingMachine{
         HeatingUnit(UARTHandler &uart);
 
         heatingunit_states_t getHeatingUnitState(UARTUser *referenceUser);
-        void set_heatingunit(bool status, UARTUser *referenceUser);
-        void toggle_heatingunit(UARTUser *referenceUser);
+        void set(bool status, UARTUser *referenceUser);
+        void toggle(UARTUser *referenceUser);
 
     private:
         UARTHandler &uart;

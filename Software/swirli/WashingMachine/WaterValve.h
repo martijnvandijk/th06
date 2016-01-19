@@ -13,8 +13,8 @@ namespace WashingMachine{
         WaterValve(UARTHandler &uart);
 
         watervalve_states_t getWaterValveState(UARTUser *referenceUser);
-        void set_watervalve(bool status, UARTUser *referenceUser);
-        void toggle_watervalve(UARTUser *referenceUser);
+        void set(bool status, UARTUser *referenceUser);
+        void toggle(UARTUser *referenceUser);
     private:
     UARTHandler uart;
 

@@ -1,4 +1,19 @@
-//
+//    class SignalLed{
+    public:
+        /**
+         * @brief Constructor, specify UARTHandler
+         *
+         * @param uart The UARTHandler to be used for communicating with the emulator.
+         */
+        SignalLed(UARTHandler &uart);
+
+        signalled_states_t getStatus(UARTUser *referenceUser);
+        void setLed(signalled_states_t status, UARTUser *referenceUser);
+        void toggleLed(UARTUser *referenceUser);
+
+    private:
+        UARTHandler &uart;
+    }
 // Created by martijn on 1/14/16.
 //
 

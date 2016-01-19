@@ -12,9 +12,9 @@ namespace WashingMachine{
     public:
         Pump(UARTHandler &uart);
 
-        pump_states_t getPumpState(UARTUser *referenceUser);
-        void set_pump(bool status, UARTUser *referenceUser);
-        void toggle_pump(UARTUser *referenceUser);
+        pump_states_t getState(UARTUser *referenceUser);
+        void set(bool status, UARTUser *referenceUser);
+        void toggle(UARTUser *referenceUser);
 
     private:
         UARTHandler &uart;
