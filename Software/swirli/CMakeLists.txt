@@ -6,6 +6,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_subdirectory(libs/googletest-master)
 include_directories(${GTEST_INCLUDE_DIRS} libs)
 
+set(NetworkingSourceFiles
+		libs/networking/base64.h libs/networking/base64.cpp
+		libs/networking/broadcaster.h libs/networking/broadcaster.cpp
+		libs/networking/PracticalSocket.h libs/networking/PracticalSocket.cpp
+		libs/networking/websocket.h libs/networking/websocket.cpp
+		)
+
 set(WashingMachineSourceFiles
 		WashingMachine/Door.cpp					WashingMachine/Door.h
 		WashingMachine/HeatingUnit.cpp			WashingMachine/HeatingUnit.h
@@ -20,10 +27,8 @@ set(WashingMachineSourceFiles
 		WashingMachine/WashingMachineBoundary.h
 		WashingMachine/WaterLevelSensor.cpp		WashingMachine/WaterLevelSensor.h
 		WashingMachine/WaterValve.cpp			WashingMachine/WaterValve.h
-#        libs/Protocol.h
 		WashingMachine/UARTHandler.cpp			WashingMachine/UARTHandler.h
 		WashingMachine/UARTUser.h
-
 		WashingInstruction.h
 		WashingTask.cpp										WashingTask.h
 		WashingProgram.cpp									WashingProgram.h
@@ -46,10 +51,19 @@ set(MainSourceFiles
 	main.cpp
 )
 
-add_executable(swirli ${WashingMachineSourceFiles} ${MainSourceFiles} ${RTOS_SourceFiles})
+add_executable(swirli
+		${WashingMachineSourceFiles}
+		${MainSourceFiles}
+		${RTOS_SourceFiles}
+		${NetworkingSourceFiles}
+		)
 target_link_libraries(swirli pthread rt)
 
-add_executable(swirli_testing test_main.cpp ${WashingMachineSourceFiles} ${RTOS_SourceFiles})
+add_executable(swirli_testing
+		test_main.cpp
+		${WashingMachineSourceFiles}
+		${RTOS_SourceFiles}
+		)
 target_link_libraries(swirli_testing gtest pthread rt)
 
 if (CMAKE_CROSSCOMPILING)
