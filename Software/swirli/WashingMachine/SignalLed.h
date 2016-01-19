@@ -1,9 +1,12 @@
 #ifndef WASHINGMACHINE_LED_H
 #define WASHINGMACHINE_LED_H
-
+#include "../libs/Protocol.h"
+#include "../libs/libserial.h"
+#include "UARTUser.h"
 #include "UARTHandler.h"
 
 namespace WashingMachine{
+    enum signalled_states_t{LED_ON, LED_OFF};
     class SignalLed{
     public:
         /**
@@ -13,36 +16,10 @@ namespace WashingMachine{
          */
         SignalLed(UARTHandler &uart);
 
-        /**
-         * @brief Get the current status of the status LED
-         * 
-         * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         * @return true for on, false for off
-         */
-        bool getStatus(UARTUser *referenceUser);
+        signalled_states_t getStatus(UARTUser *referenceUser);
+        void set_led(bool status, UARTUser *referenceUser);
+        void toggle_led(UARTUser *referenceUser);
 
-        /**
-         * @brief Toggle the status LED status
-         * @details Turns the status LED on when off, and off when on.
-         * 
-         * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         */
-        void toggle(UARTUser *referenceUser);
-        
-        /**
-         * @brief Enable the status LED
-         * 
-         * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         */
-        void enable(UARTUser *referenceUser);
-
-        /**
-         * @brief Disable the status LED
-         * @details [long description]
-         * 
-         * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         */
-        void disable(UARTUser *referenceUser);
     private:
         UARTHandler &uart;
     };
