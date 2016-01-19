@@ -8,9 +8,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    door_states_t Door::getDoorState(UARTUser *referenceUser) {
-        uint8_t *readBuf[2];
-
+    door_states_t Door::getState(UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = DOOR_LOCK_REQ;
@@ -20,31 +18,30 @@ namespace WashingMachine{
 
         switch(reply){
             case LOCKED: return DOOR_LOCKED; break;
-            case CLOSED: return DOOR_CLOSED; break;
+            case CLOSED: return DOOR_UNLOCKED_CLOSED; break;
             case OPENED: return DOOR_OPENED; break;
         }
     }
 
-    void Door::setLock(bool status, UARTUser *referenceUser) {
+    void Door::set(door_states_t state, UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = DOOR_LOCK_REQ;           
-        if(status){
+        if(state == DOOR_LOCKED){
             command.commandByte = LOCK_CMD;
         }
-        else{
+        else if(state == DOOR_UNLOCKED_CLOSED){
             command.commandByte = UNLOCK_CMD;
         }
         uart.sendMessage(command);
     }
-
-    void Door::toggleLock(UARTUser *referenceUser) {
-        if(getDoorState(referenceUser) == DOOR_CLOSED){
-            if(getDoorState(referenceUser) == DOOR_LOCKED){
-                setLock(false, referenceUser);
+    void Door::toggle(UARTUser *referenceUser) {
+        if(getState(referenceUser) != DOOR_OPENED){
+            if(getState(referenceUser) == DOOR_LOCKED){
+                set(DOOR_UNLOCKED_CLOSED, referenceUser);
             }
-            else if (getDoorState(referenceUser) != DOOR_LOCKED){
-                setLock(true, referenceUser);
+            else{
+                set(DOOR_UNLOCKED_CLOSED, referenceUser);
             }
         }
     }

@@ -5,9 +5,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    heatingunit_states_t HeatingUnit::getHeatingUnitState(UARTUser *referenceUser){
-        uint8_t *readBuf[2];
-
+    heatingunit_states_t HeatingUnit::getState(UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = HEATING_UNIT_REQ;
@@ -22,14 +20,14 @@ namespace WashingMachine{
         }
 
     }
-    void HeatingUnit::set(bool status, UARTUser *referenceUser){
+    void HeatingUnit::set(heatingunit_states_t state, UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = HEATING_UNIT_REQ;
-        if(status){
+        if(state == HEATINGUNIT_ON){
             command.commandByte = ON_CMD;
         }
-        else{
+        else if(state == HEATINGUNIT_OFF){
             command.commandByte = OFF_CMD;
         }
         uart.sendMessage(command);
@@ -37,11 +35,11 @@ namespace WashingMachine{
     
 
     void HeatingUnit::toggle(UARTUser *referenceUser){
-        if(getHeatingUnitState(referenceUser) == HEATINGUNIT_ON){
-            set(false, referenceUser);
+        if(getState(referenceUser) == HEATINGUNIT_ON){
+            set(HEATINGUNIT_OFF, referenceUser);
         }
-        else if(getHeatingUnitState(referenceUser) == HEATINGUNIT_OFF){
-            set(true, referenceUser);
+        else if(getState(referenceUser) == HEATINGUNIT_OFF){
+            set(HEATINGUNIT_ON, referenceUser);
         }
     }
 }
