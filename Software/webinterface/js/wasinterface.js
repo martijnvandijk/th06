@@ -127,20 +127,26 @@ window.onload = function() {
 		var temp_selected = temp_dropdown.options[temp_dropdown.selectedIndex].value;
 		
 		// Get the selected time until start of program
-		var duration_value = document.getElementById("duration").value;
+		var delay_value = document.getElementById("duration").value;
 		
 		// Send a start command to the websocket, along with a few parameters
-		window.socket.send("start_wash " + was_selected + " " + temp_selected  + " " + duration_value);
+		var json = {"request" : "StartWashingProgram", 
+					{
+						"Program" : was_selected, 
+						"Temperature" : temp_selected, 
+						"Delay" : delay_value
+					}};
+		window.socket.send(JSON.stringify(json));
 		
 		// Parse reply; show to use that the program has been started
 	}
 	
 	// Perform function when stop button is pressed
 	stop_button.onclick = function() {
-		// Send a stop command to the websocket
-		window.socket.send("stop_wash");
 		
-		// Parse reply; show to use that the program has been stopped
+		// Send a start command to the websocket, along with a few parameters
+		var json = {"request" : "StopWashingProgram"};
+		window.socket.send(JSON.stringify(json));
 	}
 	
 	// Perform function when update button is pressed
@@ -148,11 +154,10 @@ window.onload = function() {
 		update_screen.style.display = "none";
 		// Perform an update (read update file, place into wasprogramma's array and tell the user a new program has been added)
 		
-		// Send an update_wasprogramma command to the websocket
-		window.socket.send("fetch_update");
+		// Send a start command to the websocket, along with a few parameters
+		var json = {"request" : "StartWashingProgram"};
+		window.socket.send(JSON.stringify(json));
 	}
-	
-	
 }
 
 /*
@@ -163,11 +168,13 @@ function save_settings(pin, recovery) {
 	
 	if(!pin) { pin = window.user_json.pin; } // If the new_pin is empty, fill it with the current pin number
 	
-	// Create a json array
-	var new_settings = '{"pin" : "'+ pin +'", "recovery" : "'+ recovery +'"}';
-	
-	// Send an update_user command to the websocket
-	window.socket.send("update_user" + " " + new_settings);
+	// Send a start command to the websocket, along with a few parameters
+	var json = {"request" : "UpdateUser", 
+				{
+					"Pin" : pin, 
+					"RecoveryMethod" : recovery
+				}};
+	window.socket.send(JSON.stringify(json));
 }
 
 /*
@@ -176,16 +183,18 @@ function save_settings(pin, recovery) {
 */
 function fetch_wasprogrammas() { 
 	// Retrieve wasprogramma's from the websocket
-	// window.websocket.send("fetch_wash");
+	// Send a start command to the websocket, along with a few parameters
+	var json = {"request" : "FetchWashingProgram"};
+	window.socket.send(JSON.stringify(json));
 	
 	var was_dropdown = document.getElementById("wasprogrammas");
 
 	for(var i = 0; i < window.page_json.length; i++) {
 		var option = document.createElement("option");
 		
-		option.textContent = window.page_json[i][0];
+		option.textContent = window.page_json[i][0]; // Fill the text content of the dropdown
 		option.label = window.page_json[i][0].replace(' was', ''); // Set a label so the start command can send a name that does not contain spaces
-		option.value = i;
+		option.value = i; // Give the option an ID that can be used to populate the temperature dropdown
 		
 		was_dropdown.appendChild(option);
 	}
