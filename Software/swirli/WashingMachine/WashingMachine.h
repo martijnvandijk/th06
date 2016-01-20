@@ -19,25 +19,20 @@ namespace WashingMachine {
     class WashingMachine {
     public:
         WashingMachine(
-                Door &door,
-                HeatingUnit &heatingUnit,
-                Motor &motor,
-                Pump &pump,
-                SignalLed &signalLed,
-                SoapDispenser &soapDispenser,
-                TemperatureSensor &temperatureSensor,
-                WaterLevelSensor &waterLevelSensor,
-                WaterValve &waterValve
+                UARTHandler &uart
         ) :
-                door(door),
-                heatingUnit{heatingUnit},
-                motor{motor},
-                pump{pump},
-                signalLed{signalLed},
-                soapDispenser{soapDispenser},
-                temperatureSensor{temperatureSensor},
-                waterLevelSensor{waterLevelSensor},
-                waterValve{waterValve} { }
+                uart{uart},
+                door(uart),
+                heatingUnit(uart),
+                motor(uart),
+                pump(uart),
+                signalLed(uart),
+                soapDispenser(uart),
+                temperatureSensor(uart),
+                waterLevelSensor(uart),
+                waterValve(uart)
+        {
+            }
 
 
         Door &getDoor() const {
@@ -77,15 +72,16 @@ namespace WashingMachine {
         }
 
     private:
-        Door &door;
-        HeatingUnit &heatingUnit;
-        Motor &motor;
-        Pump &pump;
-        SignalLed &signalLed;
-        SoapDispenser &soapDispenser;
-        TemperatureSensor &temperatureSensor;
-        WaterLevelSensor &waterLevelSensor;
-        WaterValve &waterValve;
+        UARTHandler &uart;
+        Door door;
+        HeatingUnit heatingUnit;
+        Motor motor;
+        Pump pump;
+        SignalLed signalLed;
+        SoapDispenser soapDispenser;
+        TemperatureSensor temperatureSensor;
+        WaterLevelSensor waterLevelSensor;
+        WaterValve waterValve;
     };
 }
 

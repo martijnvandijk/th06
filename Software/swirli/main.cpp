@@ -6,13 +6,15 @@
 #include "Protocol.h"
 #include "WashingMachine/UARTHandler.h"
 #include "WashingMachine/UARTUser.h"
+#include "WashingMachine/WashingMachine.h"
+
 #define debug_task_logging_1
 using namespace std;
 
 class UARTTest : public WashingMachine::UARTUser {
 public:
-    UARTTest(WashingMachine::Motor &motor) :
-            motor(motor),
+    UARTTest(WashingMachine::WashingMachine &washingMachine) :
+            washingMachine(washingMachine),
             WashingMachine::UARTUser{98} {
 
     }
@@ -20,19 +22,19 @@ public:
     void main() {
         while (true) {
             std::cout << "starting motor" << std::endl;
-            motor.setRPM(100,this);
-            std::cout << motor.getRPM(this) << std::endl;
+            washingMachine.getMotor().setRPM(100,this);
+            std::cout << washingMachine.getMotor().getRPM(this) << std::endl;
             sleep(1 S);
             std::cout << "stopping motor" << std::endl;
-            motor.setRPM(0,this);
-            std::cout << motor.getRPM(this) << std::endl;
+            washingMachine.getMotor().setRPM(0,this);
+            std::cout << washingMachine.getMotor()l.getRPM(this) << std::endl;
             sleep(1 S);
         }
     }
 
 
 private:
-    WashingMachine::Motor &motor;
+    WashingMachine::WashingMachine &washingMachine;
 };
 
 int main() {
