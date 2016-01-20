@@ -51,7 +51,8 @@ window.onload = function() {
 	*/
 	var pin_field = document.getElementById("pinfield");
 	
-	loadJSON("js/usersettings.json"); // Load the user settings	
+	var json = {"request" : "FetchWashingProgram"};
+	window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
 	
 	// Check if the user is logged in
 	if(user_login == false) {
@@ -59,11 +60,11 @@ window.onload = function() {
 		login_screen.style.display = "block";
 	}
 	
-	// When the user clicks on the recovery link 
+	/*
 	recovery_link.onclick = function() {
 		document.getElementById("recoveryprompt").style.display = "block";
-		recovery_mode = true;
 	};
+	*/
 	
 	// Perform function when the pin button is pressed
 	pin_button.onclick = function() {
@@ -178,15 +179,10 @@ function save_settings(pin, recovery) {
 }
 
 /*
-	Populate the webpage with values obtained from the "wasprogrammas" file
-	Uses JSON
+	Populate the webpage with values obtained from the server
+	Call this function only after the server has replied with a JSON array
 */
-function fetch_wasprogrammas() { 
-	// Retrieve wasprogramma's from the websocket
-	// Send a start command to the websocket, along with a few parameters
-	var json = {"request" : "FetchWashingProgram"};
-	window.socket.send(JSON.stringify(json));
-	
+function populate_wasprogrammas() { 
 	var was_dropdown = document.getElementById("wasprogrammas");
 
 	for(var i = 0; i < window.page_json.length; i++) {
@@ -244,7 +240,7 @@ function loadJSON(path) {
 				console.log(jsonArray);
 			} else if(path == "js/wasprogrammas.json") {
 				window.page_json = jsonArray;
-				fetch_wasprogrammas();
+				populate_wasprogrammas();
 			}
 		}
 	};
