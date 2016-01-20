@@ -37,8 +37,11 @@ set(WashingMachineSourceFiles
 		WashingInstructions/SetTemperatureInstruction.cpp	WashingInstructions/SetTemperatureInstruction.h
 		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
 		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
+		WashingInstructions/WaitTimeInstruction.cpp			WashingInstructions/WaitTimeInstruction.h
 		TemperatureRegulator.h
-		WaterLevelRegulator.h)
+		WaterLevelRegulator.h
+
+		LogController.cpp						LogController.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h

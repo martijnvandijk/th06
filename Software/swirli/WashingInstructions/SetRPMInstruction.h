@@ -9,6 +9,7 @@
 #include "../WashingMachine/Motor.h"
 
 class SetRPMInstruction : public WashingInstruction {
+public:
 	SetRPMInstruction(WashingMachine::Motor &motor, int rmp);
 
 	virtual void execute(WashingMachine::UARTUser *user) override;
