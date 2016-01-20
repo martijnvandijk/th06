@@ -1,9 +1,9 @@
 Commando's voor de webserver --
-fetch_user = opvragen json array usergegevens
-fetch_update = installeren nieuw wasprogramma
-update_user [pincode] [recovery methode] = opslaan user gegevens
-fetch_wash = opvragen json array wasprogramma's
-start_wash [wasprogramma] [temperatuur] [duur wasprogramma] = start wasprogramma
-stop_wash = stop wasprogramma
-poll_wash_state = opvragen huidige staat wasprogramma
-poll_wash_time = opvragen tijd in wasprogramma
+FetchUserSettings - Opvragen van de pincode en recovery methode
+FetchUpdate - Opdracht geven dat het nieuwe wasprogramma moet worden toegevoegd aan de lijst van huidige wasprogramma's
+UpdateUser - De gegevens die worden meegegeven opslaan in de user settings
+FetchWashingProgram - De namen van alle wasprogramma's, de temperaturen die elke wasprogramma kan toepassen en de tijd van dit wasprogramma.
+StartWashingProgram - Starten van het wasprogramma
+StopWashingProgram - Stoppen van het wasprogramma
+FetchWashingState - Opvragen van de huidige staat van het wasprogramma
+FetchWashingTime - Fetch the current time in the washing process
