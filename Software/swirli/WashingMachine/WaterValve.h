@@ -27,7 +27,7 @@ namespace WashingMachine{
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
          * @return heatingunit_states_t Returns the enum VALVE_OPEN or VALVE_CLOSED
          */
-         watervalve_states_t getWaterValveState(UARTUser *referenceUser);
+         watervalve_states_t getState(UARTUser *referenceUser);
         /**
           * @brief set Sets the hwater valve to either the open or closed state
           * @param state The state the water valve will be set to
@@ -41,7 +41,6 @@ namespace WashingMachine{
           void toggle(UARTUser *referenceUser);
       private:
         UARTHandler &uart;
-
     };
 }
 
