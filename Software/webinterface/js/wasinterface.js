@@ -17,8 +17,8 @@ window.onload = function() {
 		Values (booleans, ints, json arrays)
 	*/
 	var user_login = false; // bool
-	var update_available = true;
-	var show_menu = false; // bool
+	var update_available = true; // bool; Whether or not there's an update available
+	var show_menu = false; // bool; Whether or not the user menu is being shown
 	window.user_json; // json array containing user settings
 	window.page_json; // json array for populating the page
 	var entered_pin; // int
@@ -32,6 +32,11 @@ window.onload = function() {
 	var start_button = document.getElementById("startbutton");
 	var stop_button = document.getElementById("stopbutton");
 	var update_button = document.getElementById("updatebutton");
+	
+	/*
+		Links
+	*/
+	var recovery_link = document.getElementById("recoverylink");
 	
 	/*
 		Visual elements (pop-up's, menu's)
@@ -49,10 +54,16 @@ window.onload = function() {
 	loadJSON("js/usersettings.json"); // Load the user settings	
 	
 	// Check if the user is logged in
-	if(user_login == false) {	
+	if(user_login == false) {
 		navbar.style.display = "none";
 		login_screen.style.display = "block";
 	}
+	
+	// When the user clicks on the recovery link 
+	recovery_link.onclick = function() {
+		document.getElementById("recoveryprompt").style.display = "block";
+		recovery_mode = true;
+	};
 	
 	// Perform function when the pin button is pressed
 	pin_button.onclick = function() {
@@ -99,6 +110,7 @@ window.onload = function() {
 			} else { // If not, the only other option must be selected
 				save_settings(new_pin, "cancel");
 			}
+			recovery_mode = false;
 			document.getElementById("user_menu").style.display = "none";
 			show_menu = false;
 		}
@@ -139,6 +151,8 @@ window.onload = function() {
 		// Send an update_wasprogramma command to the websocket
 		window.socket.send("fetch_update");
 	}
+	
+	
 }
 
 /*
