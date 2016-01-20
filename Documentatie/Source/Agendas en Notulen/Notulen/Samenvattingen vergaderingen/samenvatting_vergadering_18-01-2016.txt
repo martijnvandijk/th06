@@ -1,13 +1,5 @@
 Notities koffiepraat
 
 Aydin zal beginnen aan het technisch verslag.
-
-Commando's voor de webserver --
-fetch_user = opvragen usergegevens
-save_pin [pincode] = opslaan nieuw pincode
-save_recovery [recovery] = opslaan recovery methode
-fetch_wash = opvragen wasprogramma's
-start_wash = start wasprogramma
-stop_wash = stop wasprogramma
-poll_wash_state = opvragen huidige staat wasprogramma
-poll_wash_time = opvragen tijd in wasprogramma
+Aydin zal de lijst van webinterface commando's in een apart bestand zetten.
+Aydin zal de code voor de webinterface voorzien van meer commentaar.

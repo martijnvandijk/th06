@@ -1,17 +1,8 @@
 window.onload = function() {
 	window.socket = WebSocketConnect(); // Connect to the websocket
 	
-	/* 	Websocket Commands
-	
-		fetch_user = opvragen usergegevens
-		fetch_update = verkrijgen nieuw wasprogramma
-		update_user [pincode] [recovery methode] = opslaan user gegevens
-		fetch_wash = opvragen wasprogramma's
-		start_wash [wasprogramma] [temperatuur] [duur wasprogramma]= start wasprogramma
-		stop_wash = stop wasprogramma
-		poll_wash_state = opvragen huidige staat wasprogramma
-		poll_wash_time = opvragen tijd in wasprogramma
-	*/
+	loadJSON("js/usersettings.json");
+	loadJSON("js/wasprogrammas.json");
 	
 	/*
 		Values (booleans, ints, json arrays)
@@ -50,10 +41,7 @@ window.onload = function() {
 		Input elements
 	*/
 	var pin_field = document.getElementById("pinfield");
-	
-	var json = {"request" : "FetchWashingProgram"};
-	window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
-	
+		
 	// Check if the user is logged in
 	if(user_login == false) {
 		navbar.style.display = "none";
@@ -132,11 +120,12 @@ window.onload = function() {
 		
 		// Send a start command to the websocket, along with a few parameters
 		var json = {"request" : "StartWashingProgram", 
-					{
-						"Program" : was_selected, 
-						"Temperature" : temp_selected, 
-						"Delay" : delay_value
-					}};
+						"Parameters" : {
+							"Program" : was_selected, 
+							"Temperature" : temp_selected, 
+							"Delay" : delay_value
+						}
+				   };
 		window.socket.send(JSON.stringify(json));
 		
 		// Parse reply; show to use that the program has been started
@@ -171,10 +160,11 @@ function save_settings(pin, recovery) {
 	
 	// Send a start command to the websocket, along with a few parameters
 	var json = {"request" : "UpdateUser", 
-				{
-					"Pin" : pin, 
-					"RecoveryMethod" : recovery
-				}};
+					"Parameters" : {
+						"Pin" : pin, 
+						"RecoveryMethod" : recovery
+					}
+			   };
 	window.socket.send(JSON.stringify(json));
 }
 
@@ -256,7 +246,15 @@ function loadJSON(path) {
 function WebSocketConnect() {
 	if ("WebSocket" in window) {
 		ws = new WebSocket("ws://10.10.0.10:2222");
-		ws.onopen = function(evt) { console.log("connection open"); };
+		ws.onopen = function(evt) { 
+			console.log("connection open");
+			
+			var json = {"request" : "FetchUserSettings"};
+			window.socket.send(JSON.stringify(json)); // Request the user settings from the server
+			
+			json = {"request" : "FetchWashingProgram"};
+			window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
+		};
 		ws.onclose = function(evt) { console.log("connection closed"); };
 		ws.onmessage = function(evt) { console.log("Received message: " + evt) };
 		ws.onerror = function(evt) { console.log("websocket error: " + evt); };
