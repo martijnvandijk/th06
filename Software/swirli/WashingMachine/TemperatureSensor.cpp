@@ -14,6 +14,4 @@ namespace WashingMachine{
         return referenceUser->getReplyPoolContents();
     }
 
-
-
 }

@@ -30,44 +30,43 @@ namespace WashingMachine {
                 soapDispenser(uart),
                 temperatureSensor(uart),
                 waterLevelSensor(uart),
-                waterValve(uart)
-        {
-            }
+                waterValve(uart) {
+        }
 
 
-        Door &getDoor() const {
+        Door &getDoor()  {
             return door;
         }
 
-        HeatingUnit &getHeatingUnit() const {
+        HeatingUnit &getHeatingUnit()  {
             return heatingUnit;
         }
 
-        Motor &getMotor() const {
+        Motor &getMotor()  {
             return motor;
         }
 
-        Pump &getPump() const {
+        Pump &getPump(){
             return pump;
         }
 
-        SignalLed &getSignalLed() const {
+        SignalLed &getSignalLed()  {
             return signalLed;
         }
 
-        SoapDispenser &getSoapDispenser() const {
+        SoapDispenser &getSoapDispenser()  {
             return soapDispenser;
         }
 
-        TemperatureSensor &getTemperatureSensor() const {
+        TemperatureSensor &getTemperatureSensor()  {
             return temperatureSensor;
         }
 
-        WaterLevelSensor &getWaterLevelSensor() const {
+        WaterLevelSensor &getWaterLevelSensor()  {
             return waterLevelSensor;
         }
 
-        WaterValve &getWaterValve() const {
+        WaterValve &getWaterValve() {
             return waterValve;
         }
 

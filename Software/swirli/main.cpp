@@ -27,7 +27,7 @@ public:
             sleep(1 S);
             std::cout << "stopping motor" << std::endl;
             washingMachine.getMotor().setRPM(0,this);
-            std::cout << washingMachine.getMotor()l.getRPM(this) << std::endl;
+            std::cout << washingMachine.getMotor().getRPM(this) << std::endl;
             sleep(1 S);
         }
     }
@@ -64,8 +64,8 @@ int main() {
     serial.write(commandStart,2);
     serial.flush();
     WashingMachine::UARTHandler handler(serial);
-    WashingMachine::Motor motor(handler);
-    UARTTest test(motor);
+    WashingMachine::WashingMachine washingMachine(handler);
+    UARTTest test(washingMachine);
 
     RTOS::run();
     return 0;

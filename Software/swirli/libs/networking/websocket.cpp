@@ -89,15 +89,28 @@ void WebSocket::setListener(WebSocketListener* l){
 	theListener = l;
 }
 
-/*
- * Process message from the websocket
- * 
-*/
-void WebSocket::handleMessage(const string &message) throw (WebSocketException, SocketException){
+void WebSocket::sendTextMessage(const string &message) throw (WebSocketException, SocketException){
 	if(closing) throw WebSocketException("you must not send message while closing");
-	
-	cout << message << endl;
-	
+	size_t payloadlen = message.length();
+	char* frame;
+	char opcode = 0x81;
+	if(payloadlen < 126){
+		frame = new char[2 + payloadlen];
+		frame[0] = opcode;
+		frame[1] = payloadlen;
+		memcpy(frame+2, message.c_str(), payloadlen);
+		sock->send(frame, payloadlen+2);
+	}
+	else if(payloadlen >= 126){
+		frame = new char[4 + payloadlen];
+		frame[0] = opcode;
+		frame[1] = 126;
+		frame[2] = payloadlen >> 8;
+		frame[3] = payloadlen & 0xFF;
+		memcpy(frame+4, message.c_str(), payloadlen);
+		sock->send(frame, payloadlen+4);
+	}
+	delete[] frame;
 }
 
 
@@ -188,19 +201,19 @@ void WebSocket::processFrame() throw(WebSocketException, SocketException){
 	cout << "processing frame" << endl;
 	unsigned char tmp[4];
 	size_t n = sock->recvFully(tmp,2);
-	if(n < 2) throw WebSocketException("connection closed while processing frame1");
+	if(n < 2) throw WebSocketException("connection closed while processing frame");
 	bool fin  = tmp[0] & 0x80; // bit 0
 	int  opc  = tmp[0] & 0x0F; // bits 4, 5, 6, 7
 	bool masked = tmp[1] & 0x80; //bit 8
 	uint64_t payloadlen  = tmp[1] & 0x7F; // bits 9-15
 	if(payloadlen == 126){
 		n = sock->recvFully(tmp,2);
-		if(n < 2) throw WebSocketException("connection closed while processing frame2");
+		if(n < 2) throw WebSocketException("connection closed while processing frame");
 		payloadlen = (tmp[0] << 8) + tmp[1];
 	}
 	else if(payloadlen == 127){
 		n = sock->recvFully(tmp,8);
-		if(n < 8) throw WebSocketException("connection closed while processing frame3");
+		if(n < 8) throw WebSocketException("connection closed while processing frame");
 		payloadlen = 0;
 		for(int i = 0; i < 8; i++){
 			payloadlen <<= 8;
@@ -210,12 +223,12 @@ void WebSocket::processFrame() throw(WebSocketException, SocketException){
 	char mask[4];
 	if (masked){
 		n = sock->recvFully(mask,4);
-		if(n < 4) throw WebSocketException("connection closed while processing frame4");
+		if(n < 4) throw WebSocketException("connection closed while processing frame");
 	}
 	if (payloadlen > 0) {
 		char * payload = new char[payloadlen];
 		n = sock->recvFully(payload, payloadlen);
-		if(n < payloadlen) throw WebSocketException("connection closed while processing frame5");
+		if(n < payloadlen) throw WebSocketException("connection closed while processing frame");
 		if (masked) {
 			char * ptr = payload;
 			for (size_t i = 0; i < payloadlen; ++i)
@@ -242,7 +255,7 @@ void WebSocket::processFrame() throw(WebSocketException, SocketException){
 	//handle message
 	switch(opc){
 		case 0x1: {
-			//cout << "textframe" << endl;
+			cout << "textframe" << endl;
 			string s (data, datalen);
 			if (theListener != NULL) theListener->onTextMessage(s, this);
 			break;

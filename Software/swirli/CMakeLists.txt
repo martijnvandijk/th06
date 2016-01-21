@@ -8,10 +8,11 @@ include_directories(${GTEST_INCLUDE_DIRS} libs)
 
 set(NetworkingSourceFiles
 		libs/networking/base64.h libs/networking/base64.cpp
-		libs/networking/broadcaster.h libs/networking/broadcaster.cpp
 		libs/networking/PracticalSocket.h libs/networking/PracticalSocket.cpp
 		libs/networking/websocket.h libs/networking/websocket.cpp
-		)
+
+		WebSocketHandler.h WebSocketHandler.cpp
+		WebSocketPacket.cpp WebSocketPacket.h SwirliListener.cpp SwirliListener.h)
 
 set(WashingMachineSourceFiles
 		WashingMachine/Door.cpp					WashingMachine/Door.h
@@ -38,7 +39,9 @@ set(WashingMachineSourceFiles
 		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
 		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
 		TemperatureRegulator.h
-		WaterLevelRegulator.h)
+		WaterLevelRegulator.h
+		WebInterfaceHandler.h WebInterfaceHandler.cpp
+		WashingMachine/WashingMachine.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h
@@ -57,14 +60,14 @@ add_executable(swirli
 		${RTOS_SourceFiles}
 		${NetworkingSourceFiles}
 		)
-target_link_libraries(swirli pthread rt)
+target_link_libraries(swirli pthread rt crypto)
 
 add_executable(swirli_testing
 		test_main.cpp
 		${WashingMachineSourceFiles}
 		${RTOS_SourceFiles}
 		)
-target_link_libraries(swirli_testing gtest pthread rt)
+target_link_libraries(swirli_testing gtest pthread rt crypto)
 
 if (CMAKE_CROSSCOMPILING)
 	add_custom_target(swirli_pi)

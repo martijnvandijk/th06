@@ -6,8 +6,19 @@
 #define SWIRLI_WEBSOCKETPACKET_H
 
 
-class WebSocketPacket {
+#include <networking/websocket.h>
+#include <rapidjson/document.h>
 
+class WebSocketPacket {
+public:
+    WebSocketPacket(const char *json, WebSocket *ws);
+    rapidjson::Document &getDoc();
+
+    WebSocket * getWebsocket();
+
+private:
+    rapidjson::Document doc;
+    WebSocket *ws;
 };
 
 
