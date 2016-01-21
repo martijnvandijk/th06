@@ -68,7 +68,7 @@ TEST(WashingProgram, Complete) {
 //	task.addInstruction(new WaitTimeInstruction{1 S});
 	program.addTask(task);
 
-	LogController logController{};
+	LogController logController{std::cout};
 	TestProgramUser test{program, logController};
 
 	RTOS::display_statistics();
