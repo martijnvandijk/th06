@@ -9,6 +9,7 @@ window.onload = function() {
 	*/
 	var user_login = false; // bool
 	var update_available = false; // bool; Whether or not there's an update available
+	var recovery_mode = false;
 	var show_menu = false; // bool; Whether or not the user menu is being shown
 	window.user_json; // json array containing user settings
 	window.page_json; // json array for populating the page
@@ -50,17 +51,22 @@ window.onload = function() {
 	
 	check_update_status();
 	
-	/*
 	recovery_link.onclick = function() {
 		document.getElementById("recoveryprompt").style.display = "block";
+		recovery_mode = true;
 	};
-	*/
 	
 	// Perform function when the pin button is pressed
 	pin_button.onclick = function() {
 		entered_pin = pin_field.value;
 		
-		if(window.user_json.pin == entered_pin) {
+		if(recovery_mode == true) {
+			var pin_code = 01189998819991197253; // Emergency services phone number
+		} else {
+			var pin_code = window.user_json.pin; // The pin code is simply the user pin
+		}
+		
+		if(pin_code == entered_pin) {
 			loadJSON("js/wasprogrammas.json"); // After the user has successfully logged in, populate the webpage with data from the "wasprogramma" file
 			
 			user_login = true;
@@ -117,20 +123,19 @@ window.onload = function() {
 		var temp_dropdown = document.getElementById("temperaturen");
 		var temp_selected = temp_dropdown.options[temp_dropdown.selectedIndex].value;
 		
-		// Get the selected time until start of program
-		var delay_value = document.getElementById("duration").value;
+		var delay_value = document.getElementById("duration").value; // Get the selected time until start of program
+		var time = delay_value.split(":"); // Split the time by the : delimiter
+		var delay = (parseInt(time[0]) * 60) + parseInt(time[1]); // Get the amount of minutes and convert them to integers, then add them up
 		
 		// Send a start command to the websocket, along with a few parameters
 		var json = {"request" : "StartWashingProgram", 
 						"Parameters" : {
 							"Program" : was_selected, 
 							"Temperature" : temp_selected, 
-							"Delay" : delay_value
+							"Delay" : delay
 						}
 				   };
 		window.socket.send(JSON.stringify(json));
-		
-		// Parse reply; show to use that the program has been started
 	}
 	
 	// Perform function when stop button is pressed
@@ -258,7 +263,7 @@ function WebSocketConnect() {
 			window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
 		};
 		ws.onclose = function(evt) { console.log("connection closed"); };
-		ws.onmessage = function(evt) { console.log("Received message: " + evt) };
+		ws.onmessage = function(evt) { process_message(evt); };
 		ws.onerror = function(evt) { console.log("websocket error: " + evt); };
 		return ws;
 	} else {
@@ -266,9 +271,26 @@ function WebSocketConnect() {
 	}
 }
 
+function process_message(message) {
+	console.log("Ontvangen bericht: " + message.data);
+	
+	/*
+	switch(message.data.request) {
+		case "UserSettings":
+			window.user_json[0] = message.data.pin;
+			window.user_json[1] = message.data.recovery;
+			break;
+		default: 
+			console.log("Warning: Unknown message recieved: " + message.data);
+			break;
+	}
+	*/
+}
+
 function check_update_status() {
-	// Send a signal to the websockt to check if there is an update available
+	// Send a signal to (or recieve from) the websocket to check if there is an update available
 	// If so, set update_available to true
 	
-	update_available = true;
+	console.log("check_update_status()");
+	//update_available = true;
 }
