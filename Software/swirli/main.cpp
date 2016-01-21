@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 
 #include "WashingMachine/Motor.h"
 
@@ -7,6 +8,7 @@
 #include "WashingMachine/UARTHandler.h"
 #include "WashingMachine/UARTUser.h"
 #include "WashingMachine/WashingMachine.h"
+#include "WebSocketHandler.h"
 
 #define debug_task_logging_1
 using namespace std;
@@ -63,9 +65,19 @@ int main() {
 
     serial.write(commandStart,2);
     serial.flush();
+
+
     WashingMachine::UARTHandler handler(serial);
     WashingMachine::WashingMachine washingMachine(handler);
     UARTTest test(washingMachine);
+
+    WebInterfaceHandler webInterfaceHandler(washingMachine);
+    WebSocketHandler webSocketHandler(2222,webInterfaceHandler);
+
+    //doesn't seem to work :S
+    std::thread websocketserver(webSocketHandler.runServer);
+    websocketserver.detach();
+//    std::thread webSocketThread(webSocketHandler.runServer);
 
     RTOS::run();
     return 0;
