@@ -18,6 +18,11 @@ using namespace std;
 #include "WashingInstructions/SetRPMInstruction.h"
 #include "WashingInstructions/WaitTimeInstruction.h"
 #include "WashingInstructions/SetDoorLockInstruction.h"
+#include "WashingInstructions/SetWaterLevelInstruction.h"
+#include "TemperatureController.h"
+#include "WaterLevelController.h"
+#include "WashingMachine/SensorHandler.h"
+#include "WashingMachine/WaterLevelSensor.h"
 
 class TestProgramUser: public WashingMachine::UARTUser {
 public:
@@ -53,26 +58,37 @@ TEST(WashingProgram, Complete) {
 
 	WashingMachine::UARTHandler uartHandler{libSerial};
 	WashingMachine::Motor motor{uartHandler};
-//	WashingMachine::Door door{uartHandler};
+	WashingMachine::Door door{uartHandler};
+	WashingMachine::Pump pump{uartHandler};
+	WashingMachine::WaterValve waterValve{uartHandler};
+
+//	TemperatureController temperatureController{};
+	SensorHandler handler{};
+	WashingMachine::WaterLevelSensor waterLevelSensor{uartHandler};
+	handler.addSensor(&waterLevelSensor);
+	WaterLevelController waterLevelController{pump, waterValve};
+	waterLevelSensor.subscribe(&waterLevelController);
 
 	WashingProgram program{};
 	WashingTask task{};
-//	task.addInstruction(new SetDoorLockInstruction{door, true});
-	task.addInstruction(new SetRPMInstruction{motor, 100});
-	task.addInstruction(new WaitTimeInstruction{1 S});
-	task.addInstruction(new SetRPMInstruction{motor, -100});
-	task.addInstruction(new WaitTimeInstruction{1 S});
+	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 50});
+	task.addInstruction(new SetRPMInstruction{motor, 600});
+	task.addInstruction(new WaitTimeInstruction{5 S});
+	task.addInstruction(new SetRPMInstruction{motor, -600});
+	task.addInstruction(new WaitTimeInstruction{5 S});
 	task.addInstruction(new SetRPMInstruction{motor, 0});
-	task.addInstruction(new WaitTimeInstruction{1 S});
-//	task.addInstruction(new SetDoorLockInstruction{door, true});
-//	task.addInstruction(new WaitTimeInstruction{1 S});
+	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 0});
+	task.addInstruction(new WaitTimeInstruction{10 S});
+	program.addTask(task);
 	program.addTask(task);
 
-	LogController logController{std::cout};
+	LogController logController{&std::cout};
 	TestProgramUser test{program, logController};
 
 	RTOS::display_statistics();
-	ASSERT_EXIT({ RTOS::run(); }, testing::ExitedWithCode(1), "");
+	//ASSERT_EXIT({
+		            RTOS::run();
+	  //          }, testing::ExitedWithCode(1), "");
 }
 
 TEST(Full, Printer) {

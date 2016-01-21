@@ -2,7 +2,7 @@
 #include "../libs/Protocol.h"
 namespace WashingMachine{
 	WaterLevelSensor::WaterLevelSensor(UARTHandler &uart):
-    uart(uart){
+			uart(uart) {
     }
 
     int WaterLevelSensor::poll(UARTUser *referenceUser){
@@ -11,9 +11,10 @@ namespace WashingMachine{
         command.requestByte = TEMPERATURE_REQ;
         command.commandByte = 0xFF;
         uart.sendMessage(command);
-        return referenceUser->getReplyPoolContents();
+
+	    int newVal{referenceUser->getReplyPoolContents()};
+	    updateAll(newVal);
+        return newVal;
     }
-
-
 
 }

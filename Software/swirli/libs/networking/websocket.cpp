@@ -186,7 +186,7 @@ void WebSocket::performHandshake() throw (WebSocketException, SocketException ){
 
 void WebSocket::processFrame() throw(WebSocketException, SocketException){
 	cout << "processing frame" << endl;
-	unsigned char tmp[4];
+	unsigned char tmp[8];
 	size_t n = sock->recvFully(tmp,2);
 	if(n < 2) throw WebSocketException("connection closed while processing frame1");
 	bool fin  = tmp[0] & 0x80; // bit 0

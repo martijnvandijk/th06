@@ -4,7 +4,7 @@
 #include "WashingMachineBoundary.h"
 
 namespace WashingMachine{
-    class WaterLevelSensor{
+    class WaterLevelSensor : public Observable {
     public:
         WaterLevelSensor(UARTHandler &uart);
         int poll(UARTUser *referenceUser);

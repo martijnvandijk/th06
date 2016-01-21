@@ -8,7 +8,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    watervalve_states_t WaterValve::getState(UARTUser *referenceUser){
+    WaterValveState WaterValve::getState(UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = WATER_VALVE_REQ;
@@ -17,12 +17,12 @@ namespace WashingMachine{
         uint8_t reply = referenceUser->getReplyPoolContents();
 
         switch(reply){
-            case OPENED: return VALVE_OPEN; break;
-            case CLOSED: return VALVE_CLOSED; break;
+            case OPENED: return VALVE_OPEN;
+            case CLOSED: return VALVE_CLOSED;
         }
     }
 
-    void WaterValve::set(watervalve_states_t state, UARTUser *referenceUser) {
+    void WaterValve::set(WaterValveState state, UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = WATER_VALVE_REQ;

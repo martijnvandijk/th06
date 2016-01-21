@@ -17,10 +17,11 @@ namespace WashingMachine {
                 replyPool{(std::string{"UU "} + name + " replyPool").c_str()}
         {}
 
-        void receiveReply(uint8_t replyByte){
+        virtual void receiveReply(uint8_t replyByte){
             replyPool.write(replyByte);
         };
-        uint8_t getReplyPoolContents(){
+
+        virtual uint8_t getReplyPoolContents(){
             return replyPool.read();
 
         };

@@ -4,7 +4,7 @@
 #include "../libs/libserial.h"
 
 namespace WashingMachine{
-    class TemperatureSensor{
+    class TemperatureSensor : public Observable {
     public:
         /**
        * @brief Constructor, specify UARTHandler instance

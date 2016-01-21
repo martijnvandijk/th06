@@ -8,7 +8,7 @@
 
 namespace WashingMachine{
     // This is an enum class which handles the states the heating unit can be in.
-    enum watervalve_states_t {
+    enum WaterValveState {
         VALVE_OPEN, // The water valve is open
         VALVE_CLOSED // the water valve is clsoed
     };
@@ -27,13 +27,13 @@ namespace WashingMachine{
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
          * @return heatingunit_states_t Returns the enum VALVE_OPEN or VALVE_CLOSED
          */
-         watervalve_states_t getState(UARTUser *referenceUser);
+         WaterValveState getState(UARTUser *referenceUser);
         /**
           * @brief set Sets the hwater valve to either the open or closed state
           * @param state The state the water valve will be set to
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
-          void set(watervalve_states_t state, UARTUser *referenceUser);
+          void set(WaterValveState state, UARTUser *referenceUser);
         /**
           * @brief toggle Toggles the water valve between the open and closed state.
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)

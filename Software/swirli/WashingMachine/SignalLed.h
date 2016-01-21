@@ -6,7 +6,7 @@
 #include "UARTHandler.h"
 
 namespace WashingMachine{
-    enum signalled_states_t{LED_ON, LED_OFF};
+    enum SignalLedState {LED_ON, LED_OFF};
     class SignalLed{
     public:
         /**
@@ -16,8 +16,8 @@ namespace WashingMachine{
          */
         SignalLed(UARTHandler &uart);
 
-        signalled_states_t getStatus(UARTUser *referenceUser);
-        void set(signalled_states_t status, UARTUser *referenceUser);
+        SignalLedState getStatus(UARTUser *referenceUser);
+        void set(SignalLedState status, UARTUser *referenceUser);
         void toggle(UARTUser *referenceUser);
 
     private:

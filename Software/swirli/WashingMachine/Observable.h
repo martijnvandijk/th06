@@ -11,6 +11,9 @@ namespace WashingMachine{
         void subscribe(SensorListener* listener);
         virtual int poll(UARTUser *referenceUser) = 0;
 
+    protected:
+        void updateAll(int newVal);
+
     private:
         std::vector<SensorListener*> listeners;
     };

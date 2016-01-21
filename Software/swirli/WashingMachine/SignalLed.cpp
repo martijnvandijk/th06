@@ -3,10 +3,10 @@
 #include "UARTHandler.h"
 namespace WashingMachine{
     SignalLed::SignalLed(WashingMachine::UARTHandler & uart):
-    uart(uart){
+            uart(uart){
     }
 
-    signalled_states_t SignalLed::getStatus(WashingMachine::UARTUser *referenceUser) {
+    SignalLedState SignalLed::getStatus(WashingMachine::UARTUser *referenceUser) {
         UARTMessage command;
         command.requestByte = SIGNAL_LED_REQ;
         command.commandByte = STATUS_CMD;
@@ -19,7 +19,7 @@ namespace WashingMachine{
             case OFF: return LED_OFF; break;
         }
     }
-    void SignalLed::set(signalled_states_t status, UARTUser *referenceUser){
+    void SignalLed::set(SignalLedState status, UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = SIGNAL_LED_REQ;

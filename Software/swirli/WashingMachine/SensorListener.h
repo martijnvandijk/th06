@@ -3,7 +3,7 @@
 namespace WashingMachine{
     class SensorListener{
     public:
-        virtual void update() = 0;
+        virtual void update(int newVal) = 0;
     };
 }
 #endif

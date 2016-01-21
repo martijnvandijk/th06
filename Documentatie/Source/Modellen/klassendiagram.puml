@@ -45,8 +45,8 @@ package WashingMachine {
 	WashingMachineBoundary  <|--    Pump : Extends
 	WashingMachineBoundary  <|--    Door : Extends
 
-	TemperatureSensor       <|--    WashingMachineBoundary : Extends
-	WaterlevelSensor        <|--    WashingMachineBoundary : Extends
+	TemperatureSensor       --|>    WashingMachineBoundary : Extends
+	WaterlevelSensor        --|>    WashingMachineBoundary : Extends
 
 	Observable              ..|>    TemperatureSensor : Implements
 	Observable              ..|>    WaterlevelSensor : Implements

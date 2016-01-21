@@ -7,7 +7,7 @@
 
 namespace WashingMachine{
     // This is an enum class which handles the states the heating unit can be in.
-    enum soapdispenser_states_t {
+    enum SoapDispenserState {
         SOAP_OPEN, // The soap dispenser is open
         SOAP_CLOSED // the soap dispenser is closed
      };
@@ -25,13 +25,13 @@ namespace WashingMachine{
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
          * @return heatingunit_states_t Returns the enum SOAP_OPEN or SOAP_CLOSED depending on wether the soap dispenser is open or closed
          */
-        soapdispenser_states_t getState(UARTUser *referenceUser);
+        SoapDispenserState getState(UARTUser *referenceUser);
         /**
           * @brief set Sets the soap dipenser to either the open or closed state
           * @param state The state the soap dispenser will be set to
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
-        void set(soapdispenser_states_t state, UARTUser *referenceUser);
+        void set(SoapDispenserState state, UARTUser *referenceUser);
 
          /**
           * @brief toggle Toggles the soap dispenser between the open and closed state.

@@ -8,7 +8,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    soapdispenser_states_t SoapDispenser::getState(UARTUser *referenceUser){
+    SoapDispenserState SoapDispenser::getState(UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = SOAP_DISPENSER_REQ;
@@ -22,7 +22,7 @@ namespace WashingMachine{
         }
     }
 
-    void SoapDispenser::set(soapdispenser_states_t state, UARTUser *referenceUser) {
+    void SoapDispenser::set(SoapDispenserState state, UARTUser *referenceUser) {
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = SOAP_DISPENSER_REQ;

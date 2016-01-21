@@ -4,7 +4,18 @@ project(swirli)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 add_subdirectory(libs/googletest-master)
-include_directories(${GTEST_INCLUDE_DIRS} libs)
+include_directories(${GTEST_INCLUDE_DIRS} libs ${PI_INCLUDE_DIRS})
+
+if (CMAKE_CROSSCOMPILING)
+	set(SSL_LIBRARIES
+			${PI_LINK_DIRS}/arm-linux-gnueabihf/libssl.so.1.0.0
+			${PI_LINK_DIRS}/arm-linux-gnueabihf/libcrypto.so.1.0.0
+			${PI_LINK_DIRS}/../../lib/arm-linux-gnueabihf/libz.so.1
+			)
+else()
+	set(SSL_LIBRARIES ssl crypto)
+endif ()
+
 
 set(NetworkingSourceFiles
 		libs/networking/base64.h libs/networking/base64.cpp
@@ -41,7 +52,7 @@ set(WashingMachineSourceFiles
 		TemperatureRegulator.h
 		WaterLevelRegulator.h
 
-		LogController.cpp						LogController.h)
+		LogController.cpp						LogController.h TemperatureController.cpp TemperatureController.h WaterLevelController.cpp WaterLevelController.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h
@@ -60,24 +71,24 @@ add_executable(swirli
 		${RTOS_SourceFiles}
 		${NetworkingSourceFiles}
 		)
-target_link_libraries(swirli pthread rt)
+target_link_libraries(swirli pthread rt ${SSL_LIBRARIES})
 
 add_executable(swirli_testing
 		test_main.cpp
 		${WashingMachineSourceFiles}
 		${RTOS_SourceFiles}
 		)
-target_link_libraries(swirli_testing gtest pthread rt)
+target_link_libraries(swirli_testing gtest pthread rt ${SSL_LIBRARIES})
 
 if (CMAKE_CROSSCOMPILING)
 	add_custom_target(swirli_pi)
 	add_custom_command(TARGET swirli_pi
 			POST_BUILD
 			COMMAND rsync
-			ARGS -ahe ssh --timeout=10
+			ARGS -avhe ssh --timeout=10
 			${PROJECT_SOURCE_DIR}/
 			$<TARGET_FILE:swirli>
 			$<TARGET_FILE:swirli_testing>
-			pi@10.10.0.10:swirli_cmake
+			pi@10.42.0.71:swirli_cmake
 			WORKING_DIRECTORY .)
 endif ()
