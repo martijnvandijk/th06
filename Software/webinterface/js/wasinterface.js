@@ -8,7 +8,7 @@ window.onload = function() {
 		Values (booleans, ints, json arrays)
 	*/
 	var user_login = false; // bool
-	var update_available = true; // bool; Whether or not there's an update available
+	var update_available = false; // bool; Whether or not there's an update available
 	var show_menu = false; // bool; Whether or not the user menu is being shown
 	window.user_json; // json array containing user settings
 	window.page_json; // json array for populating the page
@@ -41,12 +41,14 @@ window.onload = function() {
 		Input elements
 	*/
 	var pin_field = document.getElementById("pinfield");
-		
+	
 	// Check if the user is logged in
 	if(user_login == false) {
 		navbar.style.display = "none";
 		login_screen.style.display = "block";
 	}
+	
+	check_update_status();
 	
 	/*
 	recovery_link.onclick = function() {
@@ -262,4 +264,11 @@ function WebSocketConnect() {
 	} else {
 		alert("WebSocket NOT supported by your Browser!");
 	}
+}
+
+function check_update_status() {
+	// Send a signal to the websockt to check if there is an update available
+	// If so, set update_available to true
+	
+	update_available = true;
 }

@@ -11,7 +11,7 @@ void LogController::logCurrentProgram(std::string program) {
 }
 
 void LogController::logCurrentStep(int step) {
-	*log << "Starting step " << step << " in program" << std::endl;
+	*log << "----Starting step " << step << " in program----" << std::endl;
 	
 	std::ofstream progresslog{"ProgressFile_WashingProgram"};
 	
