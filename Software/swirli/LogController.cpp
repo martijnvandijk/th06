@@ -16,7 +16,7 @@ void LogController::logCurrentStep(int step) {
 	std::ofstream progresslog{"ProgressFile_WashingProgram"};
 	
 	// Send information to the log file (parameters are set in brackets to more easily find them in the file
-	progresslog << step << std::endl;
+	progresslog << step;
 	
 	progresslog.close();
 }
