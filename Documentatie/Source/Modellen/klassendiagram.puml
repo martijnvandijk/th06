@@ -238,7 +238,11 @@ package WashingMachine{
     WashingMachine *-- TemperatureSensor
     WashingMachine *-- WaterLevelSensor
 
-    'listener pattern here'
+	Observable <-o SensorHandler
+	Observable o-- SensorListener
+
+	WaterLevelSensor --|> Observable : Extends
+	TemperatureSensor --|> Observable : Extends
 
     UARTHandler o-- WashingMachine
     UARTHandler o-- SignalLed
@@ -274,17 +278,17 @@ package washingInstructions{
     WaterLevelController o-- WaterValve
     WaterLevelController o-- SensorListener
     WaterLevelController o-- UARTUser
-    WaterLevelController <|-- WaterLevelRegulator : Extends
+    WaterLevelRegulator <|-- WaterLevelController : Extends
 
     TemperatureController o-- HeatingUnit
     TemperatureController o-- SensorListener
     TemperatureController o-- UARTUser
-    TemperatureController <|-- TemperatureRegulator : Extends
+    TemperatureRegulator <|-- TemperatureController : Extends
 
-    UARTUser o-- WashingInstruction
-    WashingProgram o-- WashingTask
-    WashingTask o-- WashingInstruction
-    WashingController o-- WashingProgram
+    UARTUser --o WashingInstruction
+    WashingProgram o- WashingTask
+    WashingTask o- WashingInstruction
+    WashingController o- WashingProgram
     WashingController o-- LogController
 
     WashingInstruction <|-- AddSoapInstruction :Extends
@@ -297,8 +301,7 @@ package washingInstructions{
     AddSoapInstruction o-- SoapDispenser
     SetDoorLockInstruction o-- Door
     SetRPMInstruction o-- Motor
-    SetTemperatureInstruction o-- HeatingUnit
-    SetWaterLevelInstruction o-- Pump
-    SetWaterLevelInstruction o-- WaterValve
+    SetTemperatureInstruction o-- TemperatureController
+    SetWaterLevelInstruction o-- WaterLevelController
 
 @enduml
