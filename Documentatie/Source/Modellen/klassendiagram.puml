@@ -573,6 +573,41 @@ package washingInstructions{
     AddSoapInstruction o-- SoapDispenser
     SetDoorLockInstruction o-- Door
     SetRPMInstruction o-- Motor
-    SetTemperatureInstruction o--- TemperatureController
-    SetWaterLevelInstruction o--- WaterLevelController
+    SetTemperatureInstruction o--- TemperatureRegulator
+    SetWaterLevelInstruction o--- WaterLevelRegulator
+
+'    hide TemperatureSensor
+'    hide WaterLevelSensor
+'    hide Motor
+'    hide SoapDispenser
+'    hide SensorListener
+'    hide WaterValve
+'    hide Pump
+'    hide PumpState
+'    hide WaterValveState
+'    hide SoapDispenserState
+'    hide HeatingUnit
+'    hide HeatingUnitState
+'    hide Door
+'    hide DoorState
+'    hide SignalLed
+'    hide SignalLedState
+'    hide EventGenerator
+'    hide Observable
+'    hide SensorHandler
+'    hide UARTMessage
+'    hide UARTHandler
+'    hide WaterLevelController
+'    hide TemperatureController
+'    hide AddSoapInstruction
+'    hide SetDoorLockInstruction
+'    hide SetRPMInstruction
+'    hide WaitTimeInstruction
+'    hide WaitTemperatureInstruction
+'    hide WaitWaterLevelInstruction
+'    hide WaterLevelRegulator
+'    hide TemperatureRegulator
+'    hide SetTemperatureInstruction
+'    hide SetWaterLevelInstruction
+'    hide private members
 @enduml
