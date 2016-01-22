@@ -225,7 +225,7 @@ function populate_temp() {
 */
 function WebSocketConnect() {
 	if ("WebSocket" in window) {
-		ws = new WebSocket("ws://10.10.0.10:2222");
+		ws = new WebSocket("ws://" + widow.location.hostname + "10.10.0.10:2222");
 		ws.onopen = function(evt) { 
 			console.log("connection open");
 			
