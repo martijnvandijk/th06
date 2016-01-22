@@ -33,7 +33,7 @@ void WebInterfaceHandler::main() {
                 std::cout << "procesing fetch user settings" << std::endl;
                 rapidjson::Document document{};
                 FILE * file{fopen("UserData/UserSettings.json", "r")};
-                char *readBuffer = new char[65536];
+                char *readBuffer{new char[65536]};
                 rapidjson::FileReadStream fileReadStream{file, readBuffer, 65536};
                 document.ParseStream(fileReadStream);
                 writer.String("settings");

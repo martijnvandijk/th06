@@ -41,6 +41,8 @@ public:
 	*/
 	void logProgramStopped();
 
+	void logMessage(std::string source, std::string message);
+
 private:
 	std::ostream *log;
 };

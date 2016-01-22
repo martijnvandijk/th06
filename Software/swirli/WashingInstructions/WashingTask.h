@@ -2,6 +2,7 @@
 #define SWIRLI_WASHINGTASK_H
 
 #include <vector>
+#include <memory>
 #include "WashingInstruction.h"
 #include "../LogController.h"
 #include "../WashingMachine/UARTUser.h"
@@ -12,11 +13,12 @@
 class WashingTask : public WashingInstruction {
 public:
 	void addInstruction(WashingInstruction *instruction); // has to be a pointer as the object will be stored in a array
+	void addInstruction(std::shared_ptr<WashingInstruction> &instruction);
 
 	virtual void execute(WashingMachine::UARTUser *referenceUser, LogController &logController) override;
 
 private:
-	std::vector<WashingInstruction*> instructions{};
+	std::vector<std::shared_ptr<WashingInstruction>> instructions;
 	friend class WashingProgram;
 };
 

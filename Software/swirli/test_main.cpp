@@ -27,12 +27,6 @@ using namespace std;
 #include "WashingMachine/WaterLevelController.h"
 #include "WashingMachine/TemperatureController.h"
 
-TEST(WashingProgram, ReadFromFile) {
-	WashingProgram program{"bonte_was"};
-
-	std::cout << program.getJsonInfoString() << std::endl;
-}
-
 class TestProgramUser: public WashingMachine::UARTUser {
 public:
 	TestProgramUser(WashingProgram &program, LogController &logController):
@@ -53,6 +47,43 @@ private:
 	WashingProgram &program;
 	LogController &logController;
 };
+
+TEST(WashingProgram, ReadFromFile) {
+	LibSerial libSerial{};
+	libSerial.open("/dev/ttyAMA0", 9600);
+	uint8_t commandStart[2];
+	commandStart[0]=MACHINE_REQ;
+	commandStart[1]=START_CMD;
+	libSerial.write(commandStart,2);
+	libSerial.flush();
+
+	WashingMachine::UARTHandler uartHandler{libSerial};
+	WashingMachine::WashingMachine washingMachine{uartHandler};
+	TemperatureController temperatureController{washingMachine.getHeatingUnit()};
+	WaterLevelController waterLevelController{washingMachine.getPump(), washingMachine.getWaterValve()};
+
+	SensorHandler handler{};
+
+	WashingMachine::WaterLevelSensor waterLevelSensor{uartHandler};
+	handler.addSensor(&waterLevelSensor);
+	waterLevelSensor.subscribe(&waterLevelController);
+
+	WashingMachine::TemperatureSensor temperatureSensor{uartHandler};
+	handler.addSensor(&temperatureSensor);
+	temperatureSensor.subscribe(&temperatureController);
+
+	WashingProgram program{"bonte_was", 40, washingMachine, temperatureController, waterLevelController};
+
+	LogController logController{&std::cout};
+	TestProgramUser test{program, logController};
+
+	RTOS::display_statistics();
+//	ASSERT_EXIT({
+		            RTOS::run();
+//	            }, testing::ExitedWithCode(0), "");
+
+	std::cout << program.getJsonInfoString() << std::endl;
+}
 
 TEST(WashingProgram, Complete) {
 	LibSerial libSerial{};
@@ -81,23 +112,23 @@ TEST(WashingProgram, Complete) {
 	TemperatureController temperatureController{heatingUnit};
 	temperatureSensor.subscribe(&temperatureController);
 
-	WashingTask task{};
-	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 20});
-	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
-	task.addInstruction(new SetTemperatureInstruction{temperatureController, 30});
-	task.addInstruction(new WaitTemperatureInstruction{temperatureController});
+	WashingTask *task{new WashingTask{}};
+	task->addInstruction(new SetWaterLevelInstruction{waterLevelController, 20});
+	task->addInstruction(new WaitWaterLevelInstruction{waterLevelController});
+	task->addInstruction(new SetTemperatureInstruction{temperatureController, 30});
+	task->addInstruction(new WaitTemperatureInstruction{temperatureController});
 
-	task.addInstruction(new SetRPMInstruction{motor, 300});
-	task.addInstruction(new WaitTimeInstruction{6 S});
-	task.addInstruction(new SetRPMInstruction{motor, -300});
-	task.addInstruction(new WaitTimeInstruction{6 S});
-	task.addInstruction(new SetRPMInstruction{motor, 0});
+	task->addInstruction(new SetRPMInstruction{motor, 300});
+	task->addInstruction(new WaitTimeInstruction{6 S});
+	task->addInstruction(new SetRPMInstruction{motor, -300});
+	task->addInstruction(new WaitTimeInstruction{6 S});
+	task->addInstruction(new SetRPMInstruction{motor, 0});
 
-	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 0});
-	task.addInstruction(new SetTemperatureInstruction{temperatureController, 0});
-	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
-	task.addInstruction(new WaitTimeInstruction{5 S});
-	WashingProgram program{&task};
+	task->addInstruction(new SetWaterLevelInstruction{waterLevelController, 0});
+	task->addInstruction(new SetTemperatureInstruction{temperatureController, 0});
+	task->addInstruction(new WaitWaterLevelInstruction{waterLevelController});
+	task->addInstruction(new WaitTimeInstruction{5 S});
+	WashingProgram program{task};
 	
 	LogController logCurrentName{&std::cout};
 	LogController logController{&std::cout};

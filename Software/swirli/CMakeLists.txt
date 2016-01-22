@@ -106,6 +106,6 @@ if (CMAKE_CROSSCOMPILING)
 			${PROJECT_SOURCE_DIR}/
 			$<TARGET_FILE:swirli>
 			$<TARGET_FILE:swirli_testing>
-			pi@10.42.0.71:swirli_cmake
+			pi@10.20.0.157:swirli_cmake
 			WORKING_DIRECTORY .)
 endif ()
