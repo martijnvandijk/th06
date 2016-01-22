@@ -6,7 +6,6 @@ window.onload = function() {
 	var update_available = false; // bool; Whether or not there's an update available
 	var recovery_mode = false; // bool; Determine if the user is in recovery mode
 	var show_menu = false; // bool; Whether or not the user menu is being shown
-	var washing = false; // bool; True if there's currently a wash in progress
 	
 	// JSON
 	window.user_json; // json array containing user settings
@@ -267,12 +266,10 @@ function process_message(message) {
 		case "WashStarted":
 			// Change state
 			state.innerHTML = "Er is momenteel een wastaak bezig";
-			washing = true;
 			break;
 		case "WashStopped":
 			// Change state
 			state.innerHTML = "Er is momenteel geen wastaak bezig";
-			washing = false;
 			
 			// Set temperature and time to 0
 			time.innerHTML = "00:00";
