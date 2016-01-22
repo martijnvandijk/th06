@@ -4,6 +4,7 @@
 #include "networking/websocket.h"
 #include "WebInterfaceHandler.h"
 #include "SwirliListener.h"
+#include <iostream>
 
 
 class WebSocketHandler {

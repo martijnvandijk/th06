@@ -82,10 +82,11 @@ int main() {
     //doesn't seem to work :S
     std::thread websocketserver = wsh.spawnWebSocketHandler();
 
-    websocketserver.detach();
 //    std::thread webSocketThread(webSocketHandler.runServer);
 
     RTOS::run();
+    websocketserver.join();
+
     return 0;
 }
 

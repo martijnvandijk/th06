@@ -5,14 +5,15 @@
 #ifndef PROJECT_WAITTEMPERATUREINSTRUCTION_H
 #define PROJECT_WAITTEMPERATUREINSTRUCTION_H
 
-#include "../WashingInstruction.h"
-#include "../TemperatureRegulator.h"
+#include "WashingInstruction.h"
+#include "../WashingMachine/TemperatureRegulator.h"
+#include "../WashingMachine/UARTUser.h"
 
 class WaitTemperatureInstruction : public WashingInstruction {
 public:
 	WaitTemperatureInstruction(TemperatureRegulator &regulator);
 
-	virtual void execute(WashingMachine::UARTUser *user);
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
 
 private:
 	TemperatureRegulator &regulator;

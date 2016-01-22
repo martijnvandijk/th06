@@ -31,7 +31,7 @@ bool SwirliListener::packetsAvailable() {
 
 //    pQMutex.lock();
 
-    std::cout << "PacketQueue size: " << packetQueue.size() << std::endl;
+//    std::cout << "PacketQueue size: " << packetQueue.size() << std::endl;
     if (packetQueue.size() > 0) {
         available = true;
     } else {

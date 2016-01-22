@@ -5,7 +5,7 @@
 #ifndef TEMPERATUREREGULATOR_H
 #define TEMPERATUREREGULATOR_H
 
-#include "EventGenerator.h"
+#include "../EventGenerator.h"
 
 class TemperatureRegulator : public EventGenerator {
 public:

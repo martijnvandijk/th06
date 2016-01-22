@@ -8,7 +8,7 @@
 
 namespace WashingMachine{
     // This is an enum class which handles the states the heating unit can be in.
-    enum pump_states_t {
+    enum PumpState {
         PUMP_ON, // The pump is on
          PUMP_OFF // The pump is off
      };
@@ -25,16 +25,16 @@ namespace WashingMachine{
          * @brief getState Gets the current state of the pump
          * 
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         * @return pump_states_t Returns the enum PUMP_ON or PUMP_OFF depending on wether the pump is on or off.
+         * @return PumpState Returns the enum PUMP_ON or PUMP_OFF depending on wether the pump is on or off.
          */
-        pump_states_t getState(UARTUser *referenceUser);
+       PumpState getState(UARTUser *referenceUser);
 
         /**
           * @brief set Sets the pump to either the on or off state.
           * @param state The state the pump will be set to.
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
-        void set(pump_states_t state, UARTUser *referenceUser);
+        void set(PumpState state, UARTUser *referenceUser);
 
         /**
           * @brief toggle Toggles the pump between the on and off state.

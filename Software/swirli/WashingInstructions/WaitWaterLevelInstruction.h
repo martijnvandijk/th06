@@ -5,15 +5,15 @@
 #ifndef PROJECT_WAITWATERLEVEL_H
 #define PROJECT_WAITWATERLEVEL_H
 
-
-#include "../WashingInstruction.h"
-#include "../WaterLevelRegulator.h"
+#include "WashingInstruction.h"
+#include "../WashingMachine/WaterLevelRegulator.h"
+#include "../WashingMachine/UARTUser.h"
 
 class WaitWaterLevelInstruction : public WashingInstruction {
 public:
 	WaitWaterLevelInstruction(WaterLevelRegulator &water);
 
-	virtual void execute(WashingMachine::UARTUser *user) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
 
 private:
 	WaterLevelRegulator &water;
