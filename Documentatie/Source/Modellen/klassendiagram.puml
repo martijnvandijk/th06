@@ -185,10 +185,10 @@ package WashingMachine {
 	class Door<<boundary>>
 
 	class TemperatureSensor<<boundary>>
-	class WaterlevelSensor<<boundary>>
+	class WaterLevelSensor<<boundary>>
 
 
-	WashingMachineBoundary  <|--    Watervalve : Extends
+	WashingMachineBoundary  <|--    WaterValve : Extends
 	WashingMachineBoundary  <|--    Motor : Extends
 	WashingMachineBoundary  <|--    LED : Extends
 	WashingMachineBoundary  <|--    HeatingUnit : Extends
@@ -197,10 +197,10 @@ package WashingMachine {
 	WashingMachineBoundary  <|--    Door : Extends
 
 	TemperatureSensor       <|--    WashingMachineBoundary : Extends
-	WaterlevelSensor        <|--    WashingMachineBoundary : Extends
+	WaterLevelSensor        <|--    WashingMachineBoundary : Extends
 
 	Observable              ..|>    TemperatureSensor : Implements
-	Observable              ..|>    WaterlevelSensor : Implements
+	Observable              ..|>    WaterLevelSensor : Implements
 
 	Observable              <--o "0..*"     SensorHandler
 	Observable          "1" o-->            SensorListener
@@ -212,7 +212,7 @@ skinparam classAttributeIconSize 0
 
 package WashingMachine{
     Class WaterLevelController<<Controller>>{
-        +WaterLevelController(&pump : Pump, &waterValve : WaterValve)
+        +WaterLevelController(&pump : Pump, waterValve : WaterValve&)
         +virtual void setWaterLevel(waterLevel : int)
         +virtual void update(newVal : int)
         #virtual void main()
@@ -228,7 +228,7 @@ package WashingMachine{
         +virtual void setWaterLevel(waterLevel : int)
     }
     Class TemperatureController<<Controller>>{
-        +TemperatureController(&heat : HeatingUnit)
+        +TemperatureController(heat : HeatingUnit&)
         +virtual void setTemperature(heatLevel : int)
         +virtual void update(newVal : int)
         #virtual void main()
@@ -252,13 +252,13 @@ package WashingMachine{
     Class UARTUser{
         #replyPool : RTOS::pool<uint8_t>
         #virtual void main()
-        +UARTUser(priority : unsigned int, *name : const char = " ")
+        +UARTUser(priority : unsigned int, name : const char*)
         +virtual void receiveReply(replyByte : uint8_t)
         +virtual uint8_t getReplyPoolContents()
     }
     Class Observable <<Abstract>>{
-        +void subscribe(*listener : SensorListener)
-        +virtual int poll(*referenceUser : UARTUser)
+        +void subscribe(listener : SensorListener*)
+        +virtual int poll(referenceUser : UARTUser*)
         #void updateAll(newVal : int)
         -listeners : std::vector<SensorListeners*>
     }
@@ -272,64 +272,86 @@ package WashingMachine{
         +virtual void update(newVal : int)
     }
     Class SignalLed <<Boundary>>{
-        +SignalLed(&uart : UARTHandler)
-        +SignalLedState getStatus(*referenceUSER : UARTUser)
-        +void set(status : SignalLedState, *referenceUser : UARTUser)
-        +void toggle(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +SignalLed(uart: UARTHandler&)
+        +SignalLedState getStatus(referenceUser : UARTUser*)
+        +void set(status : SignalLedState, referenceUser : UARTUser*)
+        +void toggle(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class SoapDispenser <<Boundary>>{
-        +SoapDispenser(&uart : UARTHandler)
-        +SoapDispenserState getState(*referenceUser : UARTUser)
-        +void set(state : SoapDispenserState, *referenceUser : UARTUser)
+        +SoapDispenser(uart: UARTHandler&)
+        +SoapDispenserState getState(referenceUser : UARTUser*)
+        +void set(state : SoapDispenserState, referenceUser : UARTUser*)
         +void toggle(*referenceUser UARTUser)
-        -&uart : UARTHandler
+        -uart: UARTHandler&
     }
     Class WaterValve <<Boundary>>{
-        +WaterValve(&uart : UARTHandler)
-        +WaterValveState getState(*referenceUSER : UARTUser)
-        +void set(state WaterValveState, *referenceUser : UARTUser)
-        +void toggle(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +WaterValve(uart: UARTHandler&)
+        +WaterValveState getState(referenceUser : UARTUser*)
+        +void set(state WaterValveState, referenceUser : UARTUser*)
+        +void toggle(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class Door <<Boundary>>{
-        +Door(&uart : UARTHandler)
-        +DoorState getState(*referenceUser : UARTUser)
-        +void set(state : DoorState, *referenceUser UARTUser)
-        +void toggle(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +Door(uart: UARTHandler&)
+        +DoorState getState(referenceUser : UARTUser*)
+        +void set(state : DoorState, referenceUser : UARTUser*)
+        +void toggle(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class HeatingUnit <<Boundary>>{
-        +HeatingUnit(&uart : UARTHandler)
-        +HeatingUnitState getState(*referenceUser : UARTUser)
-        +void set(state : HeatingUnitState, *referenceUser : UARTUser)
-        +void toggle(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +HeatingUnit(uart: UARTHandler&)
+        +HeatingUnitState getState(referenceUser : UARTUser*)
+        +void set(state : HeatingUnitState, referenceUser : UARTUser*)
+        +void toggle(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class Motor <<Boundary>>{
-        +Motor(&uart : UARTHandler)
-        +int getRPM(*referenceUser : UARTUser)
-        +void setRPM(rpm : int, *referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +Motor(uart: UARTHandler&)
+        +int getRPM(referenceUser : UARTUser*)
+        +void setRPM(rpm : int, referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class Pump <<Boundary>>{
-        +Pump(&uart : UARTHandler)
-        +PumpState getState (*referenceUser : UARTUser)
-        +void set(state : PumpState, *referenceUser : UARTUser)
-        +void toggle(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +Pump(uart: UARTHandler&)
+        +PumpState getState (referenceUser : UARTUser*)
+        +void set(state : PumpState, referenceUser : UARTUser*)
+        +void toggle(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class TemperatureSensor <<Boundary>>{
-        +TemperatureSensor(&uart : UARTHandler)
-        +int poll(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +TemperatureSensor(uart: UARTHandler&)
+        +int poll(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
     Class WaterLevelSensor <<Boundary>>{
-        +WaterLevelSensor(&uart : UARTHandler)
-        +int poll(*referenceUser : UARTUser)
-        -&uart : UARTHandler
+        +WaterLevelSensor(uart: UARTHandler&)
+        +int poll(referenceUser : UARTUser*)
+        -uart: UARTHandler&
     }
-    Class WashingMachine
+    Class WashingMachine{
+        +WashingMachine(uart: UARTHandler&)
+        +Door &getDoor()
+        +HeatingUnit &getHeatingUnit()
+        +Motor &getMotor()
+        +Pump &getPump()
+        +SignalLed &getSignalLed()
+        +SoapDispenser &getSoapDispenser()
+        +TemperatureSensor &getTemperatureSensor()
+        +WaterLevelSensor &getWaterLevelSensor()
+        +WaterValve &getWaterValve()
+        -uart : UARTHandler&
+        -door : Door
+        -heatingUnit : HeatingUnit
+        -motor : Motor
+        -pump : Pump
+        -signalLed : SignalLed
+        -soapDispenser : SoapDispenser
+        -temperatureSensor : TemperatureSensor
+        -waterLevelSensor : WaterLevelSensor
+        -waterValve : WaterValve
+
+    }
 
     enum SignalLedState<<Enumeration>>{
         LED_ON
@@ -395,51 +417,51 @@ package WashingMachine{
 
 package washingInstructions{
     Class WashingInstruction{
-        +virtual void execute(*user : UARTUser)
+        +virtual void execute(user : UARTUser*)
     }
     Class AddSoapInstruction{
         +AddSoapInstruction(&dispenser : SoapDispenser)
-        +virtual void execute(*user : UARTUser)
-        -&dispenser : SoapDispenser
+        +virtual void execute(user : UARTUser*)
+        -dispenser : SoapDispenser&
     }
     Class SetDoorLockInstruction{
         +SetDoorLockInstruction(&door : Door, lock : DoorState)
-        +virtual void execute(*user : UARTUser)
-        -&door : Door
+        +virtual void execute(user : UARTUser*)
+        -door : Door&
         -lock : DoorState
     }
     Class SetRPMInstruction{
         +SetRPMInstruction(&motor : Motor, rpm : int)
-        +virtual void execute(*user : UARTUser)
-        -&motor : Motor
+        +virtual void execute(user : UARTUser*)
+        -motor : Motor&
         -rpm : int
     }
     Class SetTemperatureInstruction{
         +SetTemperatureInstruction(&temperatureRegulator : TemperatureRegulator, temperature : int)
-        +virtual void execute(*user : UARTUser)
-        -&temperatureRegulator : TemperatureRegulator
+        +virtual void execute(user : UARTUser*)
+        -temperatureRegulator : TemperatureRegulator&
         -temperature : int
     }
     Class SetWaterLevelInstruction{
         +SetWaterLevelInstruction(&waterRegulator : WaterLevelRegulator, waterLevel : int)
-        +virtual void execute(*user : UARTUser)
-        -&waterRegulator : WaterLevelRegulator
+        +virtual void execute(user : UARTUser*)
+        -waterRegulator : WaterLevelRegulator&
         -waterLevel : int
     }
     Class WaitTimeInstruction{
         +WaitTimeInstruction(time : unsigned int)
-        +virtual void execute(*user : UARTUser)
+        +virtual void execute(user : UARTUser*)
         -time : unsigned int
     }
     Class WaitTemperatureInstruction{
         +WaitTemperatureInstruction(&regulator : TemperatureRegulator)
-        +virtual void execute(*user : UARTUser)
-        -&regulator : TemperatureRegulator
+        +virtual void execute(user : UARTUser*)
+        -regulator : TemperatureRegulator&
     }
     Class WaitWaterLevelInstruction{
         +WaitWaterLevelInstruction(&water : WaterLevelRegulator)
-        +virtual void execute(*user : UARTUser)
-        -&water : WaterLevelRegulator
+        +virtual void execute(user : UARTUser*)
+        -water : WaterLevelRegulator&
     }
 }
     Class WashingInstruction
@@ -467,7 +489,7 @@ package washingInstructions{
     WashingProgram o- WashingTask
     WashingTask o- WashingInstruction
     WashingController o- WashingProgram
-    WashingController o-- LogController
+    WashingController o- LogController
 
     WashingInstruction <|-- AddSoapInstruction :Extends
     WashingInstruction <|-- SetDoorLockInstruction :Extends
@@ -481,6 +503,6 @@ package washingInstructions{
     AddSoapInstruction o-- SoapDispenser
     SetDoorLockInstruction o-- Door
     SetRPMInstruction o-- Motor
-    SetTemperatureInstruction o-- TemperatureController
-    SetWaterLevelInstruction o-- WaterLevelController
+    SetTemperatureInstruction o--- TemperatureController
+    SetWaterLevelInstruction o--- WaterLevelController
 @enduml
