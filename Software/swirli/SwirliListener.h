@@ -5,18 +5,24 @@
 #ifndef SWIRLI_SWIRLILISTENER_H
 #define SWIRLI_SWIRLILISTENER_H
 
-#include "WebInterfaceHandler.h"
+#include <mutex>
+#include <queue>
+#include <networking/websocket.h>
+#include "WebSocketPacket.h"
 
 class SwirliListener : public WebSocketListener {
 public:
-    SwirliListener(WebInterfaceHandler &webInterfaceHandler);
-
     void onTextMessage(const string &s, WebSocket *ws);
 
     void onClose(WebSocket *ws);
 
+    bool packetsAvailable();
+
+    std::shared_ptr<WebSocketPacket> getPacket();
+
 private:
-    WebInterfaceHandler &webInterfaceHandler;
+    std::queue<std::shared_ptr<WebSocketPacket>> packetQueue;
+    std::mutex pQMutex;
 };
 
 

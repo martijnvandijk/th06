@@ -71,7 +71,8 @@ int main() {
     WashingMachine::WashingMachine washingMachine(handler);
 //    UARTTest test(washingMachine);
 
-    WebInterfaceHandler webInterfaceHandler(washingMachine);
+    SwirliListener swirliListener;
+    WebInterfaceHandler webInterfaceHandler(washingMachine, swirliListener);
     WebSocketHandler wsh(2222,webInterfaceHandler);
 
     //doesn't seem to work :S

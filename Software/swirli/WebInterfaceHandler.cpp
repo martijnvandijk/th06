@@ -2,47 +2,57 @@
 #include <rapidjson/writer.h>
 #include "WebInterfaceHandler.h"
 
-void WebInterfaceHandler::handleRequest(std::shared_ptr<WebSocketPacket> &webSocketPacket) {
-    InputQueue.write(webSocketPacket);
-}
-
 void WebInterfaceHandler::main() {
     while (true) {
-        auto webSocketPacket = InputQueue.read();
-        rapidjson::Document &doc = webSocketPacket->getDoc();
-        std::string request = doc["request"].GetString();
+        if (listener.packetsAvailable()) {
+            auto webSocketPacket = listener.getPacket();
 
-        rapidjson::StringBuffer sbuf;
-        rapidjson::Writer<rapidjson::StringBuffer> writer(sbuf);
-        writer.StartObject();
+            rapidjson::Document &doc = webSocketPacket->getDoc();
+            std::string request = doc["request"].GetString();
+            std::cout << "WebInterfaceHandler: request is " << request << std::endl;
+
+            rapidjson::StringBuffer sbuf;
+            rapidjson::Writer<rapidjson::StringBuffer> writer(sbuf);
+            writer.StartObject();
 
 
-        if (request == "fetchTemperature") {
-            washingMachine.getTemperatureSensor().poll(this);
-            writer.String("temperature");
-            writer.Int(replyPool.read());
+            if (request == "fetchTemperature") {
+                washingMachine.getTemperatureSensor().poll(this);
+                writer.String("temperature");
+                writer.Int(replyPool.read());
+            }
+            if (request == "fetchWashingPrograms") {
+
+            }
+
+            WebSocket *ws = webSocketPacket->getWebsocket();
+            try {
+                ws->sendTextMessage(sbuf.GetString());
+            }
+            catch (WebSocketException &e) {
+                std::cerr << "WebSockeException" << e.what() << std::endl;
+            }
+            catch (SocketException &e) {
+                std::cerr << "SocketException" << e.what() << std::endl;
+            }
+
         }
-        if (request == "fetchWashingPrograms") {
-
-        }
-
-        WebSocket *ws = webSocketPacket->getWebsocket();
-        try {
-            ws->sendTextMessage(sbuf.GetString());
-        }
-        catch (WebSocketException &e) {
-            std::cerr << "WebSockeException" << e.what() << std::endl;
-        }
-        catch (SocketException &e) {
-            std::cerr << "SocketException" << e.what() << std::endl;
-        }
-
     }
 }
 
+/*
 WebInterfaceHandler::WebInterfaceHandler(
-        WashingMachine::WashingMachine &washingMachine
+        WashingMachine::WashingMachine &washingMachine,
+        SwirliListener &swirliListener
 ) :
         washingMachine{washingMachine},
-        InputQueue(this, "WebInterfaceInputQueue"),
-        WashingMachine::UARTUser::UARTUser(97) { }
+        WashingMachine::UARTUser::UARTUser(97),
+        listener{swirliListener}
+*/
+WebInterfaceHandler::WebInterfaceHandler(
+        WashingMachine::WashingMachine &washingMachine,
+        SwirliListener &swirliListener
+) :
+        washingMachine{washingMachine},
+        WashingMachine::UARTUser::UARTUser(97),
+        listener{swirliListener} { }

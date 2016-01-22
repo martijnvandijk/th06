@@ -6,7 +6,7 @@
 
 WebSocketHandler::WebSocketHandler(int port, WebInterfaceHandler &web) :
         port{port},
-        listener(web) {
+        listener() {
 
 }
 
