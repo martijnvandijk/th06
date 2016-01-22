@@ -20,12 +20,11 @@ void WebInterfaceHandler::main() {
             writer.StartObject();
 
 
-            if (request == "fetchTemperature") {
-                washingMachine.getTemperatureSensor().poll(this);
+            if (request == "FetchTemperature") {
                 writer.String("temperature");
-                writer.Int(replyPool.read());
+                writer.Int(washingMachine.getTemperatureSensor().poll(this));
             }
-            if (request == "fetchWashingPrograms") {
+            if (request == "FetchWashingPrograms") {
 
             }
             if (request == "FetchUserSettings"){
@@ -48,7 +47,9 @@ void WebInterfaceHandler::main() {
                 std::cout << "SocketException" << e.what() << std::endl;
             }
 
-
+            writer.String("response");
+            writer.String(request.c_str());
+            writer.EndObject();
         }
     }
 }
