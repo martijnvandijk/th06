@@ -434,6 +434,17 @@ package washingInstructions{
     Class WashingInstruction{
         +virtual void execute(user : UARTUser*)
     }
+    Class WashingProgram{
+        +void addTask(task : WashingTask)
+        +void execute (uartUser : UARTUser*, logController : LogController*)
+        +void execute (uartUser : UARTUser*, logController : LogController*, resumeFrom : int)
+        -tasks : std::vector<WashingTask>
+    }
+    Class WashingTask{
+        +void addInstruction(instruction : WashingInstruction*)
+        +void execute(referenceUser : UARTUser*)
+        -instructions{} : std::vector<WashingInstruction*>
+    }
     Class AddSoapInstruction{
         +AddSoapInstruction(&dispenser : SoapDispenser)
         +virtual void execute(user : UARTUser*)
@@ -489,17 +500,6 @@ package washingInstructions{
     Class WashingController<<Controller>>{
         +WashingController(log : LogController&)
         +void start(program : WashingProgram&)
-    }
-    Class WashingProgram{
-        +void addTask(task : WashingTask)
-        +void execute (uartUser : UARTUser*, logController : LogController*)
-        +void execute (uartUser : UARTUser*, logController : LogController*, resumeFrom : int)
-        -tasks : std::vector<WashingTask>
-    }
-    Class WashingTask{
-        +void addInstruction(instruction : WashingInstruction*)
-        +void execute(referenceUser : UARTUser*)
-        -instructions{} : std::vector<WashingInstruction*>
     }
     Class SwirliListener{
         +void onTextMessage(s : const string&, ws : WebSocket*)
@@ -557,9 +557,9 @@ package washingInstructions{
 
     UARTUser --o WashingInstruction
     WashingProgram o- WashingTask
-    WashingTask o- WashingInstruction
+    WashingInstruction o- WashingTask
     WashingController o- WashingProgram
-    LogController -o WashingController
+    LogController --o WashingController
 
     WashingInstruction <|-- AddSoapInstruction :Extends
     WashingInstruction <|-- SetDoorLockInstruction :Extends
