@@ -8,7 +8,7 @@ namespace WashingMachine{
     int WaterLevelSensor::poll(UARTUser *referenceUser){
     	UARTMessage command;
         command.sender = referenceUser;
-        command.requestByte = TEMPERATURE_REQ;
+        command.requestByte = WATER_LEVEL_REQ;
         command.commandByte = 0xFF;
         uart.sendMessage(command);
 

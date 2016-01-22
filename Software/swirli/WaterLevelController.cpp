@@ -16,7 +16,7 @@ WaterLevelController::WaterLevelController(WashingMachine::Pump &pump, WashingMa
 
 void WaterLevelController::main() {
 	for (;;) {
-		RTOS::event event = wait(targetWaterLevelUpdated + waterLevelUpdated);
+		RTOS::event event = RTOS::task::wait(targetWaterLevelUpdated + waterLevelUpdated);
 
 		int diff{targetWaterLevel.read() - latestWaterLevel.read()};
 		switch ((diff > 0) - (diff < 0)) {
@@ -27,6 +27,8 @@ void WaterLevelController::main() {
 			case 0:
 				pump.set(WashingMachine::PUMP_OFF, this);
 				waterValve.set(WashingMachine::VALVE_CLOSED, this);
+
+				notifyAll();
 				break;
 			case 1:
 				pump.set(WashingMachine::PUMP_OFF, this);
