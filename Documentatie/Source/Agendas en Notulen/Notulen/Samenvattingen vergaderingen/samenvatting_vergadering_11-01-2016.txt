@@ -3,4 +3,4 @@ Notities
 Aydin zal beginnen aan het maken van de webinterface.
 Martijn zal er voor zorgen dat vanaf de PI de RTOS kan worden aangestuurd
 Chiel
-Christiaan
+Christiaan zal meehelpen de PI werkend te krijgen
