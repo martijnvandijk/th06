@@ -1,3 +1,4 @@
+#include <bitset>
 #include "LogController.h"
 
 struct washingProgramState {
@@ -15,7 +16,7 @@ void LogController::logCurrentProgram(std::string program) {
 	*log << "----Washing program [" << program << "] STARTED at " << dt << "----" << std::endl;
 }
 
-void LogController::logCurrentName(std::string name) {	
+void LogController::logCurrentName(std::string name) {
 	std::ofstream namelog{"NameFile_WashingProgram"};
 	
 	// Send information to the log file (parameters are set in brackets to more easily find them in the file
@@ -30,7 +31,7 @@ void LogController::logCurrentStep(int step) {
 	std::ofstream progresslog{"ProgressFile_WashingProgram"};
 	
 	// Send information to the log file (parameters are set in brackets to more easily find them in the file
-	progresslog << step;
+	progresslog << std::bitset<8>(step);
 	
 	progresslog.close();
 }

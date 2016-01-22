@@ -6,8 +6,7 @@
 
 WebSocketHandler::WebSocketHandler(int port, WebInterfaceHandler &web, SwirliListener &listener) :
         port{port},
-        listener(listener) {
-}
+        listener(listener) { }
 
 void WebSocketHandler::runServer() {
     try {
@@ -25,5 +24,5 @@ void WebSocketHandler::runServer() {
 }
 
 std::thread WebSocketHandler::spawnWebSocketHandler() {
-    return std::thread( [this] {this->runServer();});
+    return std::thread([this] { this->runServer(); });
 }

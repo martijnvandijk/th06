@@ -22,7 +22,6 @@ public:
 
 private:
     std::queue<std::shared_ptr<WebSocketPacket>> packetQueue;
-    std::mutex pQMutex;
 
 };
 
