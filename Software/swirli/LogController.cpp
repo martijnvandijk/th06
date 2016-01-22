@@ -1,3 +1,4 @@
+#include <bitset>
 #include "LogController.h"
 
 struct washingProgramState {
