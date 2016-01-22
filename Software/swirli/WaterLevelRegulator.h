@@ -5,7 +5,9 @@
 #ifndef WATERLEVELREGULATOR_H
 #define WATERLEVELREGULATOR_H
 
-class WaterLevelRegulator {
+#include "EventGenerator.h"
+
+class WaterLevelRegulator : public EventGenerator {
 public:
 	virtual void setWaterLevel(int waterLevel) = 0;
 };

@@ -8,7 +8,7 @@
 #include "../WashingInstruction.h"
 #include "../TemperatureRegulator.h"
 
-class SetTemperatureInstruction: WashingInstruction {
+class SetTemperatureInstruction: public WashingInstruction {
 public:
 	SetTemperatureInstruction(TemperatureRegulator &temperatureRegulator, int temperature);
 

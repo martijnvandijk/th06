@@ -4,7 +4,7 @@
 
 #include "SetWaterLevelInstruction.h"
 
-SetWaterLevelInstruction::SetWaterLevelInstruction(WaterLevelRegulator &pump, int waterLevel):
+SetWaterLevelInstruction::SetWaterLevelInstruction(WaterLevelRegulator &waterRegulator, int waterLevel):
 		waterRegulator(waterRegulator),
         waterLevel{waterLevel}
 {}

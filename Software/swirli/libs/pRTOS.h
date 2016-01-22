@@ -846,7 +846,7 @@ public:
 
       //! throws an error, beacuse tasks should never be destroyed
       ~task ( void ) {
-         rtos_fatal ("task destructor called");
+//         rtos_fatal ("task destructor called");
       }
 
       //! suspend a task (prevent execution until a resume)
@@ -997,7 +997,7 @@ private:
 
       // a timer should never be destroyed
       ~callback( void ) {
-         rtos_fatal ("callback_timer destructor called");
+//         rtos_fatal ("callback_timer destructor called");
       }
 
       // a timer's time_up function must be provided by a derived class
@@ -1148,7 +1148,7 @@ public:
    public:
       pool_base( const char * name );
       ~pool_base( void ) {
-         rtos_fatal ("pool destructor called");
+//         rtos_fatal ("pool destructor called");
       }
       void print( std::ostream & s, bool header = true ) const;
 
@@ -1342,7 +1342,7 @@ public:
       mailbox_base( const char * name );
 
       ~mailbox_base( void ) {
-         rtos_fatal ("mailbox destructor called");
+//         rtos_fatal ("mailbox destructor called");
       }
 
       void print( std::ostream & s, bool header = true ) const;
@@ -1465,7 +1465,7 @@ public:
    class channel_base : public waitable {
    public:
       ~channel_base( void ) {
-         rtos_fatal ("channel destructor called");
+//         rtos_fatal ("channel destructor called");
       }
 
       void print( std::ostream & s, bool header = true ) const;

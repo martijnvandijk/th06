@@ -23,6 +23,10 @@ using namespace std;
 #include "WaterLevelController.h"
 #include "WashingMachine/SensorHandler.h"
 #include "WashingMachine/WaterLevelSensor.h"
+#include "WashingInstructions/SetTemperatureInstruction.h"
+#include "WashingMachine/TemperatureSensor.h"
+#include "WashingInstructions/WaitWaterLevelInstruction.h"
+#include "WashingInstructions/WaitTemperatureInstruction.h"
 
 class TestProgramUser: public WashingMachine::UARTUser {
 public:
@@ -36,9 +40,7 @@ protected:
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 	virtual void main() {
-		for (int i{0}; i < 16; i++) {
-			program.execute(this, logController);
-		}
+		program.execute(this, logController);
 	}
 #pragma clang diagnostic pop
 
@@ -61,34 +63,43 @@ TEST(WashingProgram, Complete) {
 	WashingMachine::Door door{uartHandler};
 	WashingMachine::Pump pump{uartHandler};
 	WashingMachine::WaterValve waterValve{uartHandler};
+	WashingMachine::HeatingUnit heatingUnit{uartHandler};
 
-//	TemperatureController temperatureController{};
 	SensorHandler handler{};
 	WashingMachine::WaterLevelSensor waterLevelSensor{uartHandler};
 	handler.addSensor(&waterLevelSensor);
 	WaterLevelController waterLevelController{pump, waterValve};
 	waterLevelSensor.subscribe(&waterLevelController);
 
+	WashingMachine::TemperatureSensor temperatureSensor{uartHandler};
+	handler.addSensor(&temperatureSensor);
+	TemperatureController temperatureController{heatingUnit};
+	temperatureSensor.subscribe(&temperatureController);
+
 	WashingProgram program{};
 	WashingTask task{};
-	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 50});
-	task.addInstruction(new SetRPMInstruction{motor, 600});
-	task.addInstruction(new WaitTimeInstruction{5 S});
-	task.addInstruction(new SetRPMInstruction{motor, -600});
-	task.addInstruction(new WaitTimeInstruction{5 S});
+	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 20});
+	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
+	task.addInstruction(new SetTemperatureInstruction{temperatureController, 30});
+	task.addInstruction(new WaitTemperatureInstruction{temperatureController});
+
+	task.addInstruction(new SetRPMInstruction{motor, 300});
+	task.addInstruction(new WaitTimeInstruction{6 S});
+	task.addInstruction(new SetRPMInstruction{motor, -300});
+	task.addInstruction(new WaitTimeInstruction{6 S});
 	task.addInstruction(new SetRPMInstruction{motor, 0});
+
 	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 0});
-	task.addInstruction(new WaitTimeInstruction{10 S});
-	program.addTask(task);
+	task.addInstruction(new SetTemperatureInstruction{temperatureController, 0});
+	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
+	task.addInstruction(new WaitTimeInstruction{5 S});
 	program.addTask(task);
 
 	LogController logController{&std::cout};
 	TestProgramUser test{program, logController};
 
 	RTOS::display_statistics();
-	//ASSERT_EXIT({
-		            RTOS::run();
-	  //          }, testing::ExitedWithCode(1), "");
+	ASSERT_EXIT({ RTOS::run(); }, testing::ExitedWithCode(0), "");
 }
 
 TEST(Full, Printer) {

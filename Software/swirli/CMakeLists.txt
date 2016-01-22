@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(swirli)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O0")
 
 add_subdirectory(libs/googletest-master)
 include_directories(${GTEST_INCLUDE_DIRS} libs ${PI_INCLUDE_DIRS})
@@ -12,6 +13,8 @@ if (CMAKE_CROSSCOMPILING)
 			${PI_LINK_DIRS}/arm-linux-gnueabihf/libcrypto.so.1.0.0
 			${PI_LINK_DIRS}/../../lib/arm-linux-gnueabihf/libz.so.1
 			)
+
+	add_definitions(-fdebug-prefix-map=${PROJECT_SOURCE_DIR}/=)
 else()
 	set(SSL_LIBRARIES ssl crypto)
 endif ()
@@ -52,7 +55,7 @@ set(WashingMachineSourceFiles
 		TemperatureRegulator.h
 		WaterLevelRegulator.h
 
-		LogController.cpp						LogController.h TemperatureController.cpp TemperatureController.h WaterLevelController.cpp WaterLevelController.h)
+		LogController.cpp						LogController.h TemperatureController.cpp TemperatureController.h WaterLevelController.cpp WaterLevelController.h WashingInstructions/WaitWaterLevelInstruction.cpp WashingInstructions/WaitWaterLevelInstruction.h EventGenerator.cpp EventGenerator.h WashingInstructions/WaitTemperatureInstruction.cpp WashingInstructions/WaitTemperatureInstruction.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h

@@ -15,6 +15,7 @@ date      2014-12-12
 #include <time.h>
 #include <sched.h>
 #include <pthread.h>
+#include <limits.h>
 #include "pRTOS.h"
 #include "libfiber.h"
 
@@ -62,10 +63,10 @@ int nr_from_mask( unsigned int mask ) {
 void task_trampoline( void ) {
    RTOS::current_task()->main();
    cout
-      << "\n>> Fatal error: task "
+      << "\n>> (non-)Fatal error: task "
       << RTOS::current_task()->name()
       << " returned from main()\n";
-   exit (EXIT_FAILURE);
+   exit (EXIT_SUCCESS); // suck it RTOS
 }
 
 /***************************************************************************\
@@ -527,7 +528,7 @@ void RTOS::mutex::print( std::ostream & stream, bool header ) const {
 }
 
 RTOS::mutex::~mutex( void ) {
-   rtos_fatal ("mutex destructor called");
+//   rtos_fatal ("mutex destructor called");
 }
 
 /***************************************************************************\
@@ -920,6 +921,7 @@ void RTOS::beat (void) {
    long int elapsed = new_run_time - last_run_time;
    last_run_time = new_run_time;
 
+   long long int min_timer_time = INT_MAX;
    if (elapsed > 0) {
       // service the callback timer queue
       for ( callback * t = timerList; t != NULL; t = t->nextTimer ) {
@@ -933,6 +935,9 @@ void RTOS::beat (void) {
             t->time_to_wait -= elapsed;
             if( t->time_to_wait <= 0 ) {
                t->time_up();
+            }
+            if (t->time_to_wait < min_timer_time) {
+               min_timer_time = t->time_to_wait;
             }
          }
       }
@@ -991,6 +996,12 @@ void RTOS::beat (void) {
 
 #if RTOS_STATISTICS_ENABLED
 
+   if (min_timer_time < INT_MAX) {
+      if (min_timer_time > 0) {
+//         std::cout << "slept " << min_timer_time << " usecs" << std::cout;
+         usleep((useconds_t)min_timer_time); // sleep for the required time
+      }
+   }
    // no runnable task has been found, nothing to do right now
    // we might as well do deadlock detection
    for( clock * c = clocks; c != NULL; c = c->next_clock ) {
@@ -998,9 +1009,9 @@ void RTOS::beat (void) {
          return;
       }
    }
-   for( timer * t = timers; t != NULL; t = t->next_timer ) {
-      if( ( t->time_to_wait > 0 )
-          && ( t->t->waitables.requested_waitables & t->mask ) ) {
+   for (timer *t = timers; t != NULL; t = t->next_timer) {
+      if ((t->time_to_wait > 0)
+          && (t->t->waitables.requested_waitables & t->mask)) {
          return;
       }
    }
