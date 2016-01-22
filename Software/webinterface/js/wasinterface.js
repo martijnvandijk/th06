@@ -236,7 +236,7 @@ function WebSocketConnect() {
 			window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
 		};
 		ws.onclose = function(evt) { console.log("Connection closed with code: " + evt.code); }
-		ws.onmessage = function(evt) { process_message(evt.data); }
+		ws.onmessage = function(evt) { process_message(evt); }
 		ws.onerror = function(evt) { console.log("websocket error: " + evt); }
 		return ws;
 	} else {
@@ -249,15 +249,16 @@ function WebSocketConnect() {
 	Process the message recieved from the websocket, and fill the JSON arrays if required
 */
 function process_message(message) {
-	console.log("Ontvangen bericht: " + message.data);
+	var json = JSON.parse(message.data);
+	console.log(json);
 	
-	/*
-	switch(message.data.request) {
-		case "UserSettings":
-			window.user_json[0] = message.data.pin;
-			window.user_json[1] = message.data.recovery;
+	switch(json.response) {
+		case "FetchUserSettings":
+			window.user_json = json.settings;
 			break;
-		case "WashingProgramme":
+		case "FetchWashingProgram":
+			window.page_json = json.settings;
+			
 			break;
 		case "UpdateAvailable":
 			break;
@@ -276,16 +277,15 @@ function process_message(message) {
 			temp.innerHTML = "0&deg;C";
 			break;
 		case "Temperature":
-			time.innerHTML = ;
+			time.innerHTML = "";
 			break;
 		case "Time":
-			time.innerHTML = ;
+			time.innerHTML = "";
 			break;
 		default: 
-			console.log("Warning: Unknown message received: " + message.data);
+			console.log("Warning: Unknown message received: " + message);
 			break;
 	}
-	*/
 }
 
 function check_update_status() {
