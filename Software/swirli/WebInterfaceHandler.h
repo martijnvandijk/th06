@@ -18,6 +18,7 @@ public:
 private:
     WashingMachine::WashingMachine &washingMachine;
     SwirliListener &listener;
+    RTOS::timer timer;
     void main();
 };
 

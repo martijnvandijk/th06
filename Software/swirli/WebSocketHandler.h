@@ -8,7 +8,7 @@
 
 class WebSocketHandler {
 public:
-    WebSocketHandler(int port, WebInterfaceHandler &web);
+    WebSocketHandler(int port, WebInterfaceHandler &web, SwirliListener &listener);
 
     void runServer();
 
@@ -19,7 +19,7 @@ public:
 private:
     int port;
 //    std::list<WebSocket *> clients;
-    SwirliListener listener;
+    SwirliListener &listener;
 };
 
 #endif

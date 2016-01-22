@@ -21,16 +21,16 @@ namespace WashingMachine {
         WashingMachine(
                 UARTHandler &uart
         ) :
-                uart{uart},
-                door(uart),
-                heatingUnit(uart),
-                motor(uart),
-                pump(uart),
-                signalLed(uart),
-                soapDispenser(uart),
-                temperatureSensor(uart),
-                waterLevelSensor(uart),
-                waterValve(uart) {
+                uart(uart),
+                door{uart},
+                heatingUnit{uart},
+                motor{uart},
+                pump{uart},
+                signalLed{uart},
+                soapDispenser{uart},
+                temperatureSensor{uart},
+                waterLevelSensor{uart},
+                waterValve{uart} {
         }
 
 

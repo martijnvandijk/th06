@@ -92,6 +92,7 @@ target_link_libraries(swirli pthread rt ${SSL_LIBRARIES})
 add_executable(swirli_testing
 		test_main.cpp
 		${WashingMachineSourceFiles}
+		${NetworkingSourceFiles}
 		${RTOS_SourceFiles}
 		)
 
