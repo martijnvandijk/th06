@@ -1,18 +1,17 @@
 window.onload = function() {
 	window.socket = WebSocketConnect(); // Connect to the websocket
 	
-	loadJSON("js/usersettings.json");
-	loadJSON("js/wasprogrammas.json");
-	
-	/*
-		Values (booleans, ints, json arrays)
-	*/
+	// bool
 	var user_login = false; // bool
 	var update_available = false; // bool; Whether or not there's an update available
-	var recovery_mode = false;
+	var recovery_mode = false; // bool; Determine if the user is in recovery mode
 	var show_menu = false; // bool; Whether or not the user menu is being shown
+	
+	// JSON
 	window.user_json; // json array containing user settings
 	window.page_json; // json array for populating the page
+	
+	// int
 	var entered_pin; // int
 	
 	/*
@@ -37,6 +36,9 @@ window.onload = function() {
 	var login_screen = document.getElementById("login");
 	var overlay = document.getElementById("black-overlay");
 	var navbar = document.getElementById("navbar");
+	var temp = document.getElementById("temperaturefield");
+	var time = document.getElementById("timefield");
+	var state = document.getElementById("statusfield");
 	
 	/*
 		Input elements
@@ -48,8 +50,6 @@ window.onload = function() {
 		navbar.style.display = "none";
 		login_screen.style.display = "block";
 	}
-	
-	check_update_status();
 	
 	recovery_link.onclick = function() {
 		document.getElementById("recoveryprompt").style.display = "block";
@@ -66,10 +66,9 @@ window.onload = function() {
 			var pin_code = window.user_json.pin; // The pin code is simply the user pin
 		}
 		
-		if(pin_code == entered_pin) {
-			loadJSON("js/wasprogrammas.json"); // After the user has successfully logged in, populate the webpage with data from the "wasprogramma" file
-			
+		if(pin_code == entered_pin) {			
 			user_login = true;
+			check_update_status();
 			
 			// Set default value for time input fields
 			document.getElementById("duration").value = "00:00";
@@ -130,8 +129,8 @@ window.onload = function() {
 		// Send a start command to the websocket, along with a few parameters
 		var json = {"request" : "StartWashingProgram", 
 						"Parameters" : {
-							"Program" : was_selected, 
-							"Temperature" : temp_selected, 
+							"Program" : was_selected,
+							"Temperature" : temp_selected,
 							"Delay" : delay
 						}
 				   };
@@ -158,11 +157,12 @@ window.onload = function() {
 }
 
 /*
-	POST to save_settings.php to save the user settings
+	Send a request to save the user settings
+	
+	@param pin The pincode of the user
+	@param recovery The user's selected recovery method
 */
 function save_settings(pin, recovery) {
-	// Save user settings 
-	
 	if(!pin) { pin = window.user_json.pin; } // If the new_pin is empty, fill it with the current pin number
 	
 	// Send a start command to the websocket, along with a few parameters
@@ -221,33 +221,6 @@ function populate_temp() {
 }
 
 /*
-	Custom function to load JSON from a file
-*/
-function loadJSON(path) {
-	// Retrieve usersettings from the websocket
-	// window.websocket.send("fetch_user");
-
-    var xhr = new XMLHttpRequest();
-	
-    xhr.onreadystatechange = function() {
-		if(xhr.readyState == 4 && xhr.status == 200) {
-			var jsonArray = JSON.parse(xhr.responseText);
-			if(path == "js/usersettings.json") {
-				window.user_json = jsonArray;
-				console.log(jsonArray);
-			} else if(path == "js/wasprogrammas.json") {
-				window.page_json = jsonArray;
-				populate_wasprogrammas();
-			}
-		}
-	};
-	
-	// Fetch the file with timestamp in milliseconds as a nocache parameter to trick apache into thinking it's a completely new file
-	xhr.open("GET", path+"?nocache="+(new Date()).getTime(), true);
-	xhr.send();
-}
-
-/*
 	Function to connect to the websocket and show message based on results
 */
 function WebSocketConnect() {
@@ -262,15 +235,19 @@ function WebSocketConnect() {
 			json = {"request" : "FetchWashingProgram"};
 			window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
 		};
-		ws.onclose = function(evt) { console.log("connection closed"); };
-		ws.onmessage = function(evt) { process_message(evt); };
-		ws.onerror = function(evt) { console.log("websocket error: " + evt); };
+		ws.onclose = function(evt) { console.log("Connection closed with code: " + evt.code); }
+		ws.onmessage = function(evt) { process_message(evt.data); }
+		ws.onerror = function(evt) { console.log("websocket error: " + evt); }
 		return ws;
 	} else {
 		alert("WebSocket NOT supported by your Browser!");
 	}
+
 }
 
+/*
+	Process the message recieved from the websocket, and fill the JSON arrays if required
+*/
 function process_message(message) {
 	console.log("Ontvangen bericht: " + message.data);
 	
@@ -280,8 +257,32 @@ function process_message(message) {
 			window.user_json[0] = message.data.pin;
 			window.user_json[1] = message.data.recovery;
 			break;
+		case "WashingProgramme":
+			break;
+		case "UpdateAvailable":
+			break;
+		case "SettingsSaved":
+			break;
+		case "WashStarted":
+			// Change state
+			state.innerHTML = "Er is momenteel een wastaak bezig";
+			break;
+		case "WashStopped":
+			// Change state
+			state.innerHTML = "Er is momenteel geen wastaak bezig";
+			
+			// Set temperature and time to 0
+			time.innerHTML = "00:00";
+			temp.innerHTML = "0&deg;C";
+			break;
+		case "Temperature":
+			time.innerHTML = ;
+			break;
+		case "Time":
+			time.innerHTML = ;
+			break;
 		default: 
-			console.log("Warning: Unknown message recieved: " + message.data);
+			console.log("Warning: Unknown message received: " + message.data);
 			break;
 	}
 	*/
