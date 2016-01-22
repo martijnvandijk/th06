@@ -23,7 +23,7 @@ namespace WashingMachine{
          * @brief getState Gets the current state of the soap dispenser
          * 
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         * @return heatingunit_states_t Returns the enum SOAP_OPEN or SOAP_CLOSED depending on wether the soap dispenser is open or closed
+         * @return HeatingUnitState Returns the enum SOAP_OPEN or SOAP_CLOSED depending on wether the soap dispenser is open or closed
          */
         SoapDispenserState getState(UARTUser *referenceUser);
         /**

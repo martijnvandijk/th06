@@ -9,6 +9,6 @@ SetWaterLevelInstruction::SetWaterLevelInstruction(WaterLevelRegulator &waterReg
         waterLevel{waterLevel}
 {}
 
-void SetWaterLevelInstruction::execute(WashingMachine::UARTUser *user) {
+void SetWaterLevelInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
 	waterRegulator.setWaterLevel(waterLevel);
 }

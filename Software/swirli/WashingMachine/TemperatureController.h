@@ -5,11 +5,10 @@
 #ifndef PROJECT_TEMPERATURECONTROLLER_H
 #define PROJECT_TEMPERATURECONTROLLER_H
 
-
-#include "WashingMachine/UARTUser.h"
-#include "WashingMachine/SensorListener.h"
-#include "WashingMachine/HeatingUnit.h"
 #include "TemperatureRegulator.h"
+#include "UARTUser.h"
+#include "SensorListener.h"
+#include "HeatingUnit.h"
 
 class TemperatureController : public WashingMachine::UARTUser,
                               public TemperatureRegulator,

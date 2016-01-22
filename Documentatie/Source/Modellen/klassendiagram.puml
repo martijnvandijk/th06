@@ -224,7 +224,7 @@ package WashingMachine{
         -latestWaterLevel : RTOS::pool<int>
         -waterLevelUpdated : RTOS::flag
     }
-    Class WaterLevelRegulator<<Interface>>{
+    Interface WaterLevelRegulator<<Interface>>{
         +virtual void setWaterLevel(waterLevel : int)
     }
     Class TemperatureController<<Controller>>{
@@ -238,7 +238,7 @@ package WashingMachine{
         -latestTemperature : RTOS::pool<int>
         -temperatureUpdated : RTOS::flag
     }
-    Class TemperatureRegulator<<Interface>>{
+    Interface TemperatureRegulator<<Interface>>{
         +virtual void setTemperature(temperature : int)
     }
     Class UARTHandler{
@@ -249,6 +249,11 @@ package WashingMachine{
         -timer : RTOS::timer
         -OutputBuffer : std::queue<UARTMessage>
     }
+    Class UARTMessage << (S,#FF00FF) Struct>>{
+        requestByte : uint8_t
+        commandByte : uint8_t
+        sender: UARTUser*
+    }
     Class UARTUser{
         #replyPool : RTOS::pool<uint8_t>
         #virtual void main()
@@ -256,7 +261,7 @@ package WashingMachine{
         +virtual void receiveReply(replyByte : uint8_t)
         +virtual uint8_t getReplyPoolContents()
     }
-    Class Observable <<Abstract>>{
+    Abstract Observable <<Abstract>>{
         +void subscribe(listener : SensorListener*)
         +virtual int poll(referenceUser : UARTUser*)
         #void updateAll(newVal : int)
@@ -268,7 +273,7 @@ package WashingMachine{
         #virtual void main()
         #sensors : std::vector<Observable*>
     }
-    Class SensorListener <<Interface>>{
+    Interface SensorListener <<Interface>>{
         +virtual void update(newVal : int)
     }
     Class SignalLed <<Boundary>>{
@@ -352,6 +357,12 @@ package WashingMachine{
         -waterValve : WaterValve
 
     }
+    Class EventGenerator{
+        +void wait(user : RTOS::task*)
+        #bool notify()
+        #void notifyAll()
+        -blocked{} : std::queue<RTOS::task*>
+    }
 
     enum SignalLedState<<Enumeration>>{
         LED_ON
@@ -379,6 +390,10 @@ package WashingMachine{
         PUMP_OFF
     }
 
+    WaterLevelRegulator --|> EventGenerator :Extends
+    TemperatureRegulator --|> EventGenerator : Extends
+
+    UARTMessage -- UARTHandler
     SignalLed -- SignalLedState
     SoapDispenser -- SoapDispenserState
     WaterValve -- WaterValveState
@@ -464,15 +479,70 @@ package washingInstructions{
         -water : WaterLevelRegulator&
     }
 }
-    Class WashingInstruction
-    Class LogController<<Controller>>
-    Class WashingController<<Controller>>
-    Class WashingProgram
-    Class WashingTask
-    Class WaterLevelController<<Controller>>
-    Class WaterLevelRegulator<<Interface>>
-    Class TemperatureController<<Controller>>
-    Class TemperatureRegulator<<Interface>>
+    Class LogController<<Controller>>{
+        +LogController(log : std::ostream*)
+        +void logCurrentProgram(program : std::string)
+        +void logCurrentStep(step : int)
+        +void logProgramStopped()
+        +log : std::ostream*
+    }
+    Class WashingController<<Controller>>{
+        +WashingController(log : LogController&)
+        +void start(program : WashingProgram&)
+    }
+    Class WashingProgram{
+        +void addTask(task : WashingTask)
+        +void execute (uartUser : UARTUser*, logController : LogController*)
+        +void execute (uartUser : UARTUser*, logController : LogController*, resumeFrom : int)
+        -tasks : std::vector<WashingTask>
+    }
+    Class WashingTask{
+        +void addInstruction(instruction : WashingInstruction*)
+        +void execute(referenceUser : UARTUser*)
+        -instructions{} : std::vector<WashingInstruction*>
+    }
+    Class SwirliListener{
+        +void onTextMessage(s : const string&, ws : WebSocket*)
+        +void onClose(ws : WebSocket*)
+        +bool packetsAvailable()
+        +std::shared_ptr<WebSocketPacket> getPacket()
+        -packetQueue : std::queue<std::shared_ptr<WebSocketPacket>>
+        -pQMutex : std::mutex
+    }
+    Class WebInterfaceHandler{
+        +WebInterfaceHandler(washingMachine : WashingMachine*, swirliListener : SwirliListener*)
+        -washingMachine : WashingMachine&
+        -listener : SwirliListener&
+        -timer : RTOS::timer
+        -void main()
+    }
+    Class WebSocketHandler{
+        +WebSocketHandler(port : int, web : WebInterfaceHandler&, listener : SwirliListener&)
+        +void runServer()
+        +std::thread spawnWebSocketHandler()
+        +void sendMessage()
+        -port : int
+        -listener : SwirliListener&
+    }
+    Class WebSocketPacket{
+        +WebSocketPacket(json : const char*, ws : WebSocket*)
+        +rapidjson::Document &getDoc()
+        +WebSocket * getWebSocket()
+        -doc : rapidjson::Document
+        -ws : WebSocket*
+    }
+
+    WaitWaterLevelInstruction o-- WaterLevelRegulator
+    WaitTemperatureInstruction o-- TemperatureRegulator
+
+    WebInterfaceHandler o-- WashingMachine
+    WebInterfaceHandler o-- SwirliListener
+
+    SwirliListener o-- WebSocketPacket
+
+    WebSocketHandler o-- WebInterfaceHandler
+    WebSocketHandler o-- SwirliListener
+
 
     WaterLevelController o-- Pump
     WaterLevelController o-- WaterValve
@@ -489,7 +559,7 @@ package washingInstructions{
     WashingProgram o- WashingTask
     WashingTask o- WashingInstruction
     WashingController o- WashingProgram
-    WashingController o- LogController
+    LogController -o WashingController
 
     WashingInstruction <|-- AddSoapInstruction :Extends
     WashingInstruction <|-- SetDoorLockInstruction :Extends

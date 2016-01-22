@@ -39,31 +39,30 @@ set(WashingMachineSourceFiles
 		WashingMachine/SensorListener.h
 		WashingMachine/SoapDispenser.cpp		WashingMachine/SoapDispenser.h
 		WashingMachine/TemperatureSensor.cpp	WashingMachine/TemperatureSensor.h
-		WashingMachine/WashingMachineBoundary.h
 		WashingMachine/WaterLevelSensor.cpp		WashingMachine/WaterLevelSensor.h
 		WashingMachine/WaterValve.cpp			WashingMachine/WaterValve.h
 		WashingMachine/UARTHandler.cpp			WashingMachine/UARTHandler.h
 		WashingMachine/UARTUser.h
-		WashingInstruction.h
-		WashingTask.cpp										WashingTask.h
-		WashingProgram.cpp									WashingProgram.h
+		WashingInstructions/WashingInstruction.h
+		WashingInstructions/WashingTask.cpp WashingInstructions/WashingTask.h
+		WashingInstructions/WashingProgram.cpp WashingInstructions/WashingProgram.h
 		WashingInstructions/SetRPMInstruction.cpp			WashingInstructions/SetRPMInstruction.h
 		WashingInstructions/SetWaterLevelInstruction.cpp	WashingInstructions/SetWaterLevelInstruction.h
 		WashingInstructions/SetTemperatureInstruction.cpp	WashingInstructions/SetTemperatureInstruction.h
 		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
 		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
 		WashingInstructions/WaitTimeInstruction.cpp			WashingInstructions/WaitTimeInstruction.h
-		TemperatureRegulator.h
-		WaterLevelRegulator.h
-		LogController.cpp LogController.h
-		TemperatureController.cpp TemperatureController.h
-		WaterLevelController.cpp WaterLevelController.h
+		WashingMachine/TemperatureRegulator.h
+		WashingMachine/WaterLevelRegulator.h
+		LogController.cpp									LogController.h
+		WashingMachine/TemperatureController.cpp			WashingMachine/TemperatureController.h
+		WashingMachine/WaterLevelController.cpp				WashingMachine/WaterLevelController.h
 		WashingInstructions/WaitWaterLevelInstruction.cpp
 		WashingInstructions/WaitWaterLevelInstruction.h
-		EventGenerator.cpp EventGenerator.h
+		EventGenerator.cpp			EventGenerator.h
 		WashingInstructions/WaitTemperatureInstruction.cpp
 		WashingInstructions/WaitTemperatureInstruction.h
-		WebInterfaceHandler.h WebInterfaceHandler.cpp
+		WebInterfaceHandler.h		WebInterfaceHandler.cpp
 		WashingMachine/WashingMachine.h
 		)
 

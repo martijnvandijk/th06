@@ -1,8 +1,8 @@
 #include "WashingTask.h"
 
-void WashingTask::execute(WashingMachine::UARTUser *referenceUser) {
+void WashingTask::execute(WashingMachine::UARTUser *referenceUser, LogController &logController) {
 	for (WashingInstruction *i : instructions) {
-		i->execute(referenceUser);
+		i->execute(referenceUser, logController);
 	}
 }
 

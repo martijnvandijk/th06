@@ -5,14 +5,15 @@
 #ifndef SETRPMINSTRUCTION_HPP
 #define SETRPMINSTRUCTION_HPP
 
-#include "../WashingInstruction.h"
 #include "../WashingMachine/Motor.h"
+#include "WashingInstruction.h"
+#include "../LogController.h"
 
 class SetRPMInstruction : public WashingInstruction {
 public:
-	SetRPMInstruction(WashingMachine::Motor &motor, int rmp);
+	SetRPMInstruction(WashingMachine::Motor &motor, int rpm);
 
-	virtual void execute(WashingMachine::UARTUser *user) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
 
 private:
 	WashingMachine::Motor &motor;

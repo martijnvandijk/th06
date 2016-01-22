@@ -6,7 +6,7 @@
 #include "UARTUser.h"
 
 namespace WashingMachine{
-    enum door_states_t {DOOR_OPENED, DOOR_UNLOCKED_CLOSED, DOOR_LOCKED};
+    enum DoorState {DOOR_OPENED, DOOR_UNLOCKED_CLOSED, DOOR_LOCKED};
     class Door{
     public:
         /**
@@ -19,15 +19,15 @@ namespace WashingMachine{
          * @brief getState Gets the current state of the heating unit
          * 
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         * @return heatingunit_states_t Returns the enum DOOR_OPENED, DOOR_UNLOCKED_CLOSED or DOOR_LOCKED depending on wether the door is open, closed or locked.
+         * @return HeatingUnitState Returns the enum DOOR_OPENED, DOOR_UNLOCKED_CLOSED or DOOR_LOCKED depending on wether the door is open, closed or locked.
          */
-         door_states_t getState(UARTUser *referenceUser);
+         DoorState getState(UARTUser *referenceUser);
           /**
           * @brief set Sets the door to either the DOOR_LOCKED or the DOOR_UNLOCKED_CLOSED state.
           * @param state The state the door will be set to.
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
-          void set(door_states_t state, UARTUser *referenceUser);
+          void set(DoorState state, UARTUser *referenceUser);
 
          /**
           * @brief toggle Toggles the door between the locked and unlocked state
@@ -36,7 +36,7 @@ namespace WashingMachine{
           void toggle(UARTUser *referenceUser);
 
       private:
-        UARTHandler uart;
+        UARTHandler &uart;
     };
 }
 #endif
