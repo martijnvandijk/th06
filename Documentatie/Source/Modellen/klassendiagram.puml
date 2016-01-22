@@ -15,7 +15,7 @@ package WashingMachine {
 		+ poll()
 	}
 
-	class SensorHandler<<task>>
+	class SensorHandler<<Task>>
 
 	interface SensorListener<<Interface>> {
 		+ field: type
@@ -211,7 +211,7 @@ skinparam classAttributeIconSize 0
 'left to right direction'
 
 package WashingMachine{
-    Class WaterLevelController<<Controller>>{
+    Class WaterLevelController<<Controller>><<Task>>{
         +WaterLevelController(&pump : Pump, waterValve : WaterValve&)
         +virtual void setWaterLevel(waterLevel : int)
         +virtual void update(newVal : int)
@@ -227,7 +227,7 @@ package WashingMachine{
     Interface WaterLevelRegulator<<Interface>>{
         +virtual void setWaterLevel(waterLevel : int)
     }
-    Class TemperatureController<<Controller>>{
+    Class TemperatureController<<Controller>><<Task>>{
         +TemperatureController(heat : HeatingUnit&)
         +virtual void setTemperature(heatLevel : int)
         +virtual void update(newVal : int)
@@ -241,7 +241,7 @@ package WashingMachine{
     Interface TemperatureRegulator<<Interface>>{
         +virtual void setTemperature(temperature : int)
     }
-    Class UARTHandler{
+    Class UARTHandler<<Task>>{
         +UARTHandler(&serial : LibSerial)
         +void SendMessage(m : UARTMessage)
         -void main()
@@ -267,7 +267,7 @@ package WashingMachine{
         #void updateAll(newVal : int)
         -listeners : std::vector<SensorListeners*>
     }
-    Class SensorHandler{
+    Class SensorHandler<<Task>>{
         +SensorHandler()
         +void addSensor()
         #virtual void main()
@@ -490,14 +490,14 @@ package washingInstructions{
         -water : WaterLevelRegulator&
     }
 }
-    Class LogController<<Controller>>{
+    Class LogController<<Controller>><<Task>>{
         +LogController(log : std::ostream*)
         +void logCurrentProgram(program : std::string)
         +void logCurrentStep(step : int)
         +void logProgramStopped()
         +log : std::ostream*
     }
-    Class WashingController<<Controller>>{
+    Class WashingController<<Controller>><<Task>>{
         +WashingController(log : LogController&)
         +void start(program : WashingProgram&)
     }
@@ -516,7 +516,7 @@ package washingInstructions{
         -timer : RTOS::timer
         -void main()
     }
-    Class WebSocketHandler{
+    Class WebSocketHandler<<Thread>>{
         +WebSocketHandler(port : int, web : WebInterfaceHandler&, listener : SwirliListener&)
         +void runServer()
         +std::thread spawnWebSocketHandler()
