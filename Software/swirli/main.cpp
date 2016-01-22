@@ -1,15 +1,24 @@
 #include <iostream>
+#include <thread>
 
 #define debug_task_logging 1
 
 #include "WashingMachine/Motor.h"
 #include "Protocol.h"
+
+#include "WashingMachine/UARTHandler.h"
+#include "WashingMachine/UARTUser.h"
+#include "WashingMachine/WashingMachine.h"
+#include "WebSocketHandler.h"
+
+#define debug_task_logging_1
+
 using namespace std;
 
 class UARTTest : public WashingMachine::UARTUser {
 public:
-    UARTTest(WashingMachine::Motor &motor) :
-            motor(motor),
+    UARTTest(WashingMachine::WashingMachine &washingMachine) :
+            washingMachine(washingMachine),
             WashingMachine::UARTUser{98} {
     }
 
@@ -18,12 +27,12 @@ public:
     void main() {
         while (true) {
             std::cout << "starting motor" << std::endl;
-            motor.setRPM(100,this);
-            std::cout << motor.getRPM(this) << std::endl;
+            washingMachine.getMotor().setRPM(100,this);
+            std::cout << washingMachine.getMotor().getRPM(this) << std::endl;
             sleep(1 S);
             std::cout << "stopping motor" << std::endl;
-            motor.setRPM(0,this);
-            std::cout << motor.getRPM(this) << std::endl;
+            washingMachine.getMotor().setRPM(0,this);
+            std::cout << washingMachine.getMotor().getRPM(this) << std::endl;
             sleep(1 S);
         }
     }
@@ -31,7 +40,7 @@ public:
 
 
 private:
-    WashingMachine::Motor &motor;
+    WashingMachine::WashingMachine &washingMachine;
 };
 
 int main() {
@@ -60,9 +69,21 @@ int main() {
 
     serial.write(commandStart,2);
     serial.flush();
+
+
     WashingMachine::UARTHandler handler(serial);
-    WashingMachine::Motor motor(handler);
-    UARTTest test(motor);
+    WashingMachine::WashingMachine washingMachine(handler);
+//    UARTTest test(washingMachine);
+
+    SwirliListener swirliListener;
+    WebInterfaceHandler webInterfaceHandler(washingMachine, swirliListener);
+    WebSocketHandler wsh(2222,webInterfaceHandler);
+
+    //doesn't seem to work :S
+    std::thread websocketserver = wsh.spawnWebSocketHandler();
+
+    websocketserver.detach();
+//    std::thread webSocketThread(webSocketHandler.runServer);
 
     RTOS::run();
     return 0;

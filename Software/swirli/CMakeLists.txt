@@ -22,10 +22,11 @@ endif ()
 
 set(NetworkingSourceFiles
 		libs/networking/base64.h libs/networking/base64.cpp
-		libs/networking/broadcaster.h libs/networking/broadcaster.cpp
 		libs/networking/PracticalSocket.h libs/networking/PracticalSocket.cpp
 		libs/networking/websocket.h libs/networking/websocket.cpp
-		)
+
+		WebSocketHandler.h WebSocketHandler.cpp
+		WebSocketPacket.cpp WebSocketPacket.h SwirliListener.cpp SwirliListener.h)
 
 set(WashingMachineSourceFiles
 		WashingMachine/Door.cpp					WashingMachine/Door.h
@@ -54,8 +55,18 @@ set(WashingMachineSourceFiles
 		WashingInstructions/WaitTimeInstruction.cpp			WashingInstructions/WaitTimeInstruction.h
 		TemperatureRegulator.h
 		WaterLevelRegulator.h
+		LogController.cpp LogController.h
+		TemperatureController.cpp TemperatureController.h
+		WaterLevelController.cpp WaterLevelController.h
+		WashingInstructions/WaitWaterLevelInstruction.cpp
+		WashingInstructions/WaitWaterLevelInstruction.h
+		EventGenerator.cpp EventGenerator.h
+		WashingInstructions/WaitTemperatureInstruction.cpp
+		WashingInstructions/WaitTemperatureInstruction.h
+		WebInterfaceHandler.h WebInterfaceHandler.cpp
+		WashingMachine/WashingMachine.h
+		)
 
-		LogController.cpp						LogController.h TemperatureController.cpp TemperatureController.h WaterLevelController.cpp WaterLevelController.h WashingInstructions/WaitWaterLevelInstruction.cpp WashingInstructions/WaitWaterLevelInstruction.h EventGenerator.cpp EventGenerator.h WashingInstructions/WaitTemperatureInstruction.cpp WashingInstructions/WaitTemperatureInstruction.h)
 
 set(RTOS_SourceFiles
 	libs/pRTOS.cpp libs/pRTOS.h
@@ -74,13 +85,16 @@ add_executable(swirli
 		${RTOS_SourceFiles}
 		${NetworkingSourceFiles}
 		)
+
 target_link_libraries(swirli pthread rt ${SSL_LIBRARIES})
+
 
 add_executable(swirli_testing
 		test_main.cpp
 		${WashingMachineSourceFiles}
 		${RTOS_SourceFiles}
 		)
+
 target_link_libraries(swirli_testing gtest pthread rt ${SSL_LIBRARIES})
 
 if (CMAKE_CROSSCOMPILING)
