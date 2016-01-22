@@ -1,4 +1,4 @@
-Notities koffiepraat
+Notities
 
 Aydin zal de website van zijn lokale WAMP installatie verplaatsen naar de PI.
 Aydin had problemen met de websocketserver die geen verbindingen accepteert maar dit is nu verholpen.

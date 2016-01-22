@@ -1,4 +1,4 @@
-Notities koffiepraat
+Notities
 
 Aydin zal beginnen aan het technisch verslag.
 Aydin zal de lijst van webinterface commando's in een apart bestand zetten.

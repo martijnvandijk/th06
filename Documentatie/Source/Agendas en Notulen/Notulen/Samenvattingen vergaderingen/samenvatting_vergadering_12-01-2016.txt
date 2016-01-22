@@ -1,4 +1,4 @@
-Notities koffiepraat
+Notities
 
 Aydin heeft het HTML deel van de webinterface bijna af.
 Het ophalen van de gebruikers gegevens en wasprogramma's is ook al gedeeltelijk ingebouwd.

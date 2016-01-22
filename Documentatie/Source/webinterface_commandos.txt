@@ -5,5 +5,5 @@ UpdateUser - De gegevens die worden meegegeven opslaan in de user settings
 FetchWashingProgram - De namen van alle wasprogramma's, de temperaturen die elke wasprogramma kan toepassen en de tijd van dit wasprogramma.
 StartWashingProgram - Starten van het wasprogramma
 StopWashingProgram - Stoppen van het wasprogramma
-FetchWashingState - Opvragen van de huidige staat van het wasprogramma
-FetchWashingTime - Fetch the current time in the washing process
+FetchWashingTemp - Opvragen van de huidige temperatuur van het wasprogramma
+FetchWashingTime - Opvragen van de huidige tijd
