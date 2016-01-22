@@ -1,2 +1,2 @@
 Notities
-
+Christiaan: Afmaken boundary objecten en controllers en andere helpen met hun delen.

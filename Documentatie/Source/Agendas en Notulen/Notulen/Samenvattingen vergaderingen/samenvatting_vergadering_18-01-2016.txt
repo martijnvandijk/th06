@@ -3,3 +3,5 @@ Notities
 Aydin zal beginnen aan het technisch verslag.
 Aydin zal de lijst van webinterface commando's in een apart bestand zetten.
 Aydin zal de code voor de webinterface voorzien van meer commentaar.
+
+Christiaan: Commentaar bij de code van de boundary objecten en controllers neerzetten
