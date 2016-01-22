@@ -1,217 +1,9 @@
 @startuml
 skinparam classAttributeIconSize 0
-left to right direction
-
-package WashingMachine {
-	abstract class WashingMachineBoundary<<abstract>> {
-		- requestByteMap: std::unordered_map
-		- responseByteMap: std::unordered_map
-		+ sendHardwareRequest(HardwareRequest request): hardwareResponse
-	}
-
-	abstract class Observable<<abstract>> {
-		- listeners: std::vector
-		+ subscribe()
-		+ poll()
-	}
-
-	class SensorHandler<<task>>
-
-	interface SensorListener<<Interface>> {
-		+ field: type
-		+ update(observable,data)
-	}
-
-
-	class Watervalve<<boundary>>
-	class Motor<<boundary>>
-	class LED<<boundary>>
-	class HeatingUnit<<boundary>>
-	class SoapDispenser<<boundary>>
-	class Pump<<boundary>> {
-		+ getStatus(): bool
-	}
-	class Door<<boundary>>
-
-	class TemperatureSensor<<boundary>>
-	class WaterlevelSensor<<boundary>>
-
-
-	WashingMachineBoundary  <|--    Watervalve : Extends
-	WashingMachineBoundary  <|--    Motor : Extends
-	WashingMachineBoundary  <|--    LED : Extends
-	WashingMachineBoundary  <|--    HeatingUnit : Extends
-	WashingMachineBoundary  <|--    SoapDispenser : Extends
-	WashingMachineBoundary  <|--    Pump : Extends
-	WashingMachineBoundary  <|--    Door : Extends
-
-	TemperatureSensor       --|>    WashingMachineBoundary : Extends
-	WaterlevelSensor        --|>    WashingMachineBoundary : Extends
-
-	Observable              ..|>    TemperatureSensor : Implements
-	Observable              ..|>    WaterlevelSensor : Implements
-
-	Observable              <--o "0..*"     SensorHandler
-	Observable          "1" o-->            SensorListener
-}
-
-class UpdateController<<control>>
-class WashingController<<controller>>
-class AuthorizationController<<control>>
-class WebInterfaceHandler<<thread>>
-class SettingsController<<control>>
-
-class WebSocketHandler<<thread>>
-
-class LogController<<control>>
-class LogFile<<boundary>>
-
-class WashingProgram<<Object>>
-class WashingTask<<Object>>
-abstract class WashingInstruction<<Object>>
-
-
-AuthorizationController   <--o "1"  WebInterfaceHandler
-UpdateController      "1" o--> "1"  WebInterfaceHandler
-WashingController         <--o "1"  WebInterfaceHandler
-WebInterfaceHandler   "1" o->       SettingsController
-WebInterfaceHandler   "1" o->       WashingMachineBoundary
-WebInterfaceHandler   "1" o->       Observable
-
-WebSocketHandler          <-o "1"   WashingController
-LogController             <-o "1"   WashingController
-	LogFile               *->       LogController
-
-WashingController     "1" o-->      WashingProgram
-WashingProgram     "0..*" o-->      WashingTask
-WashingTask           "1" o-->      WashingInstruction
-WashingInstruction    "1" o->       WashingMachineBoundary
-WashingInstruction    "1" o->       Observable
-
-WashingController         ..|>      SensorListener
-@enduml
-
-@startuml
-skinparam classAttributeIconSize 0
-left to right direction
-
-package WashingMachine {
-	abstract class WashingMachineBoundary<<abstract>> {
-		- requestByteMap: std::unordered_map
-		- responseByteMap: std::unordered_map
-		+ sendHardwareRequest(HardwareRequest request): hardwareResponse
-	}
-
-	abstract class Observable<<abstract>> {
-		- listeners: std::vector
-		+ subscribe()
-		+ poll()
-	}
-
-	interface SensorListener<<Interface>> {
-		+ field: type
-		+ update(observable,data)
-	}
-}
-
-class UpdateController<<control>>
-class WashingController<<controller>>
-class AuthorizationController<<control>>
-class WebInterfaceHandler<<thread>>
-class SettingsController<<control>>
-
-class WebSocketHandler<<thread>>
-
-class LogController<<control>>
-class LogFile<<boundary>>
-
-class WashingProgram<<Object>>
-class WashingTask<<Object>>
-abstract class WashingInstruction<<Object>>
-
-
-AuthorizationController   <--o "1"  WebInterfaceHandler
-UpdateController      "1" o--> "1"  WebInterfaceHandler
-WashingController         <--o "1"  WebInterfaceHandler
-WebInterfaceHandler   "1" o->       SettingsController
-WebInterfaceHandler   "1" o->       WashingMachineBoundary
-WebInterfaceHandler   "1" o->       Observable
-
-WebSocketHandler          <-o "1"   WashingController
-WashingController     "1" o->       LogController
-	LogController         *->       LogFile
-
-WashingController     "1" o-->      WashingProgram
-WashingProgram     "0..*" o-->      WashingTask
-WashingTask           "1" o-->      WashingInstruction
-WashingInstruction    "1" o->       WashingMachineBoundary
-WashingInstruction    "1" o->       Observable
-
-WashingController         ..|>      SensorListener
-@enduml
-
-@startuml
-skinparam classAttributeIconSize 0
-left to right direction
-
-package WashingMachine {
-	abstract class WashingMachineBoundary<<abstract>> {
-		- requestByteMap: std::unordered_map
-		- responseByteMap: std::unordered_map
-		+ sendHardwareRequest(HardwareRequest request): hardwareResponse
-	}
-
-	abstract class Observable<<abstract>> {
-		- listeners: std::vector
-		+ subscribe()
-		+ poll()
-	}
-
-	class SensorHandler<<task>>
-
-	interface SensorListener<<Interface>> {
-		+ field: type
-		+ update(observable,data)
-	}
-
-	class Watervalve<<boundary>>
-	class Motor<<boundary>>
-	class LED<<boundary>>
-	class HeatingUnit<<boundary>>
-	class SoapDispenser<<boundary>>
-	class Pump<<boundary>> {
-		+ getStatus(): bool
-	}
-	class Door<<boundary>>
-
-	class TemperatureSensor<<boundary>>
-	class WaterLevelSensor<<boundary>>
-
-
-	WashingMachineBoundary  <|--    WaterValve : Extends
-	WashingMachineBoundary  <|--    Motor : Extends
-	WashingMachineBoundary  <|--    LED : Extends
-	WashingMachineBoundary  <|--    HeatingUnit : Extends
-	WashingMachineBoundary  <|--    SoapDispenser : Extends
-	WashingMachineBoundary  <|--    Pump : Extends
-	WashingMachineBoundary  <|--    Door : Extends
-
-	TemperatureSensor       <|--    WashingMachineBoundary : Extends
-	WaterLevelSensor        <|--    WashingMachineBoundary : Extends
-
-	Observable              ..|>    TemperatureSensor : Implements
-	Observable              ..|>    WaterLevelSensor : Implements
-
-	Observable              <--o "0..*"     SensorHandler
-	Observable          "1" o-->            SensorListener
-}
-@enduml
-@startuml
-skinparam classAttributeIconSize 0
 'left to right direction'
 
 package WashingMachine{
-    Class WaterLevelController<<Controller>>{
+    Class WaterLevelController<<Controller>><<Task>>{
         +WaterLevelController(&pump : Pump, waterValve : WaterValve&)
         +virtual void setWaterLevel(waterLevel : int)
         +virtual void update(newVal : int)
@@ -227,7 +19,7 @@ package WashingMachine{
     Interface WaterLevelRegulator<<Interface>>{
         +virtual void setWaterLevel(waterLevel : int)
     }
-    Class TemperatureController<<Controller>>{
+    Class TemperatureController<<Controller>><<Task>>{
         +TemperatureController(heat : HeatingUnit&)
         +virtual void setTemperature(heatLevel : int)
         +virtual void update(newVal : int)
@@ -241,7 +33,7 @@ package WashingMachine{
     Interface TemperatureRegulator<<Interface>>{
         +virtual void setTemperature(temperature : int)
     }
-    Class UARTHandler{
+    Class UARTHandler<<Task>>{
         +UARTHandler(&serial : LibSerial)
         +void SendMessage(m : UARTMessage)
         -void main()
@@ -267,7 +59,7 @@ package WashingMachine{
         #void updateAll(newVal : int)
         -listeners : std::vector<SensorListeners*>
     }
-    Class SensorHandler{
+    Class SensorHandler<<Task>>{
         +SensorHandler()
         +void addSensor()
         #virtual void main()
@@ -434,6 +226,17 @@ package washingInstructions{
     Class WashingInstruction{
         +virtual void execute(user : UARTUser*)
     }
+    Class WashingProgram{
+        +void addTask(task : WashingTask)
+        +void execute (uartUser : UARTUser*, logController : LogController*)
+        +void execute (uartUser : UARTUser*, logController : LogController*, resumeFrom : int)
+        -tasks : std::vector<WashingTask>
+    }
+    Class WashingTask{
+        +void addInstruction(instruction : WashingInstruction*)
+        +void execute(referenceUser : UARTUser*)
+        -instructions{} : std::vector<WashingInstruction*>
+    }
     Class AddSoapInstruction{
         +AddSoapInstruction(&dispenser : SoapDispenser)
         +virtual void execute(user : UARTUser*)
@@ -479,27 +282,16 @@ package washingInstructions{
         -water : WaterLevelRegulator&
     }
 }
-    Class LogController<<Controller>>{
+    Class LogController<<Controller>><<Task>>{
         +LogController(log : std::ostream*)
         +void logCurrentProgram(program : std::string)
         +void logCurrentStep(step : int)
         +void logProgramStopped()
         +log : std::ostream*
     }
-    Class WashingController<<Controller>>{
+    Class WashingController<<Controller>><<Task>>{
         +WashingController(log : LogController&)
         +void start(program : WashingProgram&)
-    }
-    Class WashingProgram{
-        +void addTask(task : WashingTask)
-        +void execute (uartUser : UARTUser*, logController : LogController*)
-        +void execute (uartUser : UARTUser*, logController : LogController*, resumeFrom : int)
-        -tasks : std::vector<WashingTask>
-    }
-    Class WashingTask{
-        +void addInstruction(instruction : WashingInstruction*)
-        +void execute(referenceUser : UARTUser*)
-        -instructions{} : std::vector<WashingInstruction*>
     }
     Class SwirliListener{
         +void onTextMessage(s : const string&, ws : WebSocket*)
@@ -516,7 +308,7 @@ package washingInstructions{
         -timer : RTOS::timer
         -void main()
     }
-    Class WebSocketHandler{
+    Class WebSocketHandler<<Thread>>{
         +WebSocketHandler(port : int, web : WebInterfaceHandler&, listener : SwirliListener&)
         +void runServer()
         +std::thread spawnWebSocketHandler()
@@ -557,9 +349,9 @@ package washingInstructions{
 
     UARTUser --o WashingInstruction
     WashingProgram o- WashingTask
-    WashingTask o- WashingInstruction
+    WashingInstruction o- WashingTask
     WashingController o- WashingProgram
-    LogController -o WashingController
+    LogController --o WashingController
 
     WashingInstruction <|-- AddSoapInstruction :Extends
     WashingInstruction <|-- SetDoorLockInstruction :Extends
