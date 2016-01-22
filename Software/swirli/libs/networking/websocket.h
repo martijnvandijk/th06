@@ -22,13 +22,14 @@ class WebSocketListener;
  */
 
 
-class WebSocket {
+class WebSocket
+{
 public:
 	WebSocket(TCPSocket*) throw (WebSocketException);
 	~WebSocket();
 	void close();
 	void setListener(WebSocketListener*);
-	void handleMessage(const string &message) throw (WebSocketException, SocketException);
+	void sendTextMessage(const string &message) throw (WebSocketException, SocketException);
 	string getForeignAddress() { return sock->getForeignAddress().getAddress(); }
 
 private:

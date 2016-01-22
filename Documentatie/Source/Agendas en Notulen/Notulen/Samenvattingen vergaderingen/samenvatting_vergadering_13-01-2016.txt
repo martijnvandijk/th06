@@ -1,4 +1,4 @@
-Notities koffiepraat
+Notities
 
 Er wordt onderzoek gedaan naar JSON communicatie voor het sturen van data tussen de websocket en de webinterface.
 RapidJSON(?)

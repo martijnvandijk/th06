@@ -8,14 +8,32 @@ Om de gegevens van de gebruiker op te slaan (en op te halen) moesten wij deze er
 Tijdens het ontwikkelen van het systeem wat de gebruiker zijn gegevens laat op slaan, kwamen wij er achter dat JavaScript niet in staat is om bestanden aan de server-kant aan te passen.
 Dit was een groot probleem omdat wij geen gebruik maken van JavaScript libraries, welke mogelijk wel in staat zijn om bestanden aan te passen.
 
-Uiteindelijk hebben wij dit probleem 2 maal weten te oplossen.
+Uiteindelijk hebben wij voor dit probleem 2 oplossingen gevonden.
 De eerste oplossing was om uiteindelijk toch gebruik te maken van een JavaScript library, in dit geval JQuery.
 JQuery kan door middel van een Ajax call (in de vorm van $.ajax) externe en interne scripts aan roepen.
 Hiervoor hebben wij een kort PHP script geschreven wat het bestand aan past aan de hand van een binnen komende POST variabele.
 
-De tweede oplossing was, alhoewel simpeler van aard, moeilijker toe te passen, en maakte de eerste verouderd.
-Tijdens de ontwikkeling van het systeem kwamen we tot de conclusie dat de bestanden met gebruikers gegevens aan de kant van de WebSocket zouden worden geplaatst.
+De tweede oplossing was, alhoewel simpeler van aard, moeilijker toe te passen, en maakte de eerste oplossing nuttelloos.
+Tijdens de ontwikkeling van het systeem kwamen we tot de conclusie dat de bestanden met gebruikers gegevens aan de kant van de WebSocket geplaatst kunnen worden.
 Dit houdt in dat we door middel van c++ het bestand kunnen aanspreken, waardoor we geen externe library meer hoeven te gebruiken. Tevens hoeven we geen gebruik meer te maken van een PHP script.
+
+Uiteindelijk hebben wij gebruik gemaakt van de tweede oplossing, omdat deze naast het probleem oplossing ook resulteerde in een betere architectuur.
+
+\subsection{Verbinden met websocket}
+Hoewel eerder de websocket prima verbinding maakte met de webinterface, lukte het sinds het implementeren van de websocket binnen het systeem opeens niet meer om een verbinding op te stellen.
+Uiteindelijk hebben we gebruik gemaakt van GDB, die gedetailleerder aantoont op welke regel de software misgaat.
+Hieruit bleek dat bij het verwerken van de binnenkomende requests, het woord request verkeerd gespeld was (Request was "Rqeuest").
+
+\subsection{RTOS CPU tijd}
+Tijdens de ontwikkeling van het systeem kwamen wij er achter dat het RTOS 100% van de CPU tijd gebruikt.
+Hierdoor gebruikte het systeem meer stroom, en konden andere onderdelen van het systeem niet goed functioneren.
+
+Om dit op te lossen hebben wij het RTOS aangepast.
+Nu wordt er tijdens het aftellen van de timers gecontroleerd welke de kleinste tijds duur heeft. Indien er geen beschikbaar proces voor is dan wordt voor deze tijd sleep() gedaan.
+Hierdoor gebruiken wij ongeveer 5% CPU tijd i.p.v. 100%.
+
+\subsection{Fatale fout in websocket}
+MARTIJN PLS
 
 \section{Onopgeloste problemen}
 Onopgeloste problemen

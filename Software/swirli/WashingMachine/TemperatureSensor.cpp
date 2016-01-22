@@ -17,6 +17,4 @@ namespace WashingMachine{
         return newVal;
     }
 
-
-
 }
