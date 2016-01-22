@@ -25,7 +25,7 @@ namespace WashingMachine{
          * @brief getState Gets the current state of the water valve
          * 
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
-         * @return heatingunit_states_t Returns the enum VALVE_OPEN or VALVE_CLOSED
+         * @return HeatingUnitState Returns the enum VALVE_OPEN or VALVE_CLOSED
          */
          WaterValveState getState(UARTUser *referenceUser);
         /**

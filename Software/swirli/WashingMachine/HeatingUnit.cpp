@@ -5,7 +5,7 @@ namespace WashingMachine{
     uart(uart){
     }
 
-    heatingunit_states_t HeatingUnit::getState(UARTUser *referenceUser){
+    HeatingUnitState HeatingUnit::getState(UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = HEATING_UNIT_REQ;
@@ -20,7 +20,7 @@ namespace WashingMachine{
         }
 
     }
-    void HeatingUnit::set(heatingunit_states_t state, UARTUser *referenceUser){
+    void HeatingUnit::set(HeatingUnitState state, UARTUser *referenceUser){
         UARTMessage command;
         command.sender = referenceUser;
         command.requestByte = HEATING_UNIT_REQ;

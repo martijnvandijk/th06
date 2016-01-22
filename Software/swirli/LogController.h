@@ -20,6 +20,12 @@ public:
 	*	@param program a string containing information about the started washing program.
 	*/
 	void logCurrentProgram(std::string program);
+	
+	/** \brief
+	*
+	*	@param
+	*/
+	void logCurrentName(std::string name);
 
 	/** \brief Write an int to the logfile.
 	*		Write an int to the ProgressFile_WashingProgram file. This int represents the current "step" in the washing program.

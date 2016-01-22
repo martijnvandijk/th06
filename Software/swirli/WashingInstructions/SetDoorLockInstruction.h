@@ -5,18 +5,18 @@
 #ifndef SETDOORLOCKINSTRUCTION_H
 #define SETDOORLOCKINSTRUCTION_H
 
-#include "../WashingInstruction.h"
 #include "../WashingMachine/Door.h"
+#include "WashingInstruction.h"
 
 class SetDoorLockInstruction: public WashingInstruction {
 public:
-	SetDoorLockInstruction(WashingMachine::Door &door, WashingMachine::door_states_t lock);
+	SetDoorLockInstruction(WashingMachine::Door &door, WashingMachine::DoorState lock);
 
-	virtual void execute(WashingMachine::UARTUser *user) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
 
 private:
 	WashingMachine::Door &door;
-	WashingMachine::door_states_t lock;
+	WashingMachine::DoorState lock;
 };
 
 

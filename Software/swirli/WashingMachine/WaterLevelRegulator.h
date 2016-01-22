@@ -5,7 +5,7 @@
 #ifndef WATERLEVELREGULATOR_H
 #define WATERLEVELREGULATOR_H
 
-#include "EventGenerator.h"
+#include "../EventGenerator.h"
 
 class WaterLevelRegulator : public EventGenerator {
 public:

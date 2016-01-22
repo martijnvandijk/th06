@@ -14,7 +14,7 @@ void SwirliListener::onTextMessage(const string &s, WebSocket *ws) {
         packetQueue.push(webSocketPacket);
         std::cout << "Pushed websocketpacket, queuesize: " << packetQueue.size() << std::endl;
         std::cout << "PacketsAvailable output: " << packetsAvailable() << std::endl;
-\    }
+    }
     catch (invalid_argument &e) {
         std::cout << e.what() << std::endl;
     }

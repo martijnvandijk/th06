@@ -8,6 +8,6 @@ WaitWaterLevelInstruction::WaitWaterLevelInstruction(WaterLevelRegulator &water)
 		water(water)
 {}
 
-void WaitWaterLevelInstruction::execute(WashingMachine::UARTUser *user) {
+void WaitWaterLevelInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
 	water.wait(user);
 }

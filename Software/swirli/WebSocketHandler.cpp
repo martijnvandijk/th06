@@ -6,26 +6,23 @@
 
 WebSocketHandler::WebSocketHandler(int port, WebInterfaceHandler &web, SwirliListener &listener) :
         port{port},
-        listener(listener)
-        {
-
-}
+        listener(listener) { }
 
 void WebSocketHandler::runServer() {
     try {
         // Make a socket to listen for client connections.
         TCPServerSocket servSock(port);
-        cout << "server running: " << servSock.getLocalAddress().getAddress() << endl;
+        std::cout << "server running: " << servSock.getLocalAddress().getAddress() << std::endl;
         for (; ;) {
             TCPSocket *sock = servSock.accept();
             WebSocket *ws = new WebSocket(sock);
             ws->setListener(&listener);
         }
     } catch (SocketException &e) {
-        cerr << e.what() << endl;           // Report errors to the console
+        std::cerr << e.what() << std::endl;           // Report errors to the console
     }
 }
 
 std::thread WebSocketHandler::spawnWebSocketHandler() {
-    return std::thread( [this] {this->runServer();});
+    return std::thread([this] { this->runServer(); });
 }

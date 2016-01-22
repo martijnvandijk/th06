@@ -8,6 +8,6 @@ WaitTimeInstruction::WaitTimeInstruction(unsigned int time):
 		time{time}
 {}
 
-void WaitTimeInstruction::execute(WashingMachine::UARTUser *user) {
+void WaitTimeInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
 	user->sleep(time);
 }
