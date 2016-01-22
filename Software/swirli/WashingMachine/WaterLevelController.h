@@ -7,10 +7,10 @@
 
 #include <pRTOS.h>
 #include "WaterLevelRegulator.h"
-#include "WashingMachine/SensorListener.h"
-#include "WashingMachine/UARTUser.h"
-#include "WashingMachine/Pump.h"
-#include "WashingMachine/WaterValve.h"
+#include "UARTUser.h"
+#include "SensorListener.h"
+#include "Pump.h"
+#include "WaterValve.h"
 
 class WaterLevelController : public WashingMachine::UARTUser, public WaterLevelRegulator, public WashingMachine::SensorListener {
 public:

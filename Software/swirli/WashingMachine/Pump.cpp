@@ -5,7 +5,7 @@ namespace WashingMachine{
 	 uart(uart){
 	 }
 
-    pump_states_t Pump::getState(UARTUser *referenceUser){
+    PumpState Pump::getState(UARTUser *referenceUser){
     	uint8_t *readBuf[2];
 
         UARTMessage command;
@@ -22,7 +22,7 @@ namespace WashingMachine{
         }
 
     }
-    void Pump::set(pump_states_t state, UARTUser *referenceUser){
+    void Pump::set(PumpState state, UARTUser *referenceUser){
     	UARTMessage command;
     	command.sender = referenceUser;
     	command.requestByte = PUMP_REQ;

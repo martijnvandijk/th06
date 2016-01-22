@@ -5,28 +5,33 @@
 
 #include <Protocol.h>
 #include "gtest/gtest.h"
-/* #define TEST_FORK(Suite, Test, code) TEST(Suite, Test) {EXPECT_EXIT({\
-    code\
-	exit(0);\
-}, testing::ExitedWithCode{0}, "");}*/
 
 using namespace std;
 
 #include "WashingMachine/UARTHandler.h"
-#include "WashingProgram.h"
 #include "WashingMachine/Motor.h"
 #include "WashingInstructions/SetRPMInstruction.h"
 #include "WashingInstructions/WaitTimeInstruction.h"
 #include "WashingInstructions/SetDoorLockInstruction.h"
 #include "WashingInstructions/SetWaterLevelInstruction.h"
-#include "TemperatureController.h"
-#include "WaterLevelController.h"
 #include "WashingMachine/SensorHandler.h"
 #include "WashingMachine/WaterLevelSensor.h"
 #include "WashingInstructions/SetTemperatureInstruction.h"
 #include "WashingMachine/TemperatureSensor.h"
 #include "WashingInstructions/WaitWaterLevelInstruction.h"
 #include "WashingInstructions/WaitTemperatureInstruction.h"
+#include "WashingInstructions/WashingProgram.h"
+#include "WashingMachine/WaterValve.h"
+#include "WashingMachine/Pump.h"
+#include "WashingMachine/HeatingUnit.h"
+#include "WashingMachine/WaterLevelController.h"
+#include "WashingMachine/TemperatureController.h"
+
+TEST(WashingProgram, ReadFromFile) {
+	WashingProgram program{"bonte_was"};
+
+	std::cout << program.getJsonInfoString() << std::endl;
+}
 
 class TestProgramUser: public WashingMachine::UARTUser {
 public:
@@ -76,7 +81,6 @@ TEST(WashingProgram, Complete) {
 	TemperatureController temperatureController{heatingUnit};
 	temperatureSensor.subscribe(&temperatureController);
 
-	WashingProgram program{};
 	WashingTask task{};
 	task.addInstruction(new SetWaterLevelInstruction{waterLevelController, 20});
 	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
@@ -93,7 +97,7 @@ TEST(WashingProgram, Complete) {
 	task.addInstruction(new SetTemperatureInstruction{temperatureController, 0});
 	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
 	task.addInstruction(new WaitTimeInstruction{5 S});
-	program.addTask(task);
+	WashingProgram program{&task};
 
 	LogController logController{&std::cout};
 	TestProgramUser test{program, logController};

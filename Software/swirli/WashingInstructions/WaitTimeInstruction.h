@@ -5,13 +5,14 @@
 #ifndef PROJECT_WAITTIMEINSTRUCTION_H
 #define PROJECT_WAITTIMEINSTRUCTION_H
 
-#include "../WashingInstruction.h"
+#include "WashingInstruction.h"
+#include "../WashingMachine/UARTUser.h"
 
 class WaitTimeInstruction: public WashingInstruction {
 public:
 	WaitTimeInstruction(unsigned int time);
 
-	virtual void execute(WashingMachine::UARTUser *user) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
 
 private:
 	unsigned int time;

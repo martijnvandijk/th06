@@ -1,19 +1,28 @@
 #ifndef SWIRLI_WASHINGPROGRAM_H
 #define SWIRLI_WASHINGPROGRAM_H
 
+#include <unordered_map>
+#include <memory>
 #include "WashingTask.h"
-#include "LogController.h"
 
 class WashingProgram {
 public:
-	void addTask(WashingTask task);
+	WashingProgram(WashingTask *mainTask);
+	WashingProgram(std::string filename);
 
 	void execute(WashingMachine::UARTUser *uartUser, LogController &logController);
-
 	void execute(WashingMachine::UARTUser *uartUser, LogController &logController, int resumeFrom);
 
+	std::string getJsonInfoString();
+
 private:
-	std::vector<WashingTask> tasks;
+	struct info {
+		int temperatures[];
+		int duration;
+		std::string fullName;
+	};
+
+	std::shared_ptr<WashingTask> mainTask;
 };
 
 #endif

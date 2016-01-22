@@ -2,20 +2,22 @@
 #define SWIRLI_WASHINGTASK_H
 
 #include <vector>
-#include "WashingMachine/UARTUser.h"
 #include "WashingInstruction.h"
+#include "../LogController.h"
+#include "../WashingMachine/UARTUser.h"
 
 // hier komt de taak die uitgevoed moet worden
 // een taak bevat meerdere instructies
 
-class WashingTask {
+class WashingTask : public WashingInstruction {
 public:
 	void addInstruction(WashingInstruction *instruction); // has to be a pointer as the object will be stored in a array
 
-	void execute(WashingMachine::UARTUser *referenceUser);
+	virtual void execute(WashingMachine::UARTUser *referenceUser, LogController &logController) override;
 
 private:
 	std::vector<WashingInstruction*> instructions{};
+	friend class WashingProgram;
 };
 
 #endif

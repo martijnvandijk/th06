@@ -1,12 +1,14 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
+#include <rapidjson/filereadstream.h>
+#include <fstream>
 #include "WebInterfaceHandler.h"
 
 void WebInterfaceHandler::main() {
     while (true) {
         timer.set(1 S);
         wait();
-        std::cout << "WebInterfaceHandler run" << std::endl;
+//        std::cout << "WebInterfaceHandler run" << std::endl;
         if (listener.packetsAvailable()) {
             std::cout << "Got packet!" << std::endl;
             auto webSocketPacket = listener.getPacket();
@@ -29,11 +31,22 @@ void WebInterfaceHandler::main() {
             }
             if (request == "FetchUserSettings"){
                 std::cout << "procesing fetch user settings" << std::endl;
-                writer.String("pin");
-                writer.String("1234");
-                writer.String("recovery");
-                writer.String("01189998819991197253");
+                rapidjson::Document document{};
+                FILE * file{fopen("UserData/UserSettings.json", "r")};
+                char *readBuffer = new char[65536];
+                rapidjson::FileReadStream fileReadStream{file, readBuffer, 65536};
+                document.ParseStream(fileReadStream);
+                writer.String("settings");
+
+                document.Accept(writer);
+                fclose(file);
+                delete[] readBuffer;
             }
+            writer.String("response");
+            writer.String(request.c_str());
+            writer.EndObject();
+
+
             std::cout << "reply is: " << sbuf.GetString() << std::endl;
             WebSocket *ws = webSocketPacket->getWebsocket();
             try {
@@ -46,10 +59,6 @@ void WebInterfaceHandler::main() {
             catch (SocketException &e) {
                 std::cout << "SocketException" << e.what() << std::endl;
             }
-
-            writer.String("response");
-            writer.String(request.c_str());
-            writer.EndObject();
         }
     }
 }
