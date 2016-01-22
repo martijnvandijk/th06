@@ -98,7 +98,8 @@ TEST(WashingProgram, Complete) {
 	task.addInstruction(new WaitWaterLevelInstruction{waterLevelController});
 	task.addInstruction(new WaitTimeInstruction{5 S});
 	WashingProgram program{&task};
-
+	
+	LogController logCurrentName{&std::cout};
 	LogController logController{&std::cout};
 	TestProgramUser test{program, logController};
 
