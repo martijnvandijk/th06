@@ -1,7 +1,7 @@
 #include "LogController.h"
 
-struct washingprogram {
-	string naam;
+struct washingProgramState {
+	std::string naam;
 	int step;
 };
 
