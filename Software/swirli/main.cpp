@@ -69,13 +69,14 @@ int main() {
 
     WashingMachine::UARTHandler handler(serial);
     WashingMachine::WashingMachine washingMachine(handler);
-    UARTTest test(washingMachine);
+//    UARTTest test(washingMachine);
 
     WebInterfaceHandler webInterfaceHandler(washingMachine);
-    WebSocketHandler webSocketHandler(2222,webInterfaceHandler);
+    WebSocketHandler wsh(2222,webInterfaceHandler);
 
     //doesn't seem to work :S
-    std::thread websocketserver(webSocketHandler.runServer);
+    std::thread websocketserver = wsh.spawnWebSocketHandler();
+
     websocketserver.detach();
 //    std::thread webSocketThread(webSocketHandler.runServer);
 

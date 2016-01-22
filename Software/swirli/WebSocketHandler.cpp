@@ -13,7 +13,7 @@ WebSocketHandler::WebSocketHandler(int port, WebInterfaceHandler &web) :
 void WebSocketHandler::runServer() {
     try {
         // Make a socket to listen for client connections.
-        TCPServerSocket servSock(8081);
+        TCPServerSocket servSock(port);
         cout << "server running: " << servSock.getLocalAddress().getAddress() << endl;
         for (; ;) {
             TCPSocket *sock = servSock.accept();
@@ -23,4 +23,8 @@ void WebSocketHandler::runServer() {
     } catch (SocketException &e) {
         cerr << e.what() << endl;           // Report errors to the console
     }
+}
+
+std::thread WebSocketHandler::spawnWebSocketHandler() {
+    return std::thread( [this] {this->runServer();});
 }

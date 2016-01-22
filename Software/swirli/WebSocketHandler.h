@@ -12,6 +12,8 @@ public:
 
     void runServer();
 
+    std::thread spawnWebSocketHandler();
+
     void sendMessage();
 
 private:
