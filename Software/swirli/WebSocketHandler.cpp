@@ -6,7 +6,7 @@
 
 WebSocketHandler::WebSocketHandler(int port, WebInterfaceHandler &web, SwirliListener &listener) :
         port{port},
-        listener{listener}
+        listener(listener)
         {
 
 }
