@@ -1,0 +1,55 @@
+{
+	"info" : {
+		"temperature" : [
+			40, 90
+		],
+		"duration" : 120,
+		"name" : "Witte was"
+	},
+	"washing_tasks" : {
+		"shake" : [
+			["set_rpm", "max"],
+			["sleep", 2],
+			["set_rpm", 0],
+			["sleep", 1],
+			["set_rpm", "-max"],
+			["sleep", 2],
+			["set_rpm", 0],
+			["sleep", 1]
+		],
+		"centrifuge" : [
+			["set_rpm", "max"],
+			["sleep", 30],
+			["set_rpm", "-max"],
+			["sleep", 30],
+			["set_rpm", 0],
+			["sleep", 5]
+		],
+		"slow" : [
+			["set_rpm", 100],
+			["sleep", 30],
+			["set_rpm", -100],
+			["sleep", 30],
+			["set_rpm", 0]
+		],
+
+		"main" : [
+			["set_temp", "temp"],
+			["set_water", 50],
+			"wait_temp",
+			"wait_water",
+
+			"slow",
+			"centrifuge",
+			"centrifuge",
+			"shake",
+			"slow",
+
+			["set_water", 0],
+			"wait_water",
+			"centrifuge",
+			"shake"
+		]
+	},
+	"main_program" : "main"
+}
