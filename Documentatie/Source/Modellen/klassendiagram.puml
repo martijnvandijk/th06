@@ -249,6 +249,11 @@ package WashingMachine{
         -timer : RTOS::timer
         -OutputBuffer : std::queue<UARTMessage>
     }
+    Class UARTMessage << (S,#FF00FF) Struct>>{
+        requestByte : uint8_t
+        commandByte : uint8_t
+        sender: UARTUser*
+    }
     Class UARTUser{
         #replyPool : RTOS::pool<uint8_t>
         #virtual void main()
@@ -379,6 +384,7 @@ package WashingMachine{
         PUMP_OFF
     }
 
+    UARTMessage -- UARTHandler
     SignalLed -- SignalLedState
     SoapDispenser -- SoapDispenserState
     WaterValve -- WaterValveState
@@ -464,15 +470,10 @@ package washingInstructions{
         -water : WaterLevelRegulator&
     }
 }
-    Class WashingInstruction
     Class LogController<<Controller>>
     Class WashingController<<Controller>>
     Class WashingProgram
     Class WashingTask
-    Class WaterLevelController<<Controller>>
-    Class WaterLevelRegulator<<Interface>>
-    Class TemperatureController<<Controller>>
-    Class TemperatureRegulator<<Interface>>
 
     WaterLevelController o-- Pump
     WaterLevelController o-- WaterValve
