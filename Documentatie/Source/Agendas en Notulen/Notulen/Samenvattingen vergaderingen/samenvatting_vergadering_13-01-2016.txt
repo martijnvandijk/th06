@@ -5,3 +5,5 @@ De websocketserver moet worden ontwikkeld. Dit zal aydin doen. Deze websocketser
 Christiaan: Verder met opzet voor klassen, PI, etc
 
 Martijn werkt verder aan de UARTInterface, boundary objecten
+
+Chiel werk verder aan het instellen van de cross compiler (rotding)
