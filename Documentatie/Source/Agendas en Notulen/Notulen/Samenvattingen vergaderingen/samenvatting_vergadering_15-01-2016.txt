@@ -6,4 +6,4 @@ Aydin had problemen met de websocketserver die geen verbindingen accepteert maar
 Christiaan gaat verder met boundary objecten en controllers implementeren.
 
 Martijn: afronden implementatie boundary + hardware i/o
-Chiel: 
+Chiel: verder werken aan het automatisch uploaden naar de pi en het instellen van gtest

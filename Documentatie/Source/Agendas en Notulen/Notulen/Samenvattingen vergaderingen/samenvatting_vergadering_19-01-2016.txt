@@ -3,4 +3,4 @@ Christiaan: Afmaken boundary objecten en controllers en andere helpen met hun de
 
 Martijn: verder werken aan websockets
 Aydin: Verder werken aan technisch verslag. Javascript code voorzien van commentaar.
-Chiel: Verder werken aan implementatie wasmachine programma.
+Chiel: Verder werken aan implementatie wasmachine programma, klassendiagram updaten.
