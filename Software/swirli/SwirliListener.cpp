@@ -8,6 +8,7 @@
 
 void SwirliListener::onTextMessage(const string &s, WebSocket *ws) {
     try {
+        std::cout << s.c_str() << std::endl;
         std::shared_ptr<WebSocketPacket> webSocketPacket(
                 new WebSocketPacket(s.c_str(), ws)
         );

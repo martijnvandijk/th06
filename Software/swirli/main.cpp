@@ -53,29 +53,29 @@ int main() {
 //    cout << "Hello, World!" << endl;
     LibSerial serial = LibSerial();
     serial.open("/dev/ttyAMA0", 9600);
-    uint8_t commandOn[2];
-    uint8_t commandOff[2];
-    uint8_t commandStart[2];
-    uint8_t commandTurn[2];
-
-    commandOn[0]=SIGNAL_LED_REQ;
-    commandOn[1]= ON_CMD;
-
-    commandOff[0]=SIGNAL_LED_REQ;
-    commandOff[1]=OFF_CMD;
-
-    commandStart[0]=MACHINE_REQ;
-    commandStart[1]=START_CMD;
-
-    commandTurn[0]=SET_RPM_REQ;
-    commandTurn[1]=0x00;
+//    uint8_t commandOn[2];
+//    uint8_t commandOff[2];
+//    uint8_t commandStart[2];
+//    uint8_t commandTurn[2];
+//
+//    commandOn[0]=SIGNAL_LED_REQ;
+//    commandOn[1]= ON_CMD;
+//
+//    commandOff[0]=SIGNAL_LED_REQ;
+//    commandOff[1]=OFF_CMD;
+//
+//    commandStart[0]=MACHINE_REQ;
+//    commandStart[1]=START_CMD;
+//
+//    commandTurn[0]=SET_RPM_REQ;
+//    commandTurn[1]=0x00;
 
 //    serial.write(commandStart,2);
 //    serial.flush();
 
 
     WashingMachine::UARTHandler handler(serial);
-    WashingMachine::WashingMachine washingMachine(handler);
+    WashingMachine::WashingMachine washingMachine{handler};
     SensorHandler sensorHandler{};
     sensorHandler.addSensor(&washingMachine.getTemperatureSensor());
     sensorHandler.addSensor(&washingMachine.getWaterLevelSensor());
@@ -85,18 +85,16 @@ int main() {
     washingMachine.getWaterLevelSensor().subscribe(&waterLevelController);
 //    UARTTest test(washingMachine);
 
-    SwirliListener swirliListener;
-    WebInterfaceHandler webInterfaceHandler(washingMachine, temperatureController, waterLevelController, swirliListener);
-    WebSocketHandler wsh(2222, webInterfaceHandler, swirliListener);
-
-    //doesn't seem to work :S
-    std::thread websocketserver = wsh.spawnWebSocketHandler();
-
-//    std::thread webSocketThread(webSocketHandler.runServer);
-
     LogController logController{&std::cout};
     WashingController washingController{logController, handler, sensorHandler, washingMachine, temperatureController, waterLevelController};
 
+    SwirliListener swirliListener;
+    WebInterfaceHandler webInterfaceHandler(washingMachine, temperatureController, waterLevelController, washingController, swirliListener);
+    WebSocketHandler wsh(2222, webInterfaceHandler, swirliListener);
+    //doesn't seem to work :S
+    std::thread websocketserver = wsh.spawnWebSocketHandler();
+
+    std::cout << "starting RTOS" << std::endl;
     RTOS::run();
     websocketserver.join();
 

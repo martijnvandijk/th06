@@ -43,11 +43,11 @@ protected:
 	virtual void main() {
 		WashingMachine::UARTMessage message1{MACHINE_REQ, STATUS_CMD, this};
 		uartHandler.sendMessage(message1);
-		std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::endl;
+		std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::dec << std::endl;
 
 		WashingMachine::UARTMessage message2{MACHINE_REQ, START_CMD, this};
 		uartHandler.sendMessage(message2);
-		std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::endl;
+		std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::dec << std::endl;
 
 		// resume sensorhandler
 		sensorHandler.resume();

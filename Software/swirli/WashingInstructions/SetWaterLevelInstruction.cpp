@@ -16,5 +16,6 @@ void SetWaterLevelInstruction::execute(
 		LogController &logController,
 		bool doWait
 ) {
+	std::cout << "setting waterLevel: " << waterLevel << std::endl;
 	waterRegulator.setWaterLevel(waterLevel);
 }
