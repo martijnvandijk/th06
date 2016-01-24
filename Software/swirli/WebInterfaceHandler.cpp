@@ -8,7 +8,7 @@
 
 void WebInterfaceHandler::main() {
     while (true) {
-        timer.set(1 S);
+        timer.set(20 MS);
         wait();
 //        std::cout << "WebInterfaceHandler run" << std::endl;
         if (listener.packetsAvailable()) {
