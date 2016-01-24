@@ -31,6 +31,8 @@ private:
 
 	RTOS::pool<int> latestTemperature;
 	RTOS::flag temperatureUpdated;
+public:
+	virtual int getTargetTemperature();
 };
 
 

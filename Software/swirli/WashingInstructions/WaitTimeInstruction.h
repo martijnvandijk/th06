@@ -12,7 +12,7 @@ class WaitTimeInstruction: public WashingInstruction {
 public:
 	WaitTimeInstruction(unsigned int time);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
 
 private:
 	unsigned int time;

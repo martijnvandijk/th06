@@ -10,6 +10,7 @@
 class TemperatureRegulator : public EventGenerator {
 public:
 	virtual void setTemperature(int temperature) = 0;
+	virtual int getTargetTemperature() = 0;
 };
 
 #endif //TEMPERATUREREGULATOR_H

@@ -17,8 +17,8 @@ namespace WashingMachine{
         uint8_t reply = referenceUser->getReplyPoolContents();
 
         switch(reply){
-            case OPENED: return SOAP_OPEN; break;
-            case CLOSED: return SOAP_CLOSED; break;
+            case OPENED: return SOAP_OPEN;
+            case CLOSED: return SOAP_CLOSED;
         }
     }
 

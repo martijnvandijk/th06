@@ -2,14 +2,23 @@
 
 using namespace rapidjson;
 
-WashingProgram::WashingProgram(WashingTask *mainTask) : mainTask{mainTask} {
+WashingProgram::WashingProgram(WashingTask *mainTask, TemperatureRegulator &temperatureRegulator, WaterLevelRegulator &waterLevelRegulator) :
+		mainTask{mainTask},
+		filename{""},
+		temperature{0},
+		temperatureRegulator(temperatureRegulator),
+		waterLevelRegulator(waterLevelRegulator) {
 }
 
 WashingProgram::WashingProgram(std::string filename,
                                int temperature,
                                WashingMachine::WashingMachine &machine,
                                TemperatureRegulator &temperatureRegulator,
-                               WaterLevelRegulator &waterLevelRegulator) {
+                               WaterLevelRegulator &waterLevelRegulator):
+		filename{filename},
+		temperature{temperature},
+		temperatureRegulator(temperatureRegulator),
+		waterLevelRegulator(waterLevelRegulator) {
 	std::unordered_map<std::string, std::shared_ptr<WashingTask>> tasks;
 
 	Document document{};
@@ -85,15 +94,13 @@ WashingProgram::WashingProgram(std::string filename,
 					} else {
 						assert(false);
 					}
-					newInstruction = std::shared_ptr<WashingInstruction>{new SetTemperatureInstruction{temperatureRegulator, instructionArray[1].GetInt()}};
+					newInstruction = std::shared_ptr<WashingInstruction>{new SetTemperatureInstruction{temperatureRegulator, temp}};
 				} else if (instructionName == "set_water") {
-
 					newInstruction = std::shared_ptr<WashingInstruction>{new SetWaterLevelInstruction{waterLevelRegulator, instructionArray[1].GetInt()}};
 				} else if (instructionName == "wait_temp") {
 					newInstruction = std::shared_ptr<WashingInstruction>{new WaitTemperatureInstruction{temperatureRegulator}};
 				} else if (instructionName == "sleep") {
-
-					newInstruction = std::shared_ptr<WashingInstruction>{new WaitTimeInstruction{instructionArray[1].GetUint()}};
+					newInstruction = std::shared_ptr<WashingInstruction>{new WaitTimeInstruction{instructionArray[1].GetUint() S}};
 				} else if (instructionName == "wait_water") {
 					newInstruction = std::shared_ptr<WashingInstruction>{new WaitWaterLevelInstruction{waterLevelRegulator}};
 				} else {
@@ -115,19 +122,25 @@ WashingProgram::WashingProgram(std::string filename,
 	mainTask = tasks[document["main_program"].GetString()];
 }
 
-std::string WashingProgram::getJsonInfoString() {
-	return "{}"; // TODO
-}
-
 void WashingProgram::execute(WashingMachine::UARTUser *uartUser, LogController &logController) {
 	execute(uartUser, logController, 0);
 }
 
 void WashingProgram::execute(WashingMachine::UARTUser *uartUser, LogController &logController, int resumeFrom) {
-	logController.logCurrentProgram("this");
+	logController.logProgramStarted(filename, temperature);
+	// adjust the temperature and the
+	for (int i{0}; i < resumeFrom; ++i) {
+		mainTask->instructions[i]->execute(uartUser, logController, false);
+	}
+	if (resumeFrom > 0) {
+		WaitWaterLevelInstruction{waterLevelRegulator}.execute(uartUser, logController, true);
+		if (temperatureRegulator.getTargetTemperature() > 20) {
+			WaitTemperatureInstruction{temperatureRegulator}.execute(uartUser, logController, true);
+		}
+	}
 	for (int i{resumeFrom}; i < mainTask->instructions.size(); i++) {
 		logController.logCurrentStep(i);
-		mainTask->instructions[i]->execute(uartUser, logController);
+		mainTask->instructions[i]->execute(uartUser, logController, true);
 	}
 	logController.logProgramStopped();
 	// TODO put this in WashingController instead - or don't

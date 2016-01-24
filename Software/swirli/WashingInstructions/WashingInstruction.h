@@ -7,7 +7,7 @@
 
 class WashingInstruction {
 public:
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) = 0;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) = 0;
 };
 
 #endif

@@ -13,7 +13,7 @@ class SetWaterLevelInstruction: public WashingInstruction {
 public:
 	SetWaterLevelInstruction(WaterLevelRegulator &waterRegulator, int waterLevel);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
 
 private:
 	WaterLevelRegulator &waterRegulator;

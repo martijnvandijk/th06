@@ -1,9 +1,9 @@
 #include "WashingTask.h"
 
-void WashingTask::execute(WashingMachine::UARTUser *referenceUser, LogController &logController) {
+void WashingTask::execute(WashingMachine::UARTUser *referenceUser, LogController &logController, bool doWait) {
 	for (std::shared_ptr<WashingInstruction> i : instructions) {
-		std::cout << "Executing from " << this << ": " << i << " (a " << typeid(i).name() << ")" << std::endl;
-		i->execute(referenceUser, logController);
+//		std::cout << "Executing from " << this << ": " << i << " (a " << typeid(i).name() << ")" << std::endl;
+		i->execute(referenceUser, logController, doWait);
 	}
 }
 

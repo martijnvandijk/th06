@@ -9,6 +9,6 @@ SetRPMInstruction::SetRPMInstruction(WashingMachine::Motor &motor, int rpm):
         rpm{rpm}
 {}
 
-void SetRPMInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
+void SetRPMInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
 	motor.setRPM(rpm, user);
 }

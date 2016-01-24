@@ -52,17 +52,18 @@ set(WashingMachineSourceFiles
 		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
 		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
 		WashingInstructions/WaitTimeInstruction.cpp			WashingInstructions/WaitTimeInstruction.h
+		WashingInstructions/WaitWaterLevelInstruction.cpp	WashingInstructions/WaitWaterLevelInstruction.h
+		WashingInstructions/WaitTemperatureInstruction.cpp	WashingInstructions/WaitTemperatureInstruction.h
+
+		EventGenerator.cpp									EventGenerator.h
 		WashingMachine/TemperatureRegulator.h
 		WashingMachine/WaterLevelRegulator.h
-		LogController.cpp									LogController.h
 		WashingMachine/TemperatureController.cpp			WashingMachine/TemperatureController.h
 		WashingMachine/WaterLevelController.cpp				WashingMachine/WaterLevelController.h
-		WashingInstructions/WaitWaterLevelInstruction.cpp
-		WashingInstructions/WaitWaterLevelInstruction.h
-		EventGenerator.cpp			EventGenerator.h
-		WashingInstructions/WaitTemperatureInstruction.cpp
-		WashingInstructions/WaitTemperatureInstruction.h
-		WebInterfaceHandler.h		WebInterfaceHandler.cpp
+
+		LogController.cpp									LogController.h
+		WebInterfaceHandler.h								WebInterfaceHandler.cpp
+		WashingController.h									WashingController.cpp
 		WashingMachine/WashingMachine.h
 		)
 

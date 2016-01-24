@@ -284,7 +284,7 @@ package washingInstructions{
 }
     Class LogController<<Controller>><<Task>>{
         +LogController(log : std::ostream*)
-        +void logCurrentProgram(program : std::string)
+        +void logProgramStarted(program : std::string)
         +void logCurrentStep(step : int)
         +void logProgramStopped()
         +log : std::ostream*

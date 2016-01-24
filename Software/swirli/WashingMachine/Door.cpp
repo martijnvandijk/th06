@@ -45,4 +45,10 @@ namespace WashingMachine{
             }
         }
     }
+
+    void Door::waitClosed(UARTUser *referenceUser) {
+        while (getState(referenceUser) == DOOR_OPENED) {
+            referenceUser->sleep(100 MS);
+        }
+    }
 }

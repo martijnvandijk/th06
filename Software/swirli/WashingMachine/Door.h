@@ -14,28 +14,30 @@ namespace WashingMachine{
          * 
          * @param uart The UARTHandler to be used for communicating with the emulator
          */
-         Door(UARTHandler &uart);
-         /**
+        Door(UARTHandler &uart);
+        /**
          * @brief getState Gets the current state of the heating unit
          * 
          * @param  referenceUser The UARTUser that is calling the function (usually 'this' suffices)
          * @return HeatingUnitState Returns the enum DOOR_OPENED, DOOR_UNLOCKED_CLOSED or DOOR_LOCKED depending on wether the door is open, closed or locked.
          */
-         DoorState getState(UARTUser *referenceUser);
-          /**
+        DoorState getState(UARTUser *referenceUser);
+        /**
           * @brief set Sets the door to either the DOOR_LOCKED or the DOOR_UNLOCKED_CLOSED state.
           * @param state The state the door will be set to.
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
-          void set(DoorState state, UARTUser *referenceUser);
+        void set(DoorState state, UARTUser *referenceUser);
 
-         /**
+        /**
           * @brief toggle Toggles the door between the locked and unlocked state
           * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
           */
-          void toggle(UARTUser *referenceUser);
+        void toggle(UARTUser *referenceUser);
 
-      private:
+        void waitClosed(UARTUser *referenceUser);
+
+    private:
         UARTHandler &uart;
     };
 }

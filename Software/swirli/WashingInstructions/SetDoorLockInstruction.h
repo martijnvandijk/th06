@@ -12,7 +12,7 @@ class SetDoorLockInstruction: public WashingInstruction {
 public:
 	SetDoorLockInstruction(WashingMachine::Door &door, WashingMachine::DoorState lock);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController) override;
+	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
 
 private:
 	WashingMachine::Door &door;

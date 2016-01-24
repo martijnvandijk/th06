@@ -8,6 +8,6 @@ AddSoapInstruction::AddSoapInstruction(WashingMachine::SoapDispenser &dispenser)
 		dispenser(dispenser)
 {}
 
-void AddSoapInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
+void AddSoapInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
 	//dispenser.dispense(user);
 }

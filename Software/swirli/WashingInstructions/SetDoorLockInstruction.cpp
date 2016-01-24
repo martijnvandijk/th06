@@ -10,6 +10,6 @@ SetDoorLockInstruction::SetDoorLockInstruction(WashingMachine::Door &door, Washi
         lock{lock}
 {}
 
-void SetDoorLockInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
+void SetDoorLockInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
 	door.set(lock, user);
 }

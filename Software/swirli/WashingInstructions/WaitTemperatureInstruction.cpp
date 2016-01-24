@@ -8,6 +8,8 @@ WaitTemperatureInstruction::WaitTemperatureInstruction(TemperatureRegulator &reg
 		regulator(regulator) {
 }
 
-void WaitTemperatureInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
-	regulator.wait(user);
+void WaitTemperatureInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+	if (doWait) {
+		regulator.wait(user);
+	}
 }

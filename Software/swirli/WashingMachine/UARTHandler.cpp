@@ -27,14 +27,17 @@ namespace WashingMachine {
 
             if(event == InputBuffer){
                 UARTMessage message = InputBuffer.read();
+//                std::cout << "sent " << std::hex << (int(message.requestByte)) << ", " << (int(message.commandByte)) << std::dec << std::endl;
                 serialConnection.writeChar(message.requestByte);
                 serialConnection.writeChar(message.commandByte);
+//                serialConnection.flush();
                 OutputBuffer.push(message);
             }
             else{
                 if(serialConnection.peek() >= 2 ){
                     uint8_t readBuf[2];
                     serialConnection.read(&readBuf, 2);
+//                    std::cout << "received " << std::hex << (int(readBuf[0])) << ", " << (int(readBuf[1])) << std::dec << std::endl;
                     if((OutputBuffer.front().requestByte | REPLY_BIT) == readBuf[0]){
                         OutputBuffer.front().sender->receiveReply(readBuf[1]);
                         OutputBuffer.front().sender->resume();

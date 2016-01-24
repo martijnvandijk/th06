@@ -15,8 +15,8 @@ namespace WashingMachine{
         uint8_t reply = referenceUser->getReplyPoolContents();
 
         switch(reply){
-            case ON: return LED_ON; break;
-            case OFF: return LED_OFF; break;
+            case ON: return LED_ON;
+            case OFF: return LED_OFF;
         }
     }
     void SignalLed::set(SignalLedState status, UARTUser *referenceUser){

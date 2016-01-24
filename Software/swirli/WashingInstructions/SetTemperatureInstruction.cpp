@@ -9,6 +9,6 @@ SetTemperatureInstruction::SetTemperatureInstruction(TemperatureRegulator &tempe
         temperature{temperature}
 {}
 
-void SetTemperatureInstruction::execute(WashingMachine::UARTUser *user, LogController &logController) {
+void SetTemperatureInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
 	temperatureRegulator.setTemperature(temperature);
 }

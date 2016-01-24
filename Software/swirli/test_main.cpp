@@ -4,58 +4,70 @@
 #define debug_task_logging 1
 
 #include <Protocol.h>
+#include <rapidjson/writer.h>
 #include "gtest/gtest.h"
 
 using namespace std;
 
 #include "WashingMachine/UARTHandler.h"
-#include "WashingMachine/Motor.h"
-#include "WashingInstructions/SetRPMInstruction.h"
-#include "WashingInstructions/WaitTimeInstruction.h"
-#include "WashingInstructions/SetDoorLockInstruction.h"
-#include "WashingInstructions/SetWaterLevelInstruction.h"
+#include "WashingMachine/WashingMachine.h"
 #include "WashingMachine/SensorHandler.h"
-#include "WashingMachine/WaterLevelSensor.h"
-#include "WashingInstructions/SetTemperatureInstruction.h"
-#include "WashingMachine/TemperatureSensor.h"
-#include "WashingInstructions/WaitWaterLevelInstruction.h"
-#include "WashingInstructions/WaitTemperatureInstruction.h"
-#include "WashingInstructions/WashingProgram.h"
-#include "WashingMachine/WaterValve.h"
-#include "WashingMachine/Pump.h"
-#include "WashingMachine/HeatingUnit.h"
 #include "WashingMachine/WaterLevelController.h"
 #include "WashingMachine/TemperatureController.h"
+#include "WashingInstructions/SetRPMInstruction.h"
+#include "WashingInstructions/SetWaterLevelInstruction.h"
+#include "WashingInstructions/SetTemperatureInstruction.h"
+#include "WashingInstructions/WaitWaterLevelInstruction.h"
+#include "WashingInstructions/WaitTemperatureInstruction.h"
+#include "WashingInstructions/WaitTimeInstruction.h"
+#include "WashingInstructions/WashingProgram.h"
 
 class TestProgramUser: public WashingMachine::UARTUser {
 public:
-	TestProgramUser(WashingProgram &program, LogController &logController):
-			UARTUser{999, "TestProgramUser"},
+	TestProgramUser(WashingProgram &program, LogController &logController, WashingMachine::UARTHandler &handler, SensorHandler &sensorHandler):
+			UARTUser{0, "TestProgramUser"},
 	        program(program),
-	        logController(logController)
+	        logController(logController),
+	        uartHandler(handler),
+	        sensorHandler(sensorHandler)
 	{}
 
 protected:
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 	virtual void main() {
+		WashingMachine::UARTMessage message1{MACHINE_REQ, STATUS_CMD, this};
+		uartHandler.sendMessage(message1);
+		std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::endl;
+
+		WashingMachine::UARTMessage message2{MACHINE_REQ, START_CMD, this};
+		uartHandler.sendMessage(message2);
+		std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::endl;
+
+		// resume sensorhandler
+		sensorHandler.resume();
+
 		program.execute(this, logController);
+
+		sensorHandler.suspend();
 	}
 #pragma clang diagnostic pop
 
 private:
 	WashingProgram &program;
 	LogController &logController;
+	WashingMachine::UARTHandler &uartHandler;
+	SensorHandler &sensorHandler;
 };
 
 TEST(WashingProgram, ReadFromFile) {
 	LibSerial libSerial{};
 	libSerial.open("/dev/ttyAMA0", 9600);
-	uint8_t commandStart[2];
-	commandStart[0]=MACHINE_REQ;
-	commandStart[1]=START_CMD;
-	libSerial.write(commandStart,2);
-	libSerial.flush();
+//	uint8_t commandStart[2];
+//	commandStart[0]=MACHINE_REQ;
+//	commandStart[1]=START_CMD;
+//	libSerial.write(commandStart,2);
+//	libSerial.flush();
 
 	WashingMachine::UARTHandler uartHandler{libSerial};
 	WashingMachine::WashingMachine washingMachine{uartHandler};
@@ -63,6 +75,7 @@ TEST(WashingProgram, ReadFromFile) {
 	WaterLevelController waterLevelController{washingMachine.getPump(), washingMachine.getWaterValve()};
 
 	SensorHandler handler{};
+	handler.suspend();
 
 	WashingMachine::WaterLevelSensor waterLevelSensor{uartHandler};
 	handler.addSensor(&waterLevelSensor);
@@ -75,24 +88,25 @@ TEST(WashingProgram, ReadFromFile) {
 	WashingProgram program{"bonte_was", 40, washingMachine, temperatureController, waterLevelController};
 
 	LogController logController{&std::cout};
-	TestProgramUser test{program, logController};
+	TestProgramUser test{program, logController, uartHandler, handler};
 
 	RTOS::display_statistics();
-//	ASSERT_EXIT({
-		            RTOS::run();
-//	            }, testing::ExitedWithCode(0), "");
+	ASSERT_EXIT({ RTOS::run(); }, testing::ExitedWithCode(0), "");
 
-	std::cout << program.getJsonInfoString() << std::endl;
+	rapidjson::StringBuffer stringBuffer{};
+	rapidjson::Writer<rapidjson::StringBuffer> stringWriter{stringBuffer};
+	program.writeJSONInfo(stringWriter);
+	std::cout << stringBuffer.GetString() << std::endl;
 }
 
 TEST(WashingProgram, Complete) {
 	LibSerial libSerial{};
 	libSerial.open("/dev/ttyAMA0", 9600);
-	uint8_t commandStart[2];
-	commandStart[0]=MACHINE_REQ;
-	commandStart[1]=START_CMD;
-	libSerial.write(commandStart,2);
-	libSerial.flush();
+//	uint8_t commandStart[2];
+//	commandStart[0]=MACHINE_REQ;
+//	commandStart[1]=START_CMD;
+//	libSerial.write(commandStart,2);
+//	libSerial.flush();
 
 	WashingMachine::UARTHandler uartHandler{libSerial};
 	WashingMachine::Motor motor{uartHandler};
@@ -128,11 +142,11 @@ TEST(WashingProgram, Complete) {
 	task->addInstruction(new SetTemperatureInstruction{temperatureController, 0});
 	task->addInstruction(new WaitWaterLevelInstruction{waterLevelController});
 	task->addInstruction(new WaitTimeInstruction{5 S});
-	WashingProgram program{task};
-	
+	WashingProgram program{task, temperatureController, waterLevelController};
+
 	LogController logCurrentName{&std::cout};
 	LogController logController{&std::cout};
-	TestProgramUser test{program, logController};
+	TestProgramUser test{program, logController, uartHandler, handler};
 
 	RTOS::display_statistics();
 	ASSERT_EXIT({ RTOS::run(); }, testing::ExitedWithCode(0), "");
