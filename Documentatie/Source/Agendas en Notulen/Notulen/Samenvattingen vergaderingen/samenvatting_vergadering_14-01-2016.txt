@@ -1,4 +1,7 @@
 Notities
 
 Aydin zet een websocketserver op de pi om met de webinterface te communiceren.
+
 Christiaan: Start met Boundary en controller klassen.
+
+Martijn: Puzzelen met return waardes boundary objecten, implementatie boundary objecten.

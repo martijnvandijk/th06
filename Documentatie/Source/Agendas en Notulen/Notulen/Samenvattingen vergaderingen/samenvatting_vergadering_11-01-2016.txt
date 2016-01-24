@@ -1,6 +1,6 @@
 Notities
 
 Aydin zal beginnen aan het maken van de webinterface.
-Martijn zal er voor zorgen dat vanaf de PI de RTOS kan worden aangestuurd
+Martijn zal er voor zorgen dat vanaf de PI de RTOS kan worden aangestuurd: UART I/O ontwerpen en onderzoeken hoe de emulator aagesproekn moet worden
 Chiel
 Christiaan zal meehelpen de PI werkend te krijgen

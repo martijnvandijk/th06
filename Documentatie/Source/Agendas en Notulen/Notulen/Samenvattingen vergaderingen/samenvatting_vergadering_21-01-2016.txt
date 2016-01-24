@@ -1,1 +1,3 @@
 Christiaan is ziek en gaat werken aan het klasse diagram zodat die klopt met de code
+
+martijn: verder werken aan websockets

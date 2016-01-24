@@ -1,1 +1,3 @@
 Christiaan maakt het klassendiagram af en gaat de SA en RA bijwerken.
+
+martijn: verder werken aan websockets.

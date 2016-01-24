@@ -4,3 +4,5 @@ Er wordt onderzoek gedaan naar JSON communicatie voor het sturen van data tussen
 RapidJSON(?)
 De websocketserver moet worden ontwikkeld. Dit zal aydin doen. Deze websocketserver zal op de PI draaien.
 Christiaan: Verder met opzet voor klassen, PI, etc
+
+Martijn werkt verder aan de UARTInterface, boundary objecten
