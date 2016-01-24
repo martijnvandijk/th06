@@ -14,11 +14,13 @@ WashingProgram::WashingProgram(
 		waterLevelRegulator(waterLevelRegulator) {
 }
 
-WashingProgram::WashingProgram(std::string filename,
-							   int temperature,
-							   WashingMachine::WashingMachine &machine,
-							   TemperatureRegulator &temperatureRegulator,
-							   WaterLevelRegulator &waterLevelRegulator) :
+WashingProgram::WashingProgram(
+		std::string filename,
+		int temperature,
+		WashingMachine::WashingMachine &machine,
+		TemperatureRegulator &temperatureRegulator,
+		WaterLevelRegulator &waterLevelRegulator
+) :
 		filename{filename},
 		temperature{temperature},
 		temperatureRegulator(temperatureRegulator),
