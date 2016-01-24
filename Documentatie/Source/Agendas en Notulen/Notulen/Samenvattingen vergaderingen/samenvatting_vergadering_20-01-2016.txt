@@ -1,3 +1,5 @@
 Christiaan: Commentaar bij nieuwe klasse maken
 
-Martijn: verder werken aan websockets, toevoegen object voor eenvoudigere toegang tot boundary objecten
+Martijn: verder werken aan websockets, toevoegen object voor eenvoudigere toegang tot boundary objecten.
+Aydin: Verder invullen technisch verslag.
+Chiel: Wasmachine vanuit bestand implementeren.
