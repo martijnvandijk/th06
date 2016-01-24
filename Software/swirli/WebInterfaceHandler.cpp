@@ -2,7 +2,9 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/filereadstream.h>
 #include <fstream>
+#include <dirent.h>
 #include "WebInterfaceHandler.h"
+#include "WashingInstructions/WashingProgram.h"
 
 void WebInterfaceHandler::main() {
     while (true) {
@@ -26,8 +28,37 @@ void WebInterfaceHandler::main() {
                 writer.String("temperature");
                 writer.Int(washingMachine.getTemperatureSensor().poll(this));
             }
-            if (request == "FetchWashingPrograms") {
+            if (request == "FetchWashingProgram") {
+                writer.String("programs");
+                writer.StartObject();
 
+                DIR *d{opendir("WashingPrograms")};
+                if (d) {
+                    struct dirent *nextFile;
+                    while ((nextFile = readdir(d)) != NULL) {
+                        std::string name{nextFile->d_name};
+                        if (name != "." && name != "..") {
+                            unsigned long lastindex = name.find_last_of(".");
+                            if (lastindex != std::string::npos) {
+                                std::string extension = name.substr(lastindex, name.size() - lastindex);
+                                if (extension == ".json") {
+                                    std::string rawname = name.substr(0, lastindex);
+
+                                    std::cout << "sending info for program " << rawname << std::endl;
+
+                                    WashingProgram washingProgram{rawname, 0, washingMachine, temperatureRegulator, waterLevelRegulator};
+                                    washingProgram.writeJSONInfo(writer);
+                                }
+                            }
+                        }
+                    }
+
+                    closedir(d);
+                } else {
+                    // TODO maybe throw something
+                }
+
+                writer.EndObject();
             }
             if (request == "FetchUserSettings"){
                 std::cout << "procesing fetch user settings" << std::endl;
@@ -65,9 +96,13 @@ void WebInterfaceHandler::main() {
 
 WebInterfaceHandler::WebInterfaceHandler(
         WashingMachine::WashingMachine &washingMachine,
+        TemperatureRegulator &temperatureRegulator,
+        WaterLevelRegulator &waterLevelRegulator,
         SwirliListener &swirliListener
 ) :
         washingMachine(washingMachine),
+        temperatureRegulator(temperatureRegulator),
+        waterLevelRegulator(waterLevelRegulator),
         WashingMachine::UARTUser::UARTUser{97},
         listener(swirliListener),
         timer{this, "webInterfaceHandler timer"}{ }
