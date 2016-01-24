@@ -53,7 +53,7 @@ WashingProgram::WashingProgram(
 		throw std::invalid_argument("Invalid JSON Washing Program: info.duration is not a number!");
 	}
 	if (!document["info"]["temperature"].IsArray()) {
-		throw std::invalid_argument::("Invalid JSON Washing Program: info.temperature is not an array!");
+		throw std::invalid_argument("Invalid JSON Washing Program: info.temperature is not an array!");
 	}
 
 	info.duration = document["info"]["duration"].GetInt();
@@ -72,7 +72,7 @@ WashingProgram::WashingProgram(
 		throw std::invalid_argument("Invalid JSON Washing Program: no member washing_tasks");
 	}
 	if (!document["washing_tasks"].IsObject()) {
-		throw std::invalid_argument::("Invalid JSON Washing Program: member washing_tasks is not an object");
+		throw std::invalid_argument("Invalid JSON Washing Program: member washing_tasks is not an object");
 	}
 
 	Value &tasksObject = document["washing_tasks"];
@@ -158,7 +158,7 @@ WashingProgram::WashingProgram(
 					newInstruction = std::shared_ptr<WashingInstruction>{
 							new WaitWaterLevelInstruction{waterLevelRegulator}};
 				} else {
-					throw std::invalid_argument("Invalid JSON Washing Instruction: unknown instruction);
+					throw std::invalid_argument("Invalid JSON Washing Instruction: unknown instruction");
 				}
 			} else {
 				throw std::invalid_argument("Invalid JSON Washing Instruction");
