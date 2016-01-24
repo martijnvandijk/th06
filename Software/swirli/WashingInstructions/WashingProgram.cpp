@@ -35,22 +35,46 @@ WashingProgram::WashingProgram(
 	fclose(inFile);
 	delete[] readBuffer;
 
-	assert(document.HasMember("info"));
-	assert(document["info"].HasMember("name"));
-	assert(document["info"]["name"].IsString());
-	assert(document["info"].HasMember("duration"));
-	assert(document["info"]["duration"].IsNumber());
-	assert(document["info"].HasMember("temperature"));
-	assert(document["info"]["temperature"].IsArray());
+	if (!document.HasMember("info")) {
+		throw std::invalid_argument("Invalid JSON Washing Program: no member 'info'");
+	}
+	if (!document["info"].HasMember("name")) {
+		throw std::invalid_argument("Invalid JSON Washing Program: no member 'name'");
+	}
+	if (!document["info"].HasMember("temperature")) {
+		throw std::invalid_argument("Invalid JSON Washing Program: no member 'temperature");
+	}
+
+
+	if (!document["info"]["name"].IsString()) {
+		throw std::invalid_argument("Invalid JSON Washing Program: info.name is not a string");
+	}
+	if (!document["info"]["duration"].IsNumber()) {
+		throw std::invalid_argument("Invalid JSON Washing Program: info.duration is not a number!");
+	}
+	if (!document["info"]["temperature"].IsArray()) {
+		throw std::invalid_argument::("Invalid JSON Washing Program: info.temperature is not an array!");
+	}
+
 	info.duration = document["info"]["duration"].GetInt();
 	for (SizeType i; i < document["info"]["temperature"].Size(); i++) {
-		assert(document["info"]["temperature"][i].IsNumber());
+		if (!document["info"]["temperature"][i].IsNumber()) {
+			std::string error = "Invalid JSON Washing Program: info.temperature[";
+			error.append(std::to_string(i));
+			error.append("] is not a number!s");
+			throw std::invalid_argument(error);
+		};
 		info.temperatures.push_back(document["info"]["temperature"][i].GetInt());
 	}
 	info.fullName = document["info"]["name"].GetString();
 
-	assert(document.HasMember("washing_tasks"));
-	assert(document["washing_tasks"].IsObject());
+	if (!document.HasMember("washing_tasks")) {
+		throw std::invalid_argument("Invalid JSON Washing Program: no member washing_tasks");
+	}
+	if (!document["washing_tasks"].IsObject()) {
+		throw std::invalid_argument::("Invalid JSON Washing Program: member washing_tasks is not an object");
+	}
+
 	Value &tasksObject = document["washing_tasks"];
 	for (
 			Value::MemberIterator memI{tasksObject.MemberBegin()};
@@ -60,7 +84,9 @@ WashingProgram::WashingProgram(
 		//read the task to be made
 		std::string taskName{memI->name.GetString()};
 		WashingTask *task{new WashingTask{}};
-		assert(memI->value.IsArray());
+		if (!memI->value.IsArray()) {
+			throw std::invalid_argument("Invalid JSON Washing Program");
+		}
 		Value &taskArray = memI->value;
 		for (
 				Value::ValueIterator itr{taskArray.Begin()};
@@ -73,7 +99,10 @@ WashingProgram::WashingProgram(
 				newInstruction = tasks[itr->GetString()];
 			} else if (itr->IsArray()) {
 				Value &instructionArray = *itr;
-				assert(instructionArray[0].IsString());
+				if (!instructionArray[0].IsString()) {
+					throw std::invalid_argument("Invalid JSON Washing Instruction");
+				}
+
 				std::string instructionName{instructionArray[0].GetString()};
 				if (instructionName == "add_soap") {
 					newInstruction = std::shared_ptr<WashingInstruction>{
@@ -87,12 +116,12 @@ WashingProgram::WashingProgram(
 						} else if (paramName == "max") {
 							rpm = 1600;
 						} else {
-							assert(false);
+							throw std::invalid_argument("Invalid JSON Washing Instruction: RPM");
 						}
 					} else if (instructionArray[1].IsInt()) {
 						rpm = instructionArray[1].GetInt();
 					} else {
-						assert(false);
+						throw std::invalid_argument("Invalid JSON Washing Instruction: RPM");
 					}
 					newInstruction = std::shared_ptr<WashingInstruction>{
 							new SetRPMInstruction{machine.getMotor(), rpm}};
@@ -103,12 +132,12 @@ WashingProgram::WashingProgram(
 						if (paramName == "temp") {
 							temp = temperature;
 						} else {
-							assert(false);
+							throw std::invalid_argument("Invalid JSON Washing Instruction: Temp");
 						}
 					} else if (instructionArray[1].IsInt()) {
 						temp = instructionArray[1].GetInt();
 					} else {
-						assert(false);
+						throw std::invalid_argument("Invalid JSON Washing Instruction: Temp");
 					}
 					newInstruction = std::shared_ptr<WashingInstruction>{
 							new SetTemperatureInstruction{temperatureRegulator, temp}};
@@ -129,10 +158,10 @@ WashingProgram::WashingProgram(
 					newInstruction = std::shared_ptr<WashingInstruction>{
 							new WaitWaterLevelInstruction{waterLevelRegulator}};
 				} else {
-					assert(false);
+					throw std::invalid_argument("Invalid JSON Washing Instruction: unknown instruction);
 				}
 			} else {
-				assert(false);
+				throw std::invalid_argument("Invalid JSON Washing Instruction");
 			}
 
 			if (newInstruction.get() != nullptr) {
@@ -142,8 +171,12 @@ WashingProgram::WashingProgram(
 		tasks[taskName] = std::shared_ptr<WashingTask>{task};
 	}
 
-	assert(document.HasMember("main_program"));
-	assert(document["main_program"].IsString());
+	if (!document.HasMember("main_program")) {
+		throw std::invalid_argument("Invalid JSON Washing Program: no main_program");
+	}
+	if(!document["main_program"].IsString()){
+		throw std::invalid_argument("Invalid JSON Washing Program: main_program is not a string");
+	}
 	mainTask = tasks[document["main_program"].GetString()];
 }
 
