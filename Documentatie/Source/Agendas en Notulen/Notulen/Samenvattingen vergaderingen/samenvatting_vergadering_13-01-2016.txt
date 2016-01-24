@@ -1,8 +1,9 @@
 Notities
 
-Er wordt onderzoek gedaan naar JSON communicatie voor het sturen van data tussen de websocket en de webinterface.
-RapidJSON(?)
+Er wordt onderzoek gedaan naar JSON communicatie voor het sturen van data tussen de websocket en de webinterface. RapidJSON(?)
 De websocketserver moet worden ontwikkeld. Dit zal aydin doen. Deze websocketserver zal op de PI draaien.
 Christiaan: Verder met opzet voor klassen, PI, etc
 
 Martijn werkt verder aan de UARTInterface, boundary objecten
+
+Chiel werk verder aan het instellen van de cross compiler (rotding)

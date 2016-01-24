@@ -5,3 +5,5 @@ Aydin zet een websocketserver op de pi om met de webinterface te communiceren.
 Christiaan: Start met Boundary en controller klassen.
 
 Martijn: Puzzelen met return waardes boundary objecten, implementatie boundary objecten.
+
+Chiel: werken aan het automatisch uploaden naar de pi en het instellen van gtest

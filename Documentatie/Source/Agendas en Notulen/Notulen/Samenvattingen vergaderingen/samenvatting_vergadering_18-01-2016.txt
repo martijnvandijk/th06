@@ -6,4 +6,5 @@ Aydin zal de code voor de webinterface voorzien van meer commentaar.
 
 Christiaan: Commentaar bij de code van de boundary objecten en controllers neerzetten
 
-Martijn: doxygen commentaar + websockets binnen RTOS
+Martijn: doxygen commentaar + websockets binnen RTOS.
+Chiel: Wasprogramma's uitvoeren als object implementeren, implementaties voor verschillende instructies maken.

@@ -1,3 +1,5 @@
 Christiaan is ziek en gaat werken aan het klasse diagram zodat die klopt met de code
 
 martijn: verder werken aan websockets
+Chiel: Wasmachine vanuit bestand verder implementeren. Aanpassingen wasprogramma verwerken, controllers maken voor sensors.
+Aydin: Javascript code webinterface aanpassen voor websocket verbinding (JSON). Loggingcontroller vullen voor loggen informatie wasprogramma.

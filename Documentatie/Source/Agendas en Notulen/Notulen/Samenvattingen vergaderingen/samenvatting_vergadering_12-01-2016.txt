@@ -5,6 +5,6 @@ Het ophalen van de gebruikers gegevens en wasprogramma's is ook al gedeeltelijk 
 
 Martijn werkt verder aan de UARTInterface klasse en de boundary objecten. Verder onderzoekt martijn hoe de emulator aangesproken moet worden.
 
-Chiel
+Chiel werk verder aan het instellen van de cross compiler
 
 Christiaan gaat beginnen met het opzetten van alle klassen die nodig zijn.

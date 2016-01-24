@@ -1,3 +1,6 @@
 Christiaan maakt het klassendiagram af en gaat de SA en RA bijwerken.
 
 martijn: verder werken aan websockets.
+Aydin: Javascript code verder aanpassen, voorzien van commentaar.
+Loggingcontroller verder aanpassen voor beter loggen wasprogramma.
+Chiel: Wasprogramma werkend krijgen, inlezen bestand werkend krijgen, wasprogramma bestand maken.
