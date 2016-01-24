@@ -22,19 +22,24 @@ using namespace std;
 #include "WashingInstructions/WaitTimeInstruction.h"
 #include "WashingInstructions/WashingProgram.h"
 
-class TestProgramUser: public WashingMachine::UARTUser {
+class TestProgramUser : public WashingMachine::UARTUser {
 public:
-	TestProgramUser(WashingProgram &program, LogController &logController, WashingMachine::UARTHandler &handler, SensorHandler &sensorHandler):
+	TestProgramUser(
+			WashingProgram &program,
+			LogController &logController,
+			WashingMachine::UARTHandler &handler,
+			SensorHandler &sensorHandler
+	) :
 			UARTUser{0, "TestProgramUser"},
-	        program(program),
-	        logController(logController),
-	        uartHandler(handler),
-	        sensorHandler(sensorHandler)
-	{}
+			program(program),
+			logController(logController),
+			uartHandler(handler),
+			sensorHandler(sensorHandler) { }
 
 protected:
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
+
 	virtual void main() {
 		WashingMachine::UARTMessage message1{MACHINE_REQ, STATUS_CMD, this};
 		uartHandler.sendMessage(message1);
@@ -51,6 +56,7 @@ protected:
 
 		sensorHandler.suspend();
 	}
+
 #pragma clang diagnostic pop
 
 private:
@@ -72,7 +78,10 @@ TEST(WashingProgram, ReadFromFile) {
 	WashingMachine::UARTHandler uartHandler{libSerial};
 	WashingMachine::WashingMachine washingMachine{uartHandler};
 	TemperatureController temperatureController{washingMachine.getHeatingUnit()};
-	WaterLevelController waterLevelController{washingMachine.getPump(), washingMachine.getWaterValve()};
+	WaterLevelController waterLevelController{
+			washingMachine.getPump(),
+			washingMachine.getWaterValve()
+	};
 
 	SensorHandler handler{};
 	handler.suspend();
@@ -85,7 +94,13 @@ TEST(WashingProgram, ReadFromFile) {
 	handler.addSensor(&temperatureSensor);
 	temperatureSensor.subscribe(&temperatureController);
 
-	WashingProgram program{"bonte_was", 40, washingMachine, temperatureController, waterLevelController};
+	WashingProgram program{
+			"bonte_was",
+			40,
+			washingMachine,
+			temperatureController,
+			waterLevelController
+	};
 
 	LogController logController{&std::cout};
 	TestProgramUser test{program, logController, uartHandler, handler};
