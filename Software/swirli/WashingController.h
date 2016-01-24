@@ -15,7 +15,7 @@ public:
 	                  TemperatureRegulator &temperatureRegulator,
 	                  WaterLevelRegulator &waterLevelRegulator);
 
-	void start(std::string programName, int temperature);
+	void start(std::string programName, int temperature, int programDelay);
 	/**
 	 * return the time when the washingProgram started, in seconds since the epoch
 	 */
@@ -31,7 +31,7 @@ private:
 	 * - starting the sensors
 	 * -
 	 */
-	void runProgram(WashingProgram &program);
+	void runProgram(WashingProgram &program, int step = 0);
 
 	/**
 	 * return the washing machine to the state ready for sleep.

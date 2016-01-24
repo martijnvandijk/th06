@@ -16,5 +16,6 @@ void SetTemperatureInstruction::execute(
 		LogController &logController,
 		bool doWait
 ) {
+	std::cout << "setting temperature: " << temperature << std::endl;
 	temperatureRegulator.setTemperature(temperature);
 }

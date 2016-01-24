@@ -13,5 +13,6 @@ void SetRPMInstruction::execute(
 		LogController &logController,
 		bool doWait
 ) {
+	std::cout << "setting rpm: " << rpm << std::endl;
 	motor.setRPM(rpm, user);
 }

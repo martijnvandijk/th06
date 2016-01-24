@@ -1,5 +1,4 @@
 #include "WashingController.h"
-#include "LogController.h"
 
 WashingController::WashingController(LogController &logController,
                                      WashingMachine::UARTHandler &uartHandler,
@@ -7,11 +6,12 @@ WashingController::WashingController(LogController &logController,
                                      WashingMachine::WashingMachine &machine,
                                      TemperatureRegulator &temperatureRegulator,
                                      WaterLevelRegulator &waterLevelRegulator):
-		UARTUser{0, "TestProgramUser"},
+		UARTUser{0, "WashingController"},
 		logController(logController),
 		uartHandler(uartHandler),
 		sensorHandler(sensorHandler),
 		program{"WashControl program"},
+		temperature{"WashControl temp"},
         programStarted{this, "Program started"},
         startTime{"WashControl startTime"},
         machine(machine),
@@ -19,9 +19,10 @@ WashingController::WashingController(LogController &logController,
         waterLevelRegulator(waterLevelRegulator)
 {}
 
-void WashingController::start(std::string programName, int programTemperature) {
+void WashingController::start(std::string programName, int programTemperature, int programDelay) {
 	program.write(programName);
 	temperature.write(programTemperature);
+
 	programStarted.set();
 }
 
@@ -29,26 +30,23 @@ long long int WashingController::timeStarted() {
 	return startTime.read();
 }
 
-void WashingController::runProgram(WashingProgram &program) {
+void WashingController::runProgram(WashingProgram &program, int step) {
 	WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
 	uartHandler.sendMessage(message);
 
-	machine.getDoor().waitClosed(this);
+	//machine.getDoor().waitClosed(this);
+	// TODO DO NOT FORGET
 
 	// start polling the sensors
 	sensorHandler.resume();
 
-	program.execute(this, logController);
+	program.execute(this, logController, step);
 
 	endProgram();
 }
 
 void WashingController::endProgram() {
 	resetMachineState();
-
-	// stop the machine
-	WashingMachine::UARTMessage message{MACHINE_REQ, STOP_CMD, this};
-	uartHandler.sendMessage(message);
 }
 
 void WashingController::resetMachineState() {
@@ -71,42 +69,42 @@ void WashingController::resetMachineState() {
 
 	// finally unlock the door
 	machine.getDoor().set(WashingMachine::DOOR_UNLOCKED_CLOSED, this);
+
+	// stop the machine
+	WashingMachine::UARTMessage message{MACHINE_REQ, STOP_CMD, this};
+	uartHandler.sendMessage(message);
 }
 
 void WashingController::main() {
+	std::cout << "starting WashingController" << std::endl;
+
 	LogController::WashingProgramState unfinished = logController.getUnfinishedProgram();
-	if (!unfinished.name.empty()) {
+	if (!unfinished.name.empty() && false) {
 		// there was a program running, and the power failed
 		WashingProgram readProgram{unfinished.name, unfinished.temperature,
 		                           machine,
 		                           temperatureRegulator,
 		                           waterLevelRegulator};
 
+		runProgram(readProgram, unfinished.step);
+	} else {
 		WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
 		uartHandler.sendMessage(message);
-
-		machine.getDoor().waitClosed(this);
-
-		// start polling the sensors
-		sensorHandler.resume();
-
-		readProgram.execute(this, logController, unfinished.step);
-
-		endProgram();
-	} else {
 		resetMachineState();
 	}
 
+	std::cout << "done initializing" << std::endl;
 	for (;;) {
 		RTOS::event event{wait(programStarted)};
+		std::cout << "starting program " << program.read() << std::endl;
 
 		try {
-
+			std::cout << "emulator status: " << std::hex << (int(getReplyPoolContents())) << std::dec << std::endl;
 			WashingProgram readProgram{program.read(), temperature.read(),
 									   machine,
 									   temperatureRegulator,
 									   waterLevelRegulator};
-
+			runProgram(readProgram);
 		} catch(std::invalid_argument &e){
 			std::cerr << e.what() << std::endl;
 		}

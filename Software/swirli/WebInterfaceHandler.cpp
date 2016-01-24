@@ -1,10 +1,4 @@
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/filereadstream.h>
-#include <fstream>
-#include <dirent.h>
 #include "WebInterfaceHandler.h"
-#include "WashingInstructions/WashingProgram.h"
 
 void WebInterfaceHandler::main() {
     while (true) {
@@ -73,6 +67,10 @@ void WebInterfaceHandler::main() {
                 fclose(file);
                 delete[] readBuffer;
             }
+            if (request == "StartWashingProgram") {
+                std::cout << "starting program " << doc["parameters"]["program"].GetString() << " with temperature " << doc["parameters"]["temperature"].GetInt();
+                washingController.start(doc["parameters"]["program"].GetString(), doc["parameters"]["temperature"].GetInt(), doc["parameters"]["delay"].GetInt());
+            }
             writer.String("response");
             writer.String(request.c_str());
             writer.EndObject();
@@ -98,11 +96,13 @@ WebInterfaceHandler::WebInterfaceHandler(
         WashingMachine::WashingMachine &washingMachine,
         TemperatureRegulator &temperatureRegulator,
         WaterLevelRegulator &waterLevelRegulator,
+        WashingController &washingController,
         SwirliListener &swirliListener
 ) :
         washingMachine(washingMachine),
         temperatureRegulator(temperatureRegulator),
         waterLevelRegulator(waterLevelRegulator),
-        WashingMachine::UARTUser::UARTUser{97},
+        washingController(washingController),
+        UARTUser{97, "WebInterface"},
         listener(swirliListener),
         timer{this, "webInterfaceHandler timer"}{ }
