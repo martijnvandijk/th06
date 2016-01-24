@@ -100,11 +100,16 @@ void WashingController::main() {
 	for (;;) {
 		RTOS::event event{wait(programStarted)};
 
-		WashingProgram readProgram{program.read(), temperature.read(),
-		                           machine,
-		                           temperatureRegulator,
-		                           waterLevelRegulator};
-		runProgram(readProgram);
+		try {
+
+			WashingProgram readProgram{program.read(), temperature.read(),
+									   machine,
+									   temperatureRegulator,
+									   waterLevelRegulator};
+
+		} catch(std::invalid_argument &e){
+			std::cerr << e.what() << std::endl;
+		}
 
 		// clear the started flag in case somebody tried to start washing while the machine was running
 		programStarted.clear();
