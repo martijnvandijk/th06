@@ -224,18 +224,31 @@ package WashingMachine{
 
 package washingInstructions{
     Class WashingInstruction{
-        +virtual void execute(user : UARTUser*)
+        +virtual void execute(user : UARTUser*,logController : LogController&, doWait : bool)
     }
     Class WashingProgram{
-        +void addTask(task : WashingTask)
+        +WashingProgram(mainTask : WashingTask*, temperatureRegulator : TemperatureRegulator&, waterLevelRegulator : WaterLevelRegulator&)
+        +WashingProgram(filename : std::string, temperature : int, machine : WashingMachine&, temperatureRegulator : TemperatureRegulator&, waterLevelRegulator : WaterLevelRegulator&)
         +void execute (uartUser : UARTUser*, logController : LogController*)
         +void execute (uartUser : UARTUser*, logController : LogController*, resumeFrom : int)
-        -tasks : std::vector<WashingTask>
+        -filename : std::string
+        -temperature : int
+        -mainTask : std::shared_ptr<WashingTask>
+        -temperatureRegulator : TemperatureRegulator&
+        -waterLevelRegulator : WaterLevelRegulator&
     }
+    Class info << (S,#FF00FF) Struct>>{
+        temperatures : std::vector<int>
+        duration : int
+        fullName : std::string
+    }
+    WashingProgram -- info
+
     Class WashingTask{
         +void addInstruction(instruction : WashingInstruction*)
-        +void execute(referenceUser : UARTUser*)
-        -instructions{} : std::vector<WashingInstruction*>
+        +void addInstruction(instruction : std::shared_ptr<WashingInstruction>&
+        +void execute(referenceUser : UARTUser*, logController : LogController&, doWait : bool)
+        -instructions : std::vector<std::shared_ptr<WashingInstruction>>
     }
     Class AddSoapInstruction{
         +AddSoapInstruction(&dispenser : SoapDispenser)
@@ -290,8 +303,22 @@ package washingInstructions{
         +log : std::ostream*
     }
     Class WashingController<<Controller>><<Task>>{
-        +WashingController(log : LogController&)
-        +void start(program : WashingProgram&)
+        +WashingController(log : LogController&, handler : UARTHandler&, machine : WashingMachine&, temperatureRegulator : TemperatureRegulator&, waterLevelRegulator, WaterLevelRegulator&)
+        +void start(program : WashingProgram&, temperature : int, programDelay : int)
+        +long long int timeStarted();
+        #virtual void main()
+        -void runProgram(program : WashingProgram&, step : int)
+        -void endProgram()
+        -void resetMachineState()
+        -program : RTOS::pool<std::string>
+        -temperature : RTOS::pool<int> temperature
+        -programStarted : RTOS::flag
+        -logcontroller : LogController&
+        -uartHandler : UARTHandler&
+        -sensorHandler : SensorHandler&
+        -machine : WashingMachine&
+        -temperatureRegulator : TemperatureRegulator&
+        -waterLevelRegulator : WaterLevelRegulator&
     }
     Class SwirliListener{
         +void onTextMessage(s : const string&, ws : WebSocket*)
@@ -334,6 +361,8 @@ package washingInstructions{
 
     WebSocketHandler o-- WebInterfaceHandler
     WebSocketHandler o-- SwirliListener
+
+    WashingTask o-- LogController
 
 
     WaterLevelController o-- Pump
