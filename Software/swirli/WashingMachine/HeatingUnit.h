@@ -11,6 +11,11 @@ namespace WashingMachine{
         HEATINGUNIT_ON, // The heating unit is on
         HEATINGUNIT_OFF // the heating unit is off
       };
+      /**
+       * @brief Washing Machine heater
+       * @details Interface for controlling the washing machine heating element.
+       * 
+       */
       class HeatingUnit{
       public:
        /**

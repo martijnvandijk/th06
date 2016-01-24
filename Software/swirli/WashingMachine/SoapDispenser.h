@@ -6,11 +6,17 @@
 #include "UARTHandler.h"
 
 namespace WashingMachine{
-    // This is an enum class which handles the states the heating unit can be in.
+    /// This is an enum class which handles the states the heating unit can be in.
     enum SoapDispenserState {
-        SOAP_OPEN, // The soap dispenser is open
-        SOAP_CLOSED // the soap dispenser is closed
+        SOAP_OPEN, ///< The soap dispenser is open
+        SOAP_CLOSED ///< the soap dispenser is closed
      };
+
+     /**
+      * @brief Washing Machine soap dispenser
+      * @details Provides an interface to control the washing machine soap dispenser.
+      * 
+      */
     class SoapDispenser{
     public:
         /**

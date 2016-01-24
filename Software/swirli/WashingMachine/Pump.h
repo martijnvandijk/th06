@@ -7,11 +7,16 @@
 #include "UARTUser.h"
 
 namespace WashingMachine{
-    // This is an enum class which handles the states the heating unit can be in.
+    /// This is an enum class which handles the states the heating unit can be in.
     enum PumpState {
-        PUMP_ON, // The pump is on
-         PUMP_OFF // The pump is off
+        PUMP_ON, /// The pump is on
+         PUMP_OFF /// The pump is off
      };
+     /**
+      * @brief Washing machine pump
+      * @details Interface for the pump used to pump water out of the washing machine.
+      * 
+      */
     class Pump{
     public:
         /**
