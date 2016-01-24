@@ -5,7 +5,10 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-
+/**
+ * @brief Controller for logging progress of running tasks.
+ * 
+ */
 class LogController {
 public:
 	/**

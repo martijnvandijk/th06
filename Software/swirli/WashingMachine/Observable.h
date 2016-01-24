@@ -6,8 +6,18 @@
 #include "UARTHandler.h"
 
 namespace WashingMachine{
+	/**
+	 * @brief Generalization of an observable class.
+	 * @details Used for implementing a listener pattern.
+	 * 
+	 */
     class Observable{
     public:
+    	/**
+    	 * @brief Subscribe to the observable
+    	 * 
+    	 * @param listener The listener to send updates to.
+    	 */
         void subscribe(SensorListener* listener);
         virtual int poll(UARTUser *referenceUser) = 0;
 

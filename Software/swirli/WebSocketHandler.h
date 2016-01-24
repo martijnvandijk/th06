@@ -6,20 +6,30 @@
 #include "SwirliListener.h"
 #include <iostream>
 
-
+/**
+ * @brief Handles the websocket protocol.
+ * @details Passes messages on to a listener.
+ * 
+ */
 class WebSocketHandler {
 public:
-    WebSocketHandler(int port, WebInterfaceHandler &web, SwirliListener &listener);
+	/**
+	 * @brief Constructor
+	 * 
+	 * @param port The TCP port used to listen for websocket data. 
+	 * @param listener The listener to pass the websockets to.
+	 */
+    WebSocketHandler(int port, SwirliListener &listener);
 
-    void runServer();
-
+    /**
+     * @brief Spawn a std::thread to handle the server in a separate thread.
+     * @return The thread containing the websocket server.
+     */
     std::thread spawnWebSocketHandler();
-
-    void sendMessage();
-
+    
 private:
     int port;
-//    std::list<WebSocket *> clients;
+    void runServer();
     SwirliListener &listener;
 };
 

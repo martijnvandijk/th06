@@ -91,6 +91,7 @@ int main() {
     SwirliListener swirliListener;
     WebInterfaceHandler webInterfaceHandler(washingMachine, temperatureController, waterLevelController, washingController, swirliListener);
     WebSocketHandler wsh(2222, webInterfaceHandler, swirliListener);
+
     //doesn't seem to work :S
     std::thread websocketserver = wsh.spawnWebSocketHandler();
 

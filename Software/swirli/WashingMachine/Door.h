@@ -6,7 +6,13 @@
 #include "UARTUser.h"
 
 namespace WashingMachine{
+    /// Describes the various door states.
     enum DoorState {DOOR_OPENED, DOOR_UNLOCKED_CLOSED, DOOR_LOCKED};
+    /**
+     * @brief Washing machine door
+     * @details Interface to a door that can be opened, closed and locked.
+     * 
+     */
     class Door{
     public:
         /**

@@ -16,8 +16,20 @@
 #include "WashingMachine/WaterLevelRegulator.h"
 #include "WashingController.h"
 
+/**
+ * @brief Used to exchange data between the websockethandler and the RTOS.
+ * 
+ */
 class WebInterfaceHandler : WashingMachine::UARTUser {
 public:
+    /**
+     * @brief Constructor
+     * 
+     * @param washingMachine The washing machine object for gaining access to the boundary objects.
+     * @param temperatureRegulator The temperature regulator. Passed on to the washing controller.
+     * @param waterLevelRegulator The water level regulator. Passed on to the washing controller.
+     * @param swirliListener The listener object to get websocket packets from.
+     */
     WebInterfaceHandler(
             WashingMachine::WashingMachine &washingMachine,
             TemperatureRegulator &temperatureRegulator,

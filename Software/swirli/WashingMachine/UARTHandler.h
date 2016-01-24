@@ -10,11 +10,13 @@
 #include <queue>
 #include "UARTUser.h"
 namespace WashingMachine{
-
+    /**
+     * Used for sending messages to the UART interface.
+     */
     typedef struct{
-        uint8_t requestByte;
-        uint8_t commandByte;
-        UARTUser *sender;
+        uint8_t requestByte; ///< Used for selecting the washing machine part
+        uint8_t commandByte; ///< Used for telling the washing machine part what to do.
+        UARTUser *sender; ///< Pointer to the UARTUser who sent the command. Used for suspending and resuming that task.
     } UARTMessage;
 
     class UARTHandler : public RTOS::task{

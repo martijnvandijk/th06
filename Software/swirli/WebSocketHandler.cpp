@@ -4,7 +4,7 @@
 #include "WebSocketPacket.h"
 
 
-WebSocketHandler::WebSocketHandler(int port, WebInterfaceHandler &web, SwirliListener &listener) :
+WebSocketHandler::WebSocketHandler(int port, SwirliListener &listener) :
         port{port},
         listener(listener) { }
 

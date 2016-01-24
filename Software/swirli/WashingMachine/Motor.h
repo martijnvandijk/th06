@@ -6,6 +6,11 @@
 #include "UARTHandler.h"
 
 namespace WashingMachine{
+    /**
+     * @brief Washing machine motor
+     * @details Used for controlling the motor connected tot the drum.
+     * 
+     */
     class Motor{
     public:
     	/**

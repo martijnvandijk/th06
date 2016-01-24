@@ -16,6 +16,11 @@ class WaterLevelController : public WashingMachine::UARTUser, public WaterLevelR
 public:
 	WaterLevelController(WashingMachine::Pump &pump, WashingMachine::WaterValve &waterValve);
 
+	/**
+	 * @brief Set the desired water level in the washing machine drum.
+	 * 
+	 * @param waterLevel Percentage. Values from 0 to 100 are correct.
+	 */
 	virtual void setWaterLevel(int waterLevel) override;
 
 	virtual void update(int newVal) override;

@@ -7,11 +7,16 @@
 #include "../libs/Protocol.h"
 
 namespace WashingMachine{
-    // This is an enum class which handles the states the heating unit can be in.
+    /// This is an enum class which handles the states the heating unit can be in.
     enum WaterValveState {
-        VALVE_OPEN, // The water valve is open
-        VALVE_CLOSED // the water valve is clsoed
+        VALVE_OPEN, ///< The water valve is open
+        VALVE_CLOSED ///< the water valve is clsoed
     };
+    /**
+     * @brief Washing machine water valve
+     * @details Provides an interface for controlling the water valve in the washing machine. This water valve is used for letting water into the machine.
+     * 
+     */
     class WaterValve{
     public:
         /**
