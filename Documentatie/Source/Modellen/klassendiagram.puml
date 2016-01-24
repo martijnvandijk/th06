@@ -181,6 +181,10 @@ package WashingMachine{
         PUMP_ON
         PUMP_OFF
     }
+    WashingController <|-- WashingProgramRunner
+    WashingProgram o-- WashingProgramRunner
+    WashingTask o-- WashingProgramRunner
+    WashingInstruction o-- WashingProgramRunner
 
     WaterLevelRegulator --|> EventGenerator :Extends
     TemperatureRegulator --|> EventGenerator : Extends
@@ -293,6 +297,14 @@ package washingInstructions{
         +WaitWaterLevelInstruction(&water : WaterLevelRegulator)
         +virtual void execute(user : UARTUser*)
         -water : WaterLevelRegulator&
+    }
+    Class WashingProgramRunner{
+        +WashingProgramRunner(priority : unsigned int, name : const char*)
+        +bool isStopped()
+        +RTOS::waitable waitStopped:
+        -void stop()
+        -stopped : RTOS::pool
+        -stoppedEvent : RTOS::flag
     }
 }
     Class LogController<<Controller>><<Task>>{
