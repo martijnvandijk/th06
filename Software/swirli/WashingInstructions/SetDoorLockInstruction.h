@@ -8,11 +8,15 @@
 #include "../WashingMachine/Door.h"
 #include "WashingInstruction.h"
 
-class SetDoorLockInstruction: public WashingInstruction {
+class SetDoorLockInstruction : public WashingInstruction {
 public:
 	SetDoorLockInstruction(WashingMachine::Door &door, WashingMachine::DoorState lock);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
+	virtual void execute(
+			WashingMachine::UARTUser *user,
+			LogController &logController,
+			bool doWait
+	) override;
 
 private:
 	WashingMachine::Door &door;

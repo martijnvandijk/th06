@@ -4,11 +4,17 @@
 
 #include "SetTemperatureInstruction.h"
 
-SetTemperatureInstruction::SetTemperatureInstruction(TemperatureRegulator &temperatureRegulator, int temperature):
+SetTemperatureInstruction::SetTemperatureInstruction(
+		TemperatureRegulator &temperatureRegulator,
+		int temperature
+) :
 		temperatureRegulator(temperatureRegulator),
-        temperature{temperature}
-{}
+		temperature{temperature} { }
 
-void SetTemperatureInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void SetTemperatureInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	temperatureRegulator.setTemperature(temperature);
 }

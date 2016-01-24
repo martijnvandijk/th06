@@ -4,11 +4,15 @@
 
 #include "WaitTemperatureInstruction.h"
 
-WaitTemperatureInstruction::WaitTemperatureInstruction(TemperatureRegulator &regulator):
+WaitTemperatureInstruction::WaitTemperatureInstruction(TemperatureRegulator &regulator) :
 		regulator(regulator) {
 }
 
-void WaitTemperatureInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void WaitTemperatureInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	if (doWait) {
 		regulator.wait(user);
 	}

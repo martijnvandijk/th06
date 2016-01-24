@@ -4,10 +4,13 @@
 
 #include "AddSoapInstruction.h"
 
-AddSoapInstruction::AddSoapInstruction(WashingMachine::SoapDispenser &dispenser):
-		dispenser(dispenser)
-{}
+AddSoapInstruction::AddSoapInstruction(WashingMachine::SoapDispenser &dispenser) :
+		dispenser(dispenser) { }
 
-void AddSoapInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void AddSoapInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	//dispenser.dispense(user);
 }

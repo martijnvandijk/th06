@@ -4,11 +4,14 @@
 
 #include "SetRPMInstruction.h"
 
-SetRPMInstruction::SetRPMInstruction(WashingMachine::Motor &motor, int rpm):
-        motor(motor),
-        rpm{rpm}
-{}
+SetRPMInstruction::SetRPMInstruction(WashingMachine::Motor &motor, int rpm) :
+		motor(motor),
+		rpm{rpm} { }
 
-void SetRPMInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void SetRPMInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	motor.setRPM(rpm, user);
 }

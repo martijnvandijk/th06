@@ -9,11 +9,15 @@
 #include "WashingInstruction.h"
 #include "../LogController.h"
 
-class AddSoapInstruction: public WashingInstruction {
+class AddSoapInstruction : public WashingInstruction {
 public:
 	AddSoapInstruction(WashingMachine::SoapDispenser &dispenser);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
+	virtual void execute(
+			WashingMachine::UARTUser *user,
+			LogController &logController,
+			bool doWait
+	) override;
 
 private:
 	WashingMachine::SoapDispenser &dispenser;

@@ -10,11 +10,15 @@
 #include "../WashingMachine/TemperatureRegulator.h"
 #include "../WashingMachine/UARTUser.h"
 
-class SetTemperatureInstruction: public WashingInstruction {
+class SetTemperatureInstruction : public WashingInstruction {
 public:
 	SetTemperatureInstruction(TemperatureRegulator &temperatureRegulator, int temperature);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
+	virtual void execute(
+			WashingMachine::UARTUser *user,
+			LogController &logController,
+			bool doWait
+	) override;
 
 private:
 	TemperatureRegulator &temperatureRegulator;

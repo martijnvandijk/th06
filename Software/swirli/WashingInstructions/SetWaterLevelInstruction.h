@@ -9,11 +9,15 @@
 #include "../WashingMachine/WaterLevelRegulator.h"
 #include "../WashingMachine/UARTUser.h"
 
-class SetWaterLevelInstruction: public WashingInstruction {
+class SetWaterLevelInstruction : public WashingInstruction {
 public:
 	SetWaterLevelInstruction(WaterLevelRegulator &waterRegulator, int waterLevel);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
+	virtual void execute(
+			WashingMachine::UARTUser *user,
+			LogController &logController,
+			bool doWait
+	) override;
 
 private:
 	WaterLevelRegulator &waterRegulator;

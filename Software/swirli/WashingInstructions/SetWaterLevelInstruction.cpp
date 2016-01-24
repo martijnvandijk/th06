@@ -4,11 +4,17 @@
 
 #include "SetWaterLevelInstruction.h"
 
-SetWaterLevelInstruction::SetWaterLevelInstruction(WaterLevelRegulator &waterRegulator, int waterLevel):
+SetWaterLevelInstruction::SetWaterLevelInstruction(
+		WaterLevelRegulator &waterRegulator,
+		int waterLevel
+) :
 		waterRegulator(waterRegulator),
-        waterLevel{waterLevel}
-{}
+		waterLevel{waterLevel} { }
 
-void SetWaterLevelInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void SetWaterLevelInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	waterRegulator.setWaterLevel(waterLevel);
 }

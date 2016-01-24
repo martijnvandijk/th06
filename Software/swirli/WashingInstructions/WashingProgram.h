@@ -30,7 +30,11 @@ public:
 	               WaterLevelRegulator &waterLevelRegulator);
 
 	void execute(WashingMachine::UARTUser *uartUser, LogController &logController);
-	void execute(WashingMachine::UARTUser *uartUser, LogController &logController, int resumeFrom);
+	void execute(
+			WashingMachine::UARTUser *uartUser,
+			LogController &logController,
+			int resumeFrom
+	);
 
 	template<typename OutputStream>
 	void writeJSONInfo(rapidjson::Writer<OutputStream> &writer) { // must be in the header due to compiler restrictions

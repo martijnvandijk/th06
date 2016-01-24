@@ -4,11 +4,14 @@
 
 #include "WaitWaterLevelInstruction.h"
 
-WaitWaterLevelInstruction::WaitWaterLevelInstruction(WaterLevelRegulator &water):
-		water(water)
-{}
+WaitWaterLevelInstruction::WaitWaterLevelInstruction(WaterLevelRegulator &water) :
+		water(water) { }
 
-void WaitWaterLevelInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void WaitWaterLevelInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	if (doWait) {
 		water.wait(user);
 	}

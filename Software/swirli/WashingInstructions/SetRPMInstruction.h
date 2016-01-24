@@ -13,7 +13,11 @@ class SetRPMInstruction : public WashingInstruction {
 public:
 	SetRPMInstruction(WashingMachine::Motor &motor, int rpm);
 
-	virtual void execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) override;
+	virtual void execute(
+			WashingMachine::UARTUser *user,
+			LogController &logController,
+			bool doWait
+	) override;
 
 private:
 	WashingMachine::Motor &motor;

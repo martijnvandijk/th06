@@ -15,7 +15,11 @@ public:
 	void addInstruction(WashingInstruction *instruction); // has to be a pointer as the object will be stored in a array
 	void addInstruction(std::shared_ptr<WashingInstruction> &instruction);
 
-	virtual void execute(WashingMachine::UARTUser *referenceUser, LogController &logController, bool doWait) override;
+	virtual void execute(
+			WashingMachine::UARTUser *referenceUser,
+			LogController &logController,
+			bool doWait
+	) override;
 
 private:
 	std::vector<std::shared_ptr<WashingInstruction>> instructions;

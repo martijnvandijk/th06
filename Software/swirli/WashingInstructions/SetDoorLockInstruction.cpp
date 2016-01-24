@@ -5,11 +5,17 @@
 #include "SetDoorLockInstruction.h"
 #include "../WashingMachine/UARTUser.h"
 
-SetDoorLockInstruction::SetDoorLockInstruction(WashingMachine::Door &door, WashingMachine::DoorState lock):
+SetDoorLockInstruction::SetDoorLockInstruction(
+		WashingMachine::Door &door,
+		WashingMachine::DoorState lock
+) :
 		door(door),
-        lock{lock}
-{}
+		lock{lock} { }
 
-void SetDoorLockInstruction::execute(WashingMachine::UARTUser *user, LogController &logController, bool doWait) {
+void SetDoorLockInstruction::execute(
+		WashingMachine::UARTUser *user,
+		LogController &logController,
+		bool doWait
+) {
 	door.set(lock, user);
 }
