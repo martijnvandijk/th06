@@ -12,5 +12,5 @@ void AddSoapInstruction::execute(
 		LogController &logController,
 		bool doWait
 ) {
-	//dispenser.dispense(user);
+	dispenser.set(WashingMachine::SOAP_OPEN, user);
 }

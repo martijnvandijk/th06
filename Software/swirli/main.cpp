@@ -10,6 +10,9 @@
 #include "WashingMachine/UARTUser.h"
 #include "WashingMachine/WashingMachine.h"
 #include "WebSocketHandler.h"
+#include "WashingController.h"
+#include "WashingMachine/TemperatureController.h"
+#include "WashingMachine/WaterLevelController.h"
 
 #define debug_task_logging_1
 
@@ -67,22 +70,32 @@ int main() {
     commandTurn[0]=SET_RPM_REQ;
     commandTurn[1]=0x00;
 
-    serial.write(commandStart,2);
-    serial.flush();
+//    serial.write(commandStart,2);
+//    serial.flush();
 
 
     WashingMachine::UARTHandler handler(serial);
     WashingMachine::WashingMachine washingMachine(handler);
+    SensorHandler sensorHandler{};
+    sensorHandler.addSensor(&washingMachine.getTemperatureSensor());
+    sensorHandler.addSensor(&washingMachine.getWaterLevelSensor());
+    TemperatureController temperatureController{washingMachine.getHeatingUnit()};
+    WaterLevelController waterLevelController{washingMachine.getPump(), washingMachine.getWaterValve()};
+    washingMachine.getTemperatureSensor().subscribe(&temperatureController);
+    washingMachine.getWaterLevelSensor().subscribe(&waterLevelController);
 //    UARTTest test(washingMachine);
 
     SwirliListener swirliListener;
-    WebInterfaceHandler webInterfaceHandler(washingMachine, swirliListener);
+    WebInterfaceHandler webInterfaceHandler(washingMachine, temperatureController, waterLevelController, swirliListener);
     WebSocketHandler wsh(2222, webInterfaceHandler, swirliListener);
 
     //doesn't seem to work :S
     std::thread websocketserver = wsh.spawnWebSocketHandler();
 
 //    std::thread webSocketThread(webSocketHandler.runServer);
+
+    LogController logController{&std::cout};
+    WashingController washingController{logController, handler, sensorHandler, washingMachine, temperatureController, waterLevelController};
 
     RTOS::run();
     websocketserver.join();

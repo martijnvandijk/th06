@@ -18,10 +18,10 @@ void WaterLevelController::main() {
 	for (int i{0};; i++) {
 		RTOS::event event = RTOS::task::wait(targetWaterLevelUpdated + waterLevelUpdated);
 
-		if (i >= 9) {
-			std::cout << "water level is " << latestWaterLevel.read() << " target is " << targetWaterLevel.read() << std::endl;
-			i = -1;
-		}
+//		if (i >= 9) {
+//			std::cout << "water level is " << latestWaterLevel.read() << " target is " << targetWaterLevel.read() << std::endl;
+//			i = -1;
+//		}
 
 		int diff{targetWaterLevel.read() - latestWaterLevel.read()};
 		switch ((diff > 0) - (diff < 0)) {

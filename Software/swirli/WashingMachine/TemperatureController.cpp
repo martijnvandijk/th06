@@ -17,10 +17,10 @@ void TemperatureController::main() {
 	for (int i{0};; i++) {
 		RTOS::event event = RTOS::task::wait(targetTemperatureUpdated + temperatureUpdated);
 
-		if (i >= 9) {
-			std::cout << "temperature is " << latestTemperature.read() << " target is " << targetTemperature.read() << std::endl;
-			i = -1;
-		}
+//		if (i >= 9) {
+//			std::cout << "temperature is " << latestTemperature.read() << " target is " << targetTemperature.read() << std::endl;
+//			i = -1;
+//		}
 
 		int diff{targetTemperature.read() - latestTemperature.read()};
 		if (diff > 0) {
