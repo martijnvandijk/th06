@@ -6,6 +6,7 @@
 
 WaterLevelController::WaterLevelController(WashingMachine::Pump &pump, WashingMachine::WaterValve &waterValve):
 		UARTUser{314, "WaterLevelController"},
+		WaterLevelRegulator(this),
 		pump(pump),
 		waterValve(waterValve),
 		targetWaterLevel{"TargetWaterLevel"},

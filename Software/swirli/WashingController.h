@@ -2,11 +2,14 @@
 #define SWIRLI_WASHINGCONTROLLER_H
 
 #include "LogController.h"
+#include "WashingInstructions/WashingProgram.h"
 #include "WashingMachine/UARTHandler.h"
 #include "WashingMachine/SensorHandler.h"
-#include "WashingInstructions/WashingProgram.h"
+#include "WashingMachine/WaterLevelRegulator.h"
+#include "WashingMachine/TemperatureRegulator.h"
+#include "WashingMachine/WashingMachine.h"
 
-class WashingController : public WashingMachine::UARTUser {
+class WashingController : public WashingProgramRunner {
 public:
 	WashingController(LogController &logController,
 	                  WashingMachine::UARTHandler &handler,
@@ -15,11 +18,18 @@ public:
 	                  TemperatureRegulator &temperatureRegulator,
 	                  WaterLevelRegulator &waterLevelRegulator);
 
+	/**
+	 * @brief read a program from it's file and execute it
+	 */
 	void start(std::string programName, int temperature, int programDelay);
 	/**
-	 * return the time when the washingProgram started, in seconds since the epoch
+	 * @brief return the time when the washingProgram started, in seconds since the epoch
 	 */
 	long long int timeStarted();
+	/**
+	 * @brief get the current temperature of the washing machine
+	 */
+	int getTemperature();
 
 protected:
 	virtual void main() override;
@@ -51,6 +61,7 @@ private:
 
 	RTOS::pool<std::string> program;
 	RTOS::pool<int> temperature;
+	RTOS::pool<int> delay;
 	RTOS::flag programStarted;
 	RTOS::pool<long long int> startTime;
 

@@ -11,11 +11,9 @@ SetWaterLevelInstruction::SetWaterLevelInstruction(
 		waterRegulator(waterRegulator),
 		waterLevel{waterLevel} { }
 
-void SetWaterLevelInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait
-) {
+void SetWaterLevelInstruction::execute(WashingProgramRunner &runner,
+                                       LogController &logController,
+                                       bool doWait) {
 	std::cout << "setting waterLevel: " << waterLevel << std::endl;
 	waterRegulator.setWaterLevel(waterLevel);
 }

@@ -8,11 +8,9 @@ SetRPMInstruction::SetRPMInstruction(WashingMachine::Motor &motor, int rpm) :
 		motor(motor),
 		rpm{rpm} { }
 
-void SetRPMInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait
-) {
+void SetRPMInstruction::execute(WashingProgramRunner &runner,
+                                LogController &logController,
+                                bool doWait) {
 	std::cout << "setting rpm: " << rpm << std::endl;
-	motor.setRPM(rpm, user);
+	motor.setRPM(rpm, &runner);
 }

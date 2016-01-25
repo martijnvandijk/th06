@@ -9,6 +9,8 @@
 
 class WaterLevelRegulator : public EventGenerator {
 public:
+	WaterLevelRegulator(RTOS::task *parent): EventGenerator{parent} {}
+
 	/**
 	 * @brief Set the desired water level in the washing machine drum.
 	 * 

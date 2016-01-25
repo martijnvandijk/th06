@@ -61,9 +61,28 @@ void WebInterfaceHandler::main() {
                 char *readBuffer{new char[65536]};
                 rapidjson::FileReadStream fileReadStream{file, readBuffer, 65536};
                 document.ParseStream(fileReadStream);
-                writer.String("settings");
+                writer.Key("settings");
 
                 document.Accept(writer);
+                fclose(file);
+                delete[] readBuffer;
+            }
+            if (request == "UpdateUser"){
+                std::cout << "procesing store user settings" << std::endl;
+
+                FILE * file{fopen("UserData/UserSettings.json", "w")};
+                char *readBuffer{new char[65536]};
+                rapidjson::FileWriteStream fileWriteStream{file, readBuffer, 65536};
+                rapidjson::Writer<rapidjson::FileWriteStream> settingsWriter{fileWriteStream};
+
+                settingsWriter.StartObject();
+                settingsWriter.Key("pin");
+                settingsWriter.String(doc["Parameters"]["Pin"].GetString());
+                settingsWriter.Key("recovery");
+                settingsWriter.String(doc["Parameters"]["RecoveryMethod"].GetString());
+                settingsWriter.EndObject();
+
+                ftruncate(fileno(file), ftell(file));
                 fclose(file);
                 delete[] readBuffer;
             }
@@ -71,7 +90,17 @@ void WebInterfaceHandler::main() {
                 std::cout << "starting program " << doc["parameters"]["program"].GetString() << " with temperature " << doc["parameters"]["temperature"].GetInt();
                 washingController.start(doc["parameters"]["program"].GetString(), doc["parameters"]["temperature"].GetInt(), doc["parameters"]["delay"].GetInt());
             }
-            writer.String("response");
+            if (request == "StopWashingProgram") {
+                std::cout << "stopping program" << std::endl;
+                washingController.stop();
+            }
+            if (request == "Status") {
+                writer.Key("temp");
+                writer.Int(washingController.getTemperature());
+                writer.Key("time");
+                writer.Int(washingController.isStopped() ? 0 : (int)(time(nullptr) - washingController.timeStarted()));
+            }
+            writer.Key("response");
             writer.String(request.c_str());
             writer.EndObject();
 

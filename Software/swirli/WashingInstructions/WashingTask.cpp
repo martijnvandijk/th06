@@ -1,13 +1,12 @@
 #include "WashingTask.h"
 
-void WashingTask::execute(
-		WashingMachine::UARTUser *referenceUser,
-		LogController &logController,
-		bool doWait
-) {
+void WashingTask::execute(WashingProgramRunner &runner, LogController &logController, bool doWait) {
 	for (std::shared_ptr<WashingInstruction> i : instructions) {
 //		std::cout << "Executing from " << this << ": " << i << " (a " << typeid(i).name() << ")" << std::endl;
-		i->execute(referenceUser, logController, doWait);
+		i->execute(runner, logController, doWait);
+		if (runner.isStopped()) {
+			break;
+		}
 	}
 }
 

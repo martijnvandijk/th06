@@ -6,6 +6,7 @@
 
 TemperatureController::TemperatureController(WashingMachine::HeatingUnit &heat):
 		UARTUser{314, "TemperatureController"},
+		TemperatureRegulator{this},
 		heat(heat),
 		targetTemperature{"TargetTemperature"},
 		targetTemperatureUpdated{this, "TargetTemperatureUpdated"},
@@ -15,7 +16,7 @@ TemperatureController::TemperatureController(WashingMachine::HeatingUnit &heat):
 
 void TemperatureController::main() {
 	for (int i{0};; i++) {
-		RTOS::event event = RTOS::task::wait(targetTemperatureUpdated + temperatureUpdated);
+		wait(targetTemperatureUpdated + temperatureUpdated);
 
 		if (i >= 49) {
 			std::cout << "temperature is " << latestTemperature.read() << " target is " << targetTemperature.read() << std::endl;
@@ -40,11 +41,15 @@ void TemperatureController::setTemperature(int Temperature) {
 	targetTemperatureUpdated.set();
 }
 
+void TemperatureController::update(int newVal) {
+	latestTemperature.write(newVal);
+	temperatureUpdated.set();
+}
+
 int TemperatureController::getTargetTemperature() {
 	return targetTemperature.read();
 }
 
-void TemperatureController::update(int newVal) {
-	latestTemperature.write(newVal);
-	temperatureUpdated.set();
+int TemperatureController::getCurrentTemperature() {
+	return latestTemperature.read();
 }

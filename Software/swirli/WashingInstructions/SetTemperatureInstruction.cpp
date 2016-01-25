@@ -11,11 +11,9 @@ SetTemperatureInstruction::SetTemperatureInstruction(
 		temperatureRegulator(temperatureRegulator),
 		temperature{temperature} { }
 
-void SetTemperatureInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait
-) {
+void SetTemperatureInstruction::execute(WashingProgramRunner &runner,
+                                        LogController &logController,
+                                        bool doWait) {
 	std::cout << "setting temperature: " << temperature << std::endl;
 	temperatureRegulator.setTemperature(temperature);
 }

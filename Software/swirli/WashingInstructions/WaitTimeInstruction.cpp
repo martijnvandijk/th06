@@ -7,12 +7,12 @@
 WaitTimeInstruction::WaitTimeInstruction(unsigned int time) :
 		time{time} { }
 
-void WaitTimeInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait) {
-	std::cout << "user " << user << ", doWait " << doWait << ", time " << time << std::endl;
+void WaitTimeInstruction::execute(WashingProgramRunner &runner,
+                                  LogController &logController,
+                                  bool doWait) {
+	std::cout << "user " << runner << ", doWait " << doWait << ", time " << time << std::endl;
 	if (doWait) {
-		user->sleep(time);
+		runner.sleep_timer->set(time);
+		runner.wait(*runner.sleep_timer + runner.waitStopped());
 	}
 }

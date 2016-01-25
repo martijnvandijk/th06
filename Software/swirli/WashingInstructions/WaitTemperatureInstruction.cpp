@@ -8,12 +8,10 @@ WaitTemperatureInstruction::WaitTemperatureInstruction(TemperatureRegulator &reg
 		regulator(regulator) {
 }
 
-void WaitTemperatureInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait
-) {
+void WaitTemperatureInstruction::execute(WashingProgramRunner &runner,
+                                         LogController &logController,
+                                         bool doWait) {
 	if (doWait) {
-		regulator.wait(user);
+		runner.wait(regulator.waitEvent() + runner.waitStopped());
 	}
 }

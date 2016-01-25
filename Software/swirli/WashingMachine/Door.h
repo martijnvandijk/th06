@@ -41,6 +41,10 @@ namespace WashingMachine{
           */
         void toggle(UARTUser *referenceUser);
 
+        /**
+         * @brief wait for the door to be closed, either locked or unlocked
+         * @param referenceUser The UARTUser that is calling the function (usually 'this' suffices)
+         */
         void waitClosed(UARTUser *referenceUser);
 
     private:

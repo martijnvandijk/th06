@@ -7,10 +7,6 @@
 AddSoapInstruction::AddSoapInstruction(WashingMachine::SoapDispenser &dispenser) :
 		dispenser(dispenser) { }
 
-void AddSoapInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait
-) {
-	dispenser.set(WashingMachine::SOAP_OPEN, user);
+void AddSoapInstruction::execute(WashingProgramRunner &runner, LogController &logController, bool doWait) {
+	dispenser.set(WashingMachine::SOAP_OPEN, &runner);
 }

@@ -21,13 +21,13 @@ void LogController::logProgramStarted(std::string filename, int temperature) {
 	}
 }
 
-void LogController::logCurrentStep(int step) {
+void LogController::logCurrentStep(unsigned char step) {
 	*log << "----Starting step " << step << " in program----" << std::endl;
 	
 	std::ofstream progresslog{STEPFILE_FILENAME, std::ios_base::out | std::ios_base::trunc | std::ios_base::binary};
 	
 	// Send information to the log file (parameters are set in brackets to more easily find them in the file
-	progresslog.write((char*)(&step), sizeof(char));
+	progresslog.write((char*)(&step), sizeof(unsigned char));
 	
 	progresslog.close();
 }
@@ -54,7 +54,9 @@ LogController::WashingProgramState LogController::getUnfinishedProgram() {
 	if (nameFile) {
 		std::ifstream stepFile{STEPFILE_FILENAME};
 		nameFile >> unfinished.name >> unfinished.temperature;
-		stepFile >> unfinished.step;
+		unsigned char step{0};
+		stepFile.read((char*)&step, 1);
+		unfinished.step = step;
 	}
 	return unfinished;
 }

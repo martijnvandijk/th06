@@ -36,8 +36,8 @@
 		"main" : [
 			["set_temp", "temp"],
 			["set_water", 50],
-			"wait_temp",
-			"wait_water",
+			["wait_temp"],
+			["wait_water"],
 
 			"slow",
 			"centrifuge",
@@ -46,7 +46,7 @@
 			"slow",
 
 			["set_water", 0],
-			"wait_water",
+			["wait_water"],
 			"centrifuge",
 			"shake"
 		]

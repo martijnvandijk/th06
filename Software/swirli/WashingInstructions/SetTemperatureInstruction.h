@@ -14,11 +14,9 @@ class SetTemperatureInstruction : public WashingInstruction {
 public:
 	SetTemperatureInstruction(TemperatureRegulator &temperatureRegulator, int temperature);
 
-	virtual void execute(
-			WashingMachine::UARTUser *user,
-			LogController &logController,
-			bool doWait
-	) override;
+	virtual void execute(WashingProgramRunner &runner,
+	                     LogController &logController,
+	                     bool doWait) override;
 
 private:
 	TemperatureRegulator &temperatureRegulator;

@@ -29,7 +29,7 @@ public:
 	*
 	*	@param step an int representing the current step in the washing program.
 	*/
-	void logCurrentStep(int step);
+	void logCurrentStep(unsigned char step);
 
 	/** \brief Write a message to the file.
 	*		Write a message explaining that the washing program has stopped.
@@ -38,6 +38,12 @@ public:
 	*/
 	void logProgramStopped();
 
+	/**
+	 * @brief log a non-standard message to the log stream
+	 *
+	 * @param source the name of the thing that this message came from
+	 * @param message the message
+	 */
 	void logMessage(std::string source, std::string message);
 
 	typedef struct {

@@ -44,13 +44,12 @@ set(WashingMachineSourceFiles
 		WashingMachine/UARTHandler.cpp			WashingMachine/UARTHandler.h
 		WashingMachine/UARTUser.h
 		WashingInstructions/WashingInstruction.h
-		WashingInstructions/WashingTask.cpp WashingInstructions/WashingTask.h
-		WashingInstructions/WashingProgram.cpp WashingInstructions/WashingProgram.h
+		WashingInstructions/WashingTask.cpp 				WashingInstructions/WashingTask.h
+		WashingInstructions/WashingProgram.cpp 				WashingInstructions/WashingProgram.h
 		WashingInstructions/SetRPMInstruction.cpp			WashingInstructions/SetRPMInstruction.h
 		WashingInstructions/SetWaterLevelInstruction.cpp	WashingInstructions/SetWaterLevelInstruction.h
 		WashingInstructions/SetTemperatureInstruction.cpp	WashingInstructions/SetTemperatureInstruction.h
 		WashingInstructions/AddSoapInstruction.cpp			WashingInstructions/AddSoapInstruction.h
-		WashingInstructions/SetDoorLockInstruction.cpp		WashingInstructions/SetDoorLockInstruction.h
 		WashingInstructions/WaitTimeInstruction.cpp			WashingInstructions/WaitTimeInstruction.h
 		WashingInstructions/WaitWaterLevelInstruction.cpp	WashingInstructions/WaitWaterLevelInstruction.h
 		WashingInstructions/WaitTemperatureInstruction.cpp	WashingInstructions/WaitTemperatureInstruction.h
@@ -65,7 +64,7 @@ set(WashingMachineSourceFiles
 		WebInterfaceHandler.h								WebInterfaceHandler.cpp
 		WashingController.h									WashingController.cpp
 		WashingMachine/WashingMachine.h
-		)
+		WashingInstructions/WashingProgramRunner.cpp 		WashingInstructions/WashingProgramRunner.h)
 
 
 set(RTOS_SourceFiles

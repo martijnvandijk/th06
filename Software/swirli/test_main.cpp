@@ -22,7 +22,7 @@ using namespace std;
 #include "WashingInstructions/WaitTimeInstruction.h"
 #include "WashingInstructions/WashingProgram.h"
 
-class TestProgramUser : public WashingMachine::UARTUser {
+class TestProgramUser : public WashingProgramRunner {
 public:
 	TestProgramUser(
 			WashingProgram &program,
@@ -30,7 +30,7 @@ public:
 			WashingMachine::UARTHandler &handler,
 			SensorHandler &sensorHandler
 	) :
-			UARTUser{0, "TestProgramUser"},
+			WashingProgramRunner{0, "TestProgramUser"},
 			program(program),
 			logController(logController),
 			uartHandler(handler),
@@ -52,7 +52,7 @@ protected:
 		// resume sensorhandler
 		sensorHandler.resume();
 
-		program.execute(this, logController);
+		program.execute(*this, logController);
 
 		sensorHandler.suspend();
 	}

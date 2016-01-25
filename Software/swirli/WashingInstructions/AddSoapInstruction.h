@@ -8,16 +8,13 @@
 #include "../WashingMachine/SoapDispenser.h"
 #include "WashingInstruction.h"
 #include "../LogController.h"
+#include "WashingProgramRunner.h"
 
 class AddSoapInstruction : public WashingInstruction {
 public:
 	AddSoapInstruction(WashingMachine::SoapDispenser &dispenser);
 
-	virtual void execute(
-			WashingMachine::UARTUser *user,
-			LogController &logController,
-			bool doWait
-	) override;
+	virtual void execute(WashingProgramRunner &runner, LogController &logController, bool doWait) override;
 
 private:
 	WashingMachine::SoapDispenser &dispenser;

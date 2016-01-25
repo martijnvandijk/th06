@@ -1,4 +1,11 @@
 #include "WashingProgram.h"
+#include "AddSoapInstruction.h"
+#include "SetRPMInstruction.h"
+#include "SetWaterLevelInstruction.h"
+#include "SetTemperatureInstruction.h"
+#include "WaitTemperatureInstruction.h"
+#include "WaitTimeInstruction.h"
+#include "WaitWaterLevelInstruction.h"
 
 using namespace rapidjson;
 
@@ -42,7 +49,7 @@ WashingProgram::WashingProgram(
 		throw std::invalid_argument("Invalid JSON Washing Program: no member 'name'");
 	}
 	if (!document["info"].HasMember("temperature")) {
-		throw std::invalid_argument("Invalid JSON Washing Program: no member 'temperature");
+		throw std::invalid_argument("Invalid JSON Washing Program: no member 'temperature'");
 	}
 
 
@@ -57,7 +64,7 @@ WashingProgram::WashingProgram(
 	}
 
 	info.duration = document["info"]["duration"].GetInt();
-	for (SizeType i; i < document["info"]["temperature"].Size(); i++) {
+	for (SizeType i{0}; i < document["info"]["temperature"].Size(); i++) {
 		if (!document["info"]["temperature"][i].IsNumber()) {
 			std::string error = "Invalid JSON Washing Program: info.temperature[";
 			error.append(std::to_string(i));
@@ -180,40 +187,25 @@ WashingProgram::WashingProgram(
 	mainTask = tasks[document["main_program"].GetString()];
 }
 
-void WashingProgram::execute(
-		WashingMachine::UARTUser *uartUser,
-		LogController &logController
-) {
-	execute(uartUser, logController, 0);
+void WashingProgram::execute(WashingProgramRunner &runner, LogController &logController) {
+	execute(runner, logController, 0);
 }
 
-void WashingProgram::execute(
-		WashingMachine::UARTUser *uartUser,
-		LogController &logController,
-		int resumeFrom
-) {
+void WashingProgram::execute(WashingProgramRunner &runner, LogController &logController, int resumeFrom) {
 	logController.logProgramStarted(filename, temperature);
 	// adjust the temperature and the
-	for (int i{0}; i < resumeFrom; ++i) {
-		mainTask->instructions[i]->execute(uartUser, logController, false);
+	for (int i{0}; i < resumeFrom && !runner.isStopped(); ++i) {
+		mainTask->instructions[i]->execute(runner, logController, false);
 	}
-	if (resumeFrom > 0) {
-		WaitWaterLevelInstruction{waterLevelRegulator}.execute(
-				uartUser,
-				logController,
-				true
-		);
+	if (resumeFrom > 0 && !runner.isStopped()) {
+		WaitWaterLevelInstruction{waterLevelRegulator}.execute(runner, logController, true);
 		if (temperatureRegulator.getTargetTemperature() > 20) {
-			WaitTemperatureInstruction{temperatureRegulator}.execute(
-					uartUser,
-					logController,
-					true
-			);
+			WaitTemperatureInstruction{temperatureRegulator}.execute(runner, logController, true);
 		}
 	}
-	for (int i{resumeFrom}; i < mainTask->instructions.size(); i++) {
+	for (int i{resumeFrom}; i < mainTask->instructions.size() && !runner.isStopped(); i++) {
 		logController.logCurrentStep(i);
-		mainTask->instructions[i]->execute(uartUser, logController, true);
+		mainTask->instructions[i]->execute(runner, logController, true);
 	}
 	logController.logProgramStopped();
 	// TODO put this in WashingController instead - or don't

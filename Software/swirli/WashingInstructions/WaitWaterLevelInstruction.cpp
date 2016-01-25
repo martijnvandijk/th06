@@ -7,12 +7,8 @@
 WaitWaterLevelInstruction::WaitWaterLevelInstruction(WaterLevelRegulator &water) :
 		water(water) { }
 
-void WaitWaterLevelInstruction::execute(
-		WashingMachine::UARTUser *user,
-		LogController &logController,
-		bool doWait
-) {
+void WaitWaterLevelInstruction::execute(WashingProgramRunner &runner, LogController &logController, bool doWait) {
 	if (doWait) {
-		water.wait(user);
+		runner.wait(water.waitEvent() + runner.waitStopped());
 	}
 }

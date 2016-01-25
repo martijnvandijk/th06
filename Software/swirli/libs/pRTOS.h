@@ -787,6 +787,7 @@ public:
       // a lower number means a higher priority, 0 is highest
       unsigned int task_priority;
 
+   public:
       // timer for sleep() call
       timer * sleep_timer;
 

@@ -5,6 +5,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/filereadstream.h>
+#include <rapidjson/filewritestream.h>
 #include <fstream>
 #include <dirent.h>
 #include "WebSocketPacket.h"
