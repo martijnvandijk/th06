@@ -42,7 +42,7 @@ void WashingController::runProgram(WashingProgram &program, int step) {
 	WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
 	uartHandler.sendMessage(message);
 
-	//machine.getDoor().waitClosed(this);
+	machine.getDoor().waitClosed(this);
 	// TODO DO NOT FORGET
 
 	// start polling the sensors
@@ -104,11 +104,13 @@ void WashingController::main() {
 		fclose(file);
 		delete[] readBuffer;
 
+		std::stringstream ss, ss2;
+		ss << "resuming program " << unfinished.name << " with temperature " << unfinished.temperature << " at step " << unfinished.step;
+		logController.logMessage("WashingController", ss.str());
+		ss2 << "User recovery setting is " << document["recovery"].GetString();
+		logController.logMessage("WashingController", ss2.str());
 		//determine the power failure settings
-		if (document["recovery"].GetString() == "continue") {
-			std::stringstream ss;
-			ss << "resuming program " << unfinished.name << " with temperature " << unfinished.temperature << " at step " << unfinished.step;
-			logController.logMessage("WashingController", ss.str());
+		if (std::string{document["recovery"].GetString()}.compare("continue") == 0) {
 			WashingProgram readProgram{unfinished.name, unfinished.temperature,
 			                           machine,
 			                           temperatureRegulator,
@@ -116,6 +118,7 @@ void WashingController::main() {
 			startTime.write(time(nullptr));
 			runProgram(readProgram, unfinished.step);
 		} else {
+			logController.logProgramStopped();
 			WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
 			uartHandler.sendMessage(message);
 			resetMachineState();
