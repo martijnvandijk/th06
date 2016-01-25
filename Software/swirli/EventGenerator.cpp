@@ -4,24 +4,19 @@
 
 #include "EventGenerator.h"
 
-EventGenerator::EventGenerator(RTOS::task *parent):
-		flag{parent},
-		waiting{} {
-	waiting.write(0);
-}
-
-RTOS::waitable EventGenerator::waitEvent() {
-	return flag;
+void EventGenerator::waitEvent(RTOS::task *user) {
+	blocked.push(user);
+	user->suspend();
 }
 
 bool EventGenerator::notify() {
-	int waitNum{waiting.read()};
-	if (waitNum > 0) {
-		waiting.write(--waitNum);
-		flag.set();
-		return true;
-	} else {
+	if (blocked.empty()) {
 		return false;
+	} else {
+		blocked.front()->resume();
+		blocked.pop();
+		RTOS::current_task()->release();
+		return true;
 	}
 }
 

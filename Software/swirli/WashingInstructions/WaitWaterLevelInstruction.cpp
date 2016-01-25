@@ -9,6 +9,6 @@ WaitWaterLevelInstruction::WaitWaterLevelInstruction(WaterLevelRegulator &water)
 
 void WaitWaterLevelInstruction::execute(WashingProgramRunner &runner, LogController &logController, bool doWait) {
 	if (doWait) {
-		runner.wait(water.waitEvent() + runner.waitStopped());
+		water.waitEvent(&runner); // cannot check for stop due to inter-task flag restrictions
 	}
 }

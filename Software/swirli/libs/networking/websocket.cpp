@@ -198,7 +198,7 @@ void WebSocket::performHandshake() throw (WebSocketException, SocketException ){
 //afhankelijk is van de opcode.
 
 void WebSocket::processFrame() throw(WebSocketException, SocketException){
-	cout << "processing frame" << endl;
+//	cout << "processing frame" << endl;
 	unsigned char tmp[8];
 	size_t n = sock->recvFully(tmp,2);
 	if(n < 2) throw WebSocketException("connection closed while processing frame");
@@ -255,7 +255,7 @@ void WebSocket::processFrame() throw(WebSocketException, SocketException){
 	//handle message
 	switch(opc){
 		case 0x1: {
-			cout << "textframe" << endl;
+//			cout << "textframe" << endl;
 			string s (data, datalen);
 			if (theListener != NULL) theListener->onTextMessage(s, this);
 			break;

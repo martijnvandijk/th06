@@ -9,8 +9,6 @@
 
 class TemperatureRegulator : public EventGenerator {
 public:
-	TemperatureRegulator(RTOS::task *parent): EventGenerator{parent} {}
-
 	/**
 	 * @brief set the desired temperature, the regulator will try to reach this
 	 */

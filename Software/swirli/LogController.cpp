@@ -22,7 +22,7 @@ void LogController::logProgramStarted(std::string filename, int temperature) {
 }
 
 void LogController::logCurrentStep(unsigned char step) {
-	*log << "----Starting step " << step << " in program----" << std::endl;
+	*log << "----Starting step " << int(step) << " in program----" << std::endl;
 	
 	std::ofstream progresslog{STEPFILE_FILENAME, std::ios_base::out | std::ios_base::trunc | std::ios_base::binary};
 	

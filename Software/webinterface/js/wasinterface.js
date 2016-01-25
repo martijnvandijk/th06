@@ -1,3 +1,34 @@
+/*
+ Buttons (UI elements)
+ */
+var pin_button;
+var option_button;
+var menu_button;
+var start_button;
+var stop_button;
+var update_button;
+
+/*
+ Links
+ */
+var recovery_link;
+
+/*
+ Visual elements (pop-up's, menu's)
+ */
+var update_screen;
+var login_screen;
+var overlay;
+var navbar;
+var temp;
+var time;
+var state;
+
+/*
+ Input elements
+ */
+var pin_field;
+
 window.onload = function() {
 	window.socket = WebSocketConnect(); // Connect to the websocket
 	
@@ -17,33 +48,33 @@ window.onload = function() {
 	/*
 		Buttons (UI elements)
 	*/
-	var pin_button = document.getElementById("pinbutton");
-	var option_button = document.getElementById("optionbutton");
-	var menu_button = document.getElementById("menubutton");
-	var start_button = document.getElementById("startbutton");
-	var stop_button = document.getElementById("stopbutton");
-	var update_button = document.getElementById("updatebutton");
+	pin_button = document.getElementById("pinbutton");
+	option_button = document.getElementById("optionbutton");
+	menu_button = document.getElementById("menubutton");
+	start_button = document.getElementById("startbutton");
+	stop_button = document.getElementById("stopbutton");
+	update_button = document.getElementById("updatebutton");
 	
 	/*
 		Links
 	*/
-	var recovery_link = document.getElementById("recoverylink");
+	recovery_link = document.getElementById("recoverylink");
 	
 	/*
 		Visual elements (pop-up's, menu's)
 	*/
-	var update_screen = document.getElementById("update-message");
-	var login_screen = document.getElementById("login");
-	var overlay = document.getElementById("black-overlay");
-	var navbar = document.getElementById("navbar");
-	var temp = document.getElementById("temperaturefield");
-	var time = document.getElementById("timefield");
-	var state = document.getElementById("statusfield");
+	update_screen = document.getElementById("update-message");
+	login_screen = document.getElementById("login");
+	overlay = document.getElementById("black-overlay");
+	navbar = document.getElementById("navbar");
+	temp = document.getElementById("temperaturefield");
+	time = document.getElementById("timefield");
+	state = document.getElementById("statusfield");
 	
 	/*
 		Input elements
 	*/
-	var pin_field = document.getElementById("pinfield");
+	pin_field = document.getElementById("pinfield");
 	
 	// Check if the user is logged in
 	if(user_login == false) {
@@ -116,11 +147,12 @@ window.onload = function() {
 	start_button.onclick = function() {
 		// Get the selected washingprogram
 		var was_dropdown = document.getElementById("wasprogrammas");
-		var was_selected = was_dropdown.options[was_dropdown.selectedIndex].label;
+		var was_selected = was_dropdown.value;
 		
 		// Get the selected temperature
 		var temp_dropdown = document.getElementById("temperaturen");
-		var temp_selected = temp_dropdown.options[temp_dropdown.selectedIndex].value;
+		var temp_selected = parseInt(temp_dropdown.value);
+		console.log(temp_selected);
 		
 		var delay_value = document.getElementById("duration").value; // Get the selected time until start of program
 		var time = delay_value.split(":"); // Split the time by the : delimiter
@@ -128,10 +160,10 @@ window.onload = function() {
 		
 		// Send a start command to the websocket, along with a few parameters
 		var json = {"request" : "StartWashingProgram", 
-						"Parameters" : {
-							"Program" : was_selected,
-							"Temperature" : temp_selected,
-							"Delay" : delay
+						"parameters" : {
+							"program" : was_selected,
+							"temperature" : temp_selected,
+							"delay" : delay
 						}
 				   };
 		window.socket.send(JSON.stringify(json));
@@ -150,10 +182,12 @@ window.onload = function() {
 		update_screen.style.display = "none";
 		// Perform an update (read update file, place into wasprogramma's array and tell the user a new program has been added)
 		
-		// Send a start command to the websocket, along with a few parameters
-		var json = {"request" : "StartWashingProgram"};
+		// Send an update command to the websocket, along with a few parameters
+		var json = {"request" : "FetchUpdate"};
 		window.socket.send(JSON.stringify(json));
 	}
+
+	setInterval(function(){ window.socket.send(JSON.stringify({"request" : "Status"})); }, 1000);
 }
 
 /*
@@ -182,14 +216,16 @@ function save_settings(pin, recovery) {
 function populate_wasprogrammas() { 
 	var was_dropdown = document.getElementById("wasprogrammas");
 
-	for(var i = 0; i < window.page_json.length; i++) {
-		var option = document.createElement("option");
-		
-		option.textContent = window.page_json[i][0]; // Fill the text content of the dropdown
-		option.label = window.page_json[i][0].replace(' was', ''); // Set a label so the start command can send a name that does not contain spaces
-		option.value = i; // Give the option an ID that can be used to populate the temperature dropdown
-		
-		was_dropdown.appendChild(option);
+	for (var key in window.page_json) {
+		if (window.page_json.hasOwnProperty(key)) {
+			var option = document.createElement("option");
+			
+			option.textContent = window.page_json[key].name; // Fill the text content of the dropdown
+			option.label = window.page_json[key].name; // Set a label so the start command can send a name that does not contain spaces
+			option.value = key; // Give the option an ID that can be used to populate the temperature dropdown
+			
+			was_dropdown.appendChild(option);
+		}
 	}
 	
 	populate_temp(); // Initial call to populate_temp to fill the dropdown (since onchange doesn't get called on intial load)
@@ -210,11 +246,11 @@ function populate_temp() {
 	/*
 		Loop through the temperatures for each washing program and generate option fields for them
 	*/
-	for(var i = 0; i < window.page_json[was_dropdown.value][1].length; i++) {
+	for(var i = 0; i < window.page_json[was_dropdown.value].temperature.length; i++) {
 		var option = document.createElement("option");
 		
-		option.innerHTML = window.page_json[was_dropdown.value][1][i] + "&deg;C"; // Set text for the dropdown to the number with a Celcius symbol
-		option.value = window.page_json[was_dropdown.value][1][i];
+		option.innerHTML = window.page_json[was_dropdown.value].temperature[i] + "&deg;C"; // Set text for the dropdown to the number with a Celcius symbol
+		option.value = window.page_json[was_dropdown.value].temperature[i];
 		
 		temp_dropdown.appendChild(option);
 	}
@@ -225,7 +261,7 @@ function populate_temp() {
 */
 function WebSocketConnect() {
 	if ("WebSocket" in window) {
-		ws = new WebSocket("ws://" + widow.location.hostname + "10.10.0.10:2222");
+		ws = new WebSocket("ws://" + window.location.hostname + ":2222");
 		ws.onopen = function(evt) { 
 			console.log("connection open");
 			
@@ -234,6 +270,9 @@ function WebSocketConnect() {
 			
 			json = {"request" : "FetchWashingProgram"};
 			window.socket.send(JSON.stringify(json)); // Request the list of washing programs from the server
+
+			json = {"request" : "Status"};
+			window.socket.send(JSON.stringify(json));
 		};
 		ws.onclose = function(evt) { console.log("Connection closed with code: " + evt.code); }
 		ws.onmessage = function(evt) { process_message(evt); }
@@ -243,6 +282,19 @@ function WebSocketConnect() {
 		alert("WebSocket NOT supported by your Browser!");
 	}
 
+}
+
+Number.prototype.toHHMMSS = function () {
+	var sec_num = this;
+	var hours   = Math.floor(sec_num / 3600);
+	var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+	var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+	if (hours   < 10) {hours   = "0"+hours;}
+	if (minutes < 10) {minutes = "0"+minutes;}
+	if (seconds < 10) {seconds = "0"+seconds;}
+	var time    = hours+':'+minutes+':'+seconds;
+	return time;
 }
 
 /*
@@ -257,30 +309,34 @@ function process_message(message) {
 			window.user_json = json.settings;
 			break;
 		case "FetchWashingProgram":
-			window.page_json = json.settings;
-			
+			window.page_json = json.programs;
+			console.log(window.page_json);
+			populate_wasprogrammas();
 			break;
 		case "UpdateAvailable":
-			break;
-		case "SettingsSaved":
-			break;
-		case "WashStarted":
-			// Change state
-			state.innerHTML = "Er is momenteel een wastaak bezig";
-			break;
-		case "WashStopped":
-			// Change state
-			state.innerHTML = "Er is momenteel geen wastaak bezig";
 			
-			// Set temperature and time to 0
-			time.innerHTML = "00:00";
-			temp.innerHTML = "0&deg;C";
 			break;
-		case "Temperature":
-			time.innerHTML = "";
+		case "UpdateUser":
+			console.log("User settings are saved");
 			break;
-		case "Time":
-			time.innerHTML = "";
+		case "StartWashingProgram":
+		case "StopWashingProgram":
+			// Change state
+			json = {"request" : "Status"};
+			window.socket.send(JSON.stringify(json));
+			break;
+		case "Status":
+			if (json.status) {
+				state.innerHTML = "Er is momenteel een wastaak bezig";
+
+				time.innerHTML = json.time.toHHMMSS();
+				temp.innerHTML = json.temp + "&deg;C";
+			} else {
+				state.innerHTML = "Er is momenteel geen wastaak bezig";
+
+				time.innerHTML = "00:00:00";
+				temp.innerHTML = "0&deg;C";
+			}
 			break;
 		default: 
 			console.log("Warning: Unknown message received: " + message);

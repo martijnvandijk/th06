@@ -8,13 +8,13 @@
 
 void SwirliListener::onTextMessage(const string &s, WebSocket *ws) {
     try {
-        std::cout << s.c_str() << std::endl;
+//        std::cout << s.c_str() << std::endl;
         std::shared_ptr<WebSocketPacket> webSocketPacket(
                 new WebSocketPacket(s.c_str(), ws)
         );
         packetQueue.push(webSocketPacket);
-        std::cout << "Pushed websocketpacket, queuesize: " << packetQueue.size() << std::endl;
-        std::cout << "PacketsAvailable output: " << packetsAvailable() << std::endl;
+//        std::cout << "Pushed websocketpacket, queuesize: " << packetQueue.size() << std::endl;
+//        std::cout << "PacketsAvailable output: " << packetsAvailable() << std::endl;
     }
     catch (invalid_argument &e) {
         std::cout << e.what() << std::endl;
@@ -41,7 +41,7 @@ std::shared_ptr<WebSocketPacket> SwirliListener::getPacket() {
     std::shared_ptr<WebSocketPacket> webSocketPacket;
 
     webSocketPacket = packetQueue.front();
-    std::cout << "popped packet!" << std::endl;
+//    std::cout << "popped packet!" << std::endl;
     packetQueue.pop();
 
 

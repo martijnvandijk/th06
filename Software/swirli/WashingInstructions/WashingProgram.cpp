@@ -1,3 +1,4 @@
+#include <sstream>
 #include "WashingProgram.h"
 #include "AddSoapInstruction.h"
 #include "SetRPMInstruction.h"
@@ -193,19 +194,27 @@ void WashingProgram::execute(WashingProgramRunner &runner, LogController &logCon
 
 void WashingProgram::execute(WashingProgramRunner &runner, LogController &logController, int resumeFrom) {
 	logController.logProgramStarted(filename, temperature);
-	// adjust the temperature and the
+	// adjust the temperature and the other things
 	for (int i{0}; i < resumeFrom && !runner.isStopped(); ++i) {
+		std::stringstream ss;
+		ss << "skipping over step " << i;
+		logController.logMessage("WashingProgram", ss.str());
 		mainTask->instructions[i]->execute(runner, logController, false);
 	}
 	if (resumeFrom > 0 && !runner.isStopped()) {
-		WaitWaterLevelInstruction{waterLevelRegulator}.execute(runner, logController, true);
+		logController.logMessage("WashingProgram", "waiting for waterlevel");
+		waterLevelRegulator.waitEvent(&runner);
 		if (temperatureRegulator.getTargetTemperature() > 20) {
-			WaitTemperatureInstruction{temperatureRegulator}.execute(runner, logController, true);
+			logController.logMessage("WashingProgram", "waiting for temperature");
+			temperatureRegulator.waitEvent(&runner);
 		}
 	}
-	for (int i{resumeFrom}; i < mainTask->instructions.size() && !runner.isStopped(); i++) {
+	for (int i{resumeFrom}; i < mainTask->instructions.size(); i++) {
 		logController.logCurrentStep(i);
 		mainTask->instructions[i]->execute(runner, logController, true);
+		if (runner.isStopped()) {
+			break;
+		}
 	}
 	logController.logProgramStopped();
 	// TODO put this in WashingController instead - or don't

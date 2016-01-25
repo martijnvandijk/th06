@@ -1,3 +1,4 @@
+#include <sstream>
 #include "WashingController.h"
 
 WashingController::WashingController(LogController &logController,
@@ -17,11 +18,14 @@ WashingController::WashingController(LogController &logController,
         machine(machine),
         temperatureRegulator(temperatureRegulator),
         waterLevelRegulator(waterLevelRegulator)
-{}
+{
+	startTime.write(0);
+}
 
 void WashingController::start(std::string programName, int programTemperature, int programDelay) {
 	program.write(programName);
 	temperature.write(programTemperature);
+	delay.write(programDelay);
 
 	programStarted.set();
 }
@@ -38,7 +42,7 @@ void WashingController::runProgram(WashingProgram &program, int step) {
 	WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
 	uartHandler.sendMessage(message);
 
-	machine.getDoor().waitClosed(this);
+	//machine.getDoor().waitClosed(this);
 	// TODO DO NOT FORGET
 
 	// start polling the sensors
@@ -51,8 +55,11 @@ void WashingController::runProgram(WashingProgram &program, int step) {
 
 void WashingController::endProgram() {
 	stopped.write(false);
+	stoppedEvent.clear();
 
 	resetMachineState();
+
+	startTime.write(0);
 }
 
 void WashingController::resetMachineState() {
@@ -64,7 +71,7 @@ void WashingController::resetMachineState() {
 	// pump away the water
 	waterLevelRegulator.setWaterLevel(0);
 	// wait for the water to be gone
-	wait(waterLevelRegulator.waitEvent());
+	waterLevelRegulator.waitEvent(this);
 
 	// stop polling the sensors, machine can now idle
 	sensorHandler.suspend();
@@ -80,49 +87,70 @@ void WashingController::resetMachineState() {
 	// stop the machine
 	WashingMachine::UARTMessage message{MACHINE_REQ, STOP_CMD, this};
 	uartHandler.sendMessage(message);
+
+	std::cout << "sucessfully reset washing machine" << std::endl;
 }
 
 void WashingController::main() {
-	std::cout << "starting WashingController" << std::endl;
-
 	LogController::WashingProgramState unfinished = logController.getUnfinishedProgram();
 	if (!unfinished.name.empty()) {
 		// there was a program running, and the power failed
-		WashingProgram readProgram{unfinished.name, unfinished.temperature,
-		                           machine,
-		                           temperatureRegulator,
-		                           waterLevelRegulator};
-		startTime.write(time(nullptr));
-		runProgram(readProgram, unfinished.step);
+
+		rapidjson::Document document{};
+		FILE * file{fopen("UserData/UserSettings.json", "r")};
+		char *readBuffer{new char[65536]};
+		rapidjson::FileReadStream fileReadStream{file, readBuffer, 65536};
+		document.ParseStream(fileReadStream);
+		fclose(file);
+		delete[] readBuffer;
+
+		//determine the power failure settings
+		if (document["recovery"].GetString() == "continue") {
+			std::stringstream ss;
+			ss << "resuming program " << unfinished.name << " with temperature " << unfinished.temperature << " at step " << unfinished.step;
+			logController.logMessage("WashingController", ss.str());
+			WashingProgram readProgram{unfinished.name, unfinished.temperature,
+			                           machine,
+			                           temperatureRegulator,
+			                           waterLevelRegulator};
+			startTime.write(time(nullptr));
+			runProgram(readProgram, unfinished.step);
+		} else {
+			WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
+			uartHandler.sendMessage(message);
+			resetMachineState();
+		}
 	} else {
 		WashingMachine::UARTMessage message{MACHINE_REQ, START_CMD, this};
 		uartHandler.sendMessage(message);
 		resetMachineState();
 	}
 
-	std::cout << "done initializing" << std::endl;
 	for (;;) {
-		RTOS::event event{wait(programStarted)};
-		std::cout << "starting program " << program.read() << std::endl;
-
-		sleep_timer->set(((unsigned long)(delay.read()) S) * 60);
-		RTOS::event sleepEvent{wait(*sleep_timer + waitStopped())};
-		if (sleepEvent == *sleep_timer) {
-			try {
-				WashingProgram readProgram{program.read(), temperature.read(),
-				                           machine,
-				                           temperatureRegulator,
-				                           waterLevelRegulator};
-				startTime.write(time(nullptr));
-				runProgram(readProgram);
-			} catch(std::invalid_argument &e){
-				std::cerr << e.what() << std::endl;
-			}
-		} else {
-			stopped.write(false);
-		}
-
 		// clear the started flag in case somebody tried to start washing while the machine was running
 		programStarted.clear();
+
+		RTOS::event event{wait(programStarted)};
+		std::cout << "starting program " << program.read() << " with delay " << delay.read() << std::endl;
+
+		if (delay.read() > 0) {
+			sleepTimer.set(((unsigned int)(delay.read()) S) * 60);
+			RTOS::event sleepEvent{wait(sleepTimer + waitStopped())};
+			if (sleepEvent != sleepTimer) {
+				sleepTimer.cancel();
+				stopped.write(false);
+				break;
+			}
+		}
+		try {
+			WashingProgram readProgram{program.read(), temperature.read(),
+			                           machine,
+			                           temperatureRegulator,
+			                           waterLevelRegulator};
+			startTime.write(time(nullptr));
+			runProgram(readProgram);
+		} catch(std::invalid_argument &e){
+			std::cerr << e.what() << std::endl;
+		}
 	}
 }

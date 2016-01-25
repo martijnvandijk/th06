@@ -10,9 +10,13 @@ WaitTimeInstruction::WaitTimeInstruction(unsigned int time) :
 void WaitTimeInstruction::execute(WashingProgramRunner &runner,
                                   LogController &logController,
                                   bool doWait) {
-	std::cout << "user " << runner << ", doWait " << doWait << ", time " << time << std::endl;
 	if (doWait) {
-		runner.sleep_timer->set(time);
-		runner.wait(*runner.sleep_timer + runner.waitStopped());
+		std::cout << "waiting " << time << " µs" << std::endl;
+//		runner.sleep(time);
+		runner.sleepTimer.set(time);
+		RTOS::event event{runner.wait(runner.sleepTimer + runner.waitStopped())};
+		if (!(event == runner.sleepTimer)) {
+			runner.sleepTimer.cancel();
+		}
 	}
 }

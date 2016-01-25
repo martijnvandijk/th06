@@ -6,7 +6,6 @@
 
 TemperatureController::TemperatureController(WashingMachine::HeatingUnit &heat):
 		UARTUser{314, "TemperatureController"},
-		TemperatureRegulator{this},
 		heat(heat),
 		targetTemperature{"TargetTemperature"},
 		targetTemperatureUpdated{this, "TargetTemperatureUpdated"},

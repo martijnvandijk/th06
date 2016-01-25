@@ -10,20 +10,14 @@
 
 class EventGenerator {
 public:
-	EventGenerator(RTOS::task *parent);
-
-	/**
-	 * @return an RTOS::waitable that gets notified when this object generates an event
-	 */
-	RTOS::waitable waitEvent();
+	void waitEvent(RTOS::task *user);
 
 protected:
 	bool notify();
 	void notifyAll();
 
 private:
-	RTOS::pool<int> waiting;
-	RTOS::flag flag;
+	std::queue<RTOS::task*> blocked{};
 };
 
 

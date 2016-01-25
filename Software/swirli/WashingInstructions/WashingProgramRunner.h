@@ -25,10 +25,10 @@ public:
 	 */
 	void stop();
 
+	RTOS::timer sleepTimer;
+
 protected:
 	RTOS::pool<bool> stopped;
-
-private:
 	RTOS::flag stoppedEvent;
 };
 

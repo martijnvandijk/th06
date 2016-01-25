@@ -7,7 +7,8 @@
 WashingProgramRunner::WashingProgramRunner(unsigned int priority, const char *name):
 		UARTUser{priority, name},
 		stopped{"Program stopped"},
-		stoppedEvent{this, "Program stopped"} {
+		stoppedEvent{this, "Program stopped"},
+		sleepTimer{this, "Runner sleepTimer"} {
 	stopped.write(false);
 }
 

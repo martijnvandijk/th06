@@ -12,6 +12,6 @@ void WaitTemperatureInstruction::execute(WashingProgramRunner &runner,
                                          LogController &logController,
                                          bool doWait) {
 	if (doWait) {
-		runner.wait(regulator.waitEvent() + runner.waitStopped());
+		regulator.waitEvent(&runner);
 	}
 }

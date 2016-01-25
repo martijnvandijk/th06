@@ -6,12 +6,12 @@ void WebInterfaceHandler::main() {
         wait();
 //        std::cout << "WebInterfaceHandler run" << std::endl;
         if (listener.packetsAvailable()) {
-            std::cout << "Got packet!" << std::endl;
+//            std::cout << "Got packet!" << std::endl;
             auto webSocketPacket = listener.getPacket();
 
             rapidjson::Document &doc = webSocketPacket->getDoc();
             std::string request = doc["request"].GetString();
-            std::cout << "WebInterfaceHandler: request is " << request << std::endl;
+//            std::cout << "WebInterfaceHandler: request is " << request << std::endl;
 
             rapidjson::StringBuffer sbuf;
             rapidjson::Writer<rapidjson::StringBuffer> writer(sbuf);
@@ -98,18 +98,20 @@ void WebInterfaceHandler::main() {
                 writer.Key("temp");
                 writer.Int(washingController.getTemperature());
                 writer.Key("time");
-                writer.Int(washingController.isStopped() ? 0 : (int)(time(nullptr) - washingController.timeStarted()));
+                writer.Int((int)(time(nullptr) - washingController.timeStarted()));
+                writer.Key("status");
+                writer.Bool(washingController.timeStarted() != 0);
             }
             writer.Key("response");
             writer.String(request.c_str());
             writer.EndObject();
 
 
-            std::cout << "reply is: " << sbuf.GetString() << std::endl;
+//            std::cout << "reply is: " << sbuf.GetString() << std::endl;
             WebSocket *ws = webSocketPacket->getWebsocket();
             try {
                 ws->sendTextMessage(sbuf.GetString());
-                std::cout << "Sent reply: " << sbuf.GetString();
+//                std::cout << "Sent reply: " << sbuf.GetString();
             }
             catch (WebSocketException &e) {
                 std::cout << "WebSockeException" << e.what() << std::endl;

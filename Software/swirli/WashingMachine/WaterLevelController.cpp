@@ -6,7 +6,6 @@
 
 WaterLevelController::WaterLevelController(WashingMachine::Pump &pump, WashingMachine::WaterValve &waterValve):
 		UARTUser{314, "WaterLevelController"},
-		WaterLevelRegulator(this),
 		pump(pump),
 		waterValve(waterValve),
 		targetWaterLevel{"TargetWaterLevel"},
@@ -34,7 +33,8 @@ void WaterLevelController::main() {
 				pump.set(WashingMachine::PUMP_OFF, this);
 				waterValve.set(WashingMachine::VALVE_CLOSED, this);
 
-				if (event == waterLevelUpdated) {
+				diff = targetWaterLevel.read() - latestWaterLevel.read();
+				if (diff == 0) { // if the thing still holds true
 					notifyAll();
 				}
 				break;

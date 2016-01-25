@@ -12,7 +12,7 @@ using namespace rapidjson;
 WebSocketPacket::WebSocketPacket(const char *json, WebSocket *ws) :
         ws{ws} {
 //    Document document;
-    std::cout << "WebSocketPacket: " << json << std::endl;
+//    std::cout << "WebSocketPacket: " << json << std::endl;
     doc.Parse(json);
     if (doc["request"].IsString()) {
         if (
@@ -23,8 +23,7 @@ WebSocketPacket::WebSocketPacket(const char *json, WebSocket *ws) :
                         doc["request"] == "FetchWashingProgram" ||
                         doc["request"] == "StartWashingProgram" ||
                         doc["request"] == "StopWashingProgram" ||
-                        doc["request"] == "FetchWashingState" ||
-                        doc["request"] == "FetchWashingTime"
+                        doc["request"] == "Status"
                 )
                 ) {
             throw invalid_argument("Invalid JSON request!");
