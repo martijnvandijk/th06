@@ -1,6 +1,4 @@
 \chapter{Realisatie}
-\section{Inleiding}
-\newpage
 
 \section{Opgetreden problemen en oplossingen}
 \subsection{Schrijven naar bestand d.m.v. JavaScript}
@@ -10,7 +8,7 @@ Dit was een groot probleem omdat wij geen gebruik maken van JavaScript libraries
 
 Uiteindelijk hebben wij voor dit probleem 2 oplossingen gevonden.
 De eerste oplossing was om uiteindelijk toch gebruik te maken van een JavaScript library, in dit geval JQuery.
-JQuery kan door middel van een Ajax call (in de vorm van $.ajax) externe en interne scripts aan roepen.
+JQuery kan door middel van een Ajax call (in de vorm van \$.ajax) externe en interne scripts aan roepen.
 Hiervoor hebben wij een kort PHP script geschreven wat het bestand aan past aan de hand van een binnen komende POST variabele.
 
 De tweede oplossing was, alhoewel simpeler van aard, moeilijker toe te passen, en maakte de eerste oplossing nuttelloos.
@@ -25,21 +23,34 @@ Uiteindelijk hebben we gebruik gemaakt van GDB, die gedetailleerder aantoont op 
 Hieruit bleek dat bij het verwerken van de binnenkomende requests, het woord request verkeerd gespeld was (Request was "Rqeuest").
 
 \subsection{RTOS CPU tijd}
-Tijdens de ontwikkeling van het systeem kwamen wij er achter dat het RTOS 100% van de CPU tijd gebruikt.
+Tijdens de ontwikkeling van het systeem kwamen wij er achter dat het RTOS 100\% van de CPU tijd gebruikt.
 Hierdoor gebruikte het systeem meer stroom, en konden andere onderdelen van het systeem niet goed functioneren.
 
 Om dit op te lossen hebben wij het RTOS aangepast.
 Nu wordt er tijdens het aftellen van de timers gecontroleerd welke de kleinste tijds duur heeft. Indien er geen beschikbaar proces voor is dan wordt voor deze tijd sleep() gedaan.
-Hierdoor gebruiken wij ongeveer 5% CPU tijd i.p.v. 100%.
+Hierdoor gebruiken wij ongeveer 5\% CPU tijd i.p.v. 100\%.
 
 \subsection{Fatale fout in websocket}
-MARTIJN PLS
+Inkomende websocket verbindingen worden buiten het RTOS om afgehandeld. 
+Tijdens de ontwikkeling bleek dat buiten het RTOS geen items toegevoegd konden worden aan channels. Dit hebben wij opgelost door een std::queue te gebruiken aan de kant van de websockets, en vanuit het RTOS een method aan te roepen om deze std::queue te pollen.
 
 \section{Onopgeloste problemen}
-Onopgeloste problemen
+Het systeem crasht soms als de websocket gesloten wordt vlak na het starten van een wasprogramma. Er wordt dan een exceptie opgegooid vanuit de websocket klasse, die niet afgehandeld wordt.
 
 \section{Gedetailleerde uitleg code}
-int i = 0; houdt in dat een integer genaamd "i" wordt geinstantieerd met een waarde van 0.
+\subsection{Boundary objecten}
+Communicatie tussen boundary objecten en de UART interface wordt afgehandeld door de UARTHandeler klasse. Deze wacht totdat er nieuwe commando's in een channel geplaatst worden, en pollt vervolgens voor inkomende reacties. Tijdens het wachten op een reactie van de emulator worden taken die commando's sturen stil gelegd.
 
-\section{Uitgevoerde tests en resultaten}
-( ☉д⊙)
+\subsection{Web interface}
+Communicatie tussen de webinterface en de rest van het systeem wordt uitgevoerd door twee hoofdonderdelen. De WebsocketHandler accepteert inkomende verbindingen. Een listener klasse wordt geabbonneerd op binnenkomende berichten op die verbindingen. Binnenkomende berichten worden in een std::queue gezet. Vanuit de WebinterfaceHandler wordt iedere 20 MS gepollt op deze queue. Vanuit de WebinterfaceHandler worden de binnenkomende berichten afgehandeld. Als er data opgevraagd wordt stuurt de WebinterfaceHandler de gevraagde data terug. Als er opdrachten gegeven worden zorgt de WebinterfaceHandler ervoor dat deze uitgevoerd worden. 
+
+Berichten over de websocket worden met JSON geformatteerd. Deze berichten worden geparsed met de rapidjson library. Ook op andere plekken binnen het programma wordt deze library gebruikt.
+
+\subsection{Wasprogramma's}
+Wasprogramma's worden opgeslagen in JSON geformatteerde bestanden. Zodra de webpagina wordt geladen worden deze bestanden ingelezen en geparsed. Het parsen JSON wordt gedaan met behulp van de rapidjson library. 
+
+Wasprogramma's bestaan uit een reeks instructies die door het systeem uitgevoerd worden. De motor laten draaien, water in de trommel pompen en de temperatuur instellen zijn enkele voorbeelden van instructies. Instructies worden vanuit het JSON bestand ingelezen en een voor een uitgevoerd door de WashingController.
+
+
+\subsection*{Verdere toelichting}
+Verdere toelichting over de interne werking van de software is te vinden in de doxygen documentatie.
