@@ -2,8 +2,6 @@
 \section{Inleiding}
 In dit hoofdstuk bespreken wij de onderdelen van de realisatie die achteraf beter hadden kunnen zijn opgelost.
 Tevens bieden wij voor deze problemen beter oplossingen die zo gewenst in de toekomst alsnog toegepast kunnen worden.
-\newpage
 
-\section{Problemen}
-
-\section{Betere oplossingen}
+\section{Communicatie tussen RTOS en de rest van het systeem}
+Tijdens de ontwikkeling kwamen wij erachter dat communicatie tussen het RTOS en andere threads vrij omslachtig is. Mogelijk hadden wij dit beter kunnen oplossen door de websocket thread inkomende verbindingen te laten accepteren en de socket objecten vanuit het RTOS op te halen, en deze sockets binnen het RTOS verder af te handelen.
