@@ -1,9 +1,75 @@
 Commando's voor de webserver --
-FetchUserSettings - Opvragen van de pincode en recovery methode
-FetchUpdate - Opdracht geven dat het nieuwe wasprogramma moet worden toegevoegd aan de lijst van huidige wasprogramma's
-UpdateUser - De gegevens die worden meegegeven opslaan in de user settings
-FetchWashingProgram - De namen van alle wasprogramma's, de temperaturen die elke wasprogramma kan toepassen en de tijd van dit wasprogramma.
-StartWashingProgram - Starten van het wasprogramma
-StopWashingProgram - Stoppen van het wasprogramma
-FetchWashingTemp - Opvragen van de huidige temperatuur van het wasprogramma
-FetchWashingTime - Opvragen van de huidige tijd
+Deze commando's zijn ontwikkeld voor het versturen, opvragen van gegevens en verzoeken door middel van we websocket.
+Omdat niet alle requests een resultaat verwachten geven wij als respons de request terug. Dit houdt in dat een request zoals {"request" : "StopWashingProgram"} een reply terug krijgt zoals {"response" : "StopWashingProgram"}.
+Alle requests en responses zijn JSON compliant.
+	
+Opvragen gegevens:
+FetchUserSettings-
+	Doel: Het ophalen van de gebruiker gegevens. Deze bevatten de pincode en herstelmethode.
+	Opbouw: {"request" : "FetchUserSettings"}
+	Verwachte respons: {"pin" : "1234", "recovery" : "continue", "response" : "FetchUserSettings"}
+FetchWashingProgram-
+	Doel: Het ophalen van de wasprogramma's. Dit houdt in de naam, temperaturen en duur van alle beschikbare wasprogramma's.
+	Opbouw: {"request" : "FetchWashingProgram"}
+	Verwachte respons: {"programs" : {
+								"bonte_was" : {
+									"temperature" : [20,40,90],
+									"duration" : 120,
+									"name" : "Bonte was"
+								}, 
+								"witte_was" : {
+										"temperature" : [40,90],
+										"duration" : 120,
+										"name" : "Witte was"
+								},
+								"fijne_was" : {
+										"temperature" : [30,40],
+										"duration" : 120,
+										"name" : "Fijne was"
+									}
+								}, "response" : "FetchWashingProgram"
+						}
+Status-
+	Doel: Het opvragen van de huidige tijd en temperatuur van het wasprogramma.
+	Opbouw: {"request" : "Status"}
+	Verwachte respons: { "status" : true,
+						 "time" : 0,
+						 "temp" : 20,
+						 "response" : "Status"
+						}
+
+
+
+Opdracht:
+UpdateUser-
+	Doel: Opslaan van nieuwe gegevens van de gebruiker. Dit houdt in de pinode en herstelmethode van de gebruiker.
+	Parameters: pin = de pincode zoals de gebruiker heeft ingevuld
+		    recovery = de naam van de herstelmethode die de gebruiker heeft aangegeven ("continue" of "cancel"). Continue laat het systeem verder gaan met het wasprogramma, cancel laat het systeem stoppen met het huidige programma
+	Opbouw:	{"request" : "UpdateUser", 
+				"Parameters" : {
+					"Pin" : pin, 
+					"RecoveryMethod" : recovery
+				}
+			}
+	Verwachte respons: {"response" : "UpdateUser"}
+StartWashingProgram-
+	Doel: Het starten van een wasprogramma door de naam, temperatuur en wachttijd mee te geven.
+	Parameters: was_selected = de naam van het wasprogramma
+		    temp_selected = de temperatuur zoals meegegeven uit de dropdown
+		    delay = de tijd die het systeem wacht voordat het start met het wasprogramma
+	Opbouw: {"request" : "StartWashingProgram", 
+				"parameters" : {
+					"program" : was_selected,
+					"temperature" : temp_selected,
+					"delay" : delay
+				}
+			}
+	Verwachte respons: {"response" : "StartWashingProgram"}
+StopWashingProgram-
+	Doel: Het stoppen van het huidige wasprogramma.
+	Opbouw: {"request" : "StopWashingProgram"}
+	Verwachte respons: {"response" : "StopWashingProgram"}
+FetchUpdate-
+	Doel: Opdracht geven dat nieuwe wasprogramma's moeten worden toegevoegd aan de lijst van huidige wasprogramma's
+	Opbouw: {"request" : "FetchUpdate"}
+	Verwachte respons: {"response" : "FetchUpdate"}
