@@ -1,29 +1,36 @@
 \chapter{Management Samenvatting}
+\newpage
+
 \section{Inleiding}
 Dit hoofdstuk bevat de management samenvatting voor het technisch verslag.
 Hier staan een beknopte samenvatting van een aantal onderdelen van het technisch slag, met uitzondering van modellen.
-% \newpage
 
-% \section{Inleiding}
-% Waar gaat het verslag over? Vermeld kernachtig de opdracht, het doel en de problemen die zijn opgelost.
 \subsection{De opdracht}
 Swirl \textregistered heeft aan ons gevraagd een systeem te ontwikkelen wat van een afstand een wasmachine kan aansturen.
-Dit zal gaan door middel van een webinterface die met de wasmachine communiceert.
+Dit systeem zal worden ontwikkeld door een embedded computer die de wasmachine aanstuurt door middel van requests vanaf een webinterface.
+Het doel is om een werkend systeem te maken wat gebruik maakt van een lokaal netwerk.
 
 \subsection{Het doel}
 Het doel is om een systeem te ontwikkelen wat in staat is om een wasmachine aan te sturen vanaf een computer in het huis.
 Om dit doel te bereiken zal gebruik gemaakt worden van een embedded systeem in de wasmachine wat de wasmachine aanstuurt.
 
-\subsection{Opgeloste problemen}
+\section{Opgeloste problemen}
+Een van de problemen waar wij tegen aan liepen was het opslaan van de gebruikers gegevens.
+De eerste oplossing die wij hier voor gebruikte was het aanroepen van een PHP script door middel van een AJAX call uit JQuery.
+Het nadeel hiervan is dat er gebruik moet worden gemaakt van PHP en een externe JavaScript library.
+Uiteindelijk hebben wij het PHP script kunnen verwerpen door het bestand met gebruikers gegevens aan de server kant te bewaren en dit aan te passen door middel van JSON calls.
 
 \section{Verzamelde informatie}
 Welke informatie is verzameld en hoe?
+<Hier wat informatie komen te staan over onderzoeken of tests>
 
 \section{Motivering Solution Architecture}
 Welke keuzes zijn gemaakt bij het opstellen van de requirements en solution architecture.
+<Hier moet christiaan of martijn iets korts vertellen>
 
 \section{Resultaten}
 Wat zijn de belangrijkste resultaten?
+<Iets vertellen over de resultaten die wij bereikt hebben met het project>
 
 \section{Conclusies en aanbevelingen}
 Wat zijn de belangrijkste conclusies en aanbevelingen?
